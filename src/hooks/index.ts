@@ -1,1 +1,1 @@
-export const hooks = 'hooks'
+export const hooks = 'hoos'
