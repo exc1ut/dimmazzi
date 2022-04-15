@@ -1,8 +1,10 @@
+import { AppProps } from 'next/app'
+import '../lib/i18n'
 
-import { AppProps } from 'next/app';
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  const AnyComponent = Component as any
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
-  <Component {...pageProps} />
-);
+  return <AnyComponent {...pageProps} />
+}
 
-export default MyApp;
+export default MyApp

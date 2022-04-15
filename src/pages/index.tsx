@@ -1,8 +1,14 @@
+import { useTranslation } from 'react-i18next'
+
 const Index = () => {
+  const { t } = useTranslation()
 
   return (
-   <>asd</> 
-  );
-};
+    <>
+      <>{t`sample`}</>
+      <>{t('sample')}</>
+    </>
+  )
+}
 
-export default Index;
+export default Index
