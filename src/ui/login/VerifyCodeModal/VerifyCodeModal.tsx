@@ -1,5 +1,5 @@
 
-import { Modal, CloseButton, ModalContent, ModalOverlay, Box, Button, Text, Heading, VStack, Input, HStack } from "@chakra-ui/react";
+import { chakra, Modal, CloseButton, ModalContent, ModalOverlay, Box, Button, Text, VStack, Input, HStack, ModalCloseButton, ModalHeader, ChakraProvider } from "@chakra-ui/react";
 import * as React from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
@@ -13,18 +13,19 @@ export const VerifyCodeModal = (props: VerifyCodeModalProps) => {
         <ModalOverlay />
         <ModalContent sx={{
           padding: "0px",
-          width: "416px",
+          // width: "416px",
 
         }}>
-          <CloseButton variant="modal" />
+          {/* <CloseButton variant="modal" /> */}
+          <ModalCloseButton />
           <Box p="40px">
             <VStack align="center" spacing={6}>
               <VStack align="center" spacing={4}>
-                <Heading variant="modal">
+                <ModalHeader>
                   Tizimga kirish
-                </Heading>
+                </ModalHeader>
                 <Text variant="modal_sub">
-                  Tasdiqlash kodi <Text variant="highlighted">+998 99 987 65 43 </Text>raqamiga yuborildi
+                  Tasdiqlash kodi <chakra.span color="dark.100">+998 99 987 65 43 </chakra.span>raqamiga yuborildi
                 </Text>
               </VStack>
               <HStack spacing={2}>

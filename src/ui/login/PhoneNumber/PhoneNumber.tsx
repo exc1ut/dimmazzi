@@ -1,11 +1,11 @@
 import * as React from "react";
 import {
-  Box, Heading, Modal, ModalContent, ModalHeader, ModalOverlay, VStack,
+  chakra,
+  Box, Modal, ModalContent, ModalHeader, ModalOverlay, VStack,
   Text,
   Input,
   Button,
   ModalCloseButton,
-  CloseButton
 
 } from "@chakra-ui/react";
 
@@ -18,18 +18,14 @@ export const PhoneNumber = (props: PhoneNumberProps) => {
       <Box>
         <Modal isOpen={true} onClose={() => console.log("close")}>
           <ModalOverlay />
-          <ModalContent sx={{
-            padding: "0px",
-            width: "416px",
-
-          }}>
-            <CloseButton variant="modal" />
+          <ModalContent>
+            <ModalCloseButton />
             <Box p="40px">
               <VStack align="center" spacing={6}>
                 <VStack align="center" spacing={4}>
-                  <Heading variant="modal">
+                  <ModalHeader>
                     Tizimga kirish
-                  </Heading>
+                  </ModalHeader>
                   <Text variant="modal_sub">
                     Telefon raqamingizni tasdiqlash uchun sizga sms orqali kod jo’natiladi.
                   </Text>
@@ -43,7 +39,7 @@ export const PhoneNumber = (props: PhoneNumberProps) => {
                     variant="modal_info"
                   >
                     "Kirish" tugmasini bosish orqali
-                    <Text variant="highlighted" color="red.premium"> foydalanuvchi shartnomasi </Text>
+                    <chakra.span color="red.100"> foydalanuvchi shartnomasi </chakra.span>
                     shartlarini qabul qilaman.</Text>
                 </Box>
 
