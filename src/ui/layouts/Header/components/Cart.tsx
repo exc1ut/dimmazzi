@@ -24,7 +24,7 @@ export const Cart: React.FC<CartProps> = ({ count }) => {
           width={5}
           fontWeight={500}
           color={'white'}
-          bg={'red.100'}
+          bg={'premium_red.1000'}
           m={0}
           p={0}
           transform={'translateY(-8px)'}

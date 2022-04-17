@@ -1,5 +1,7 @@
 import { chakraTheme } from '../src/theme/chakraTheme'
 import * as NextImage from 'next/image'
+import { addDecorator } from '@storybook/react'
+import NiceModal from '@ebay/nice-modal-react'
 
 // Deoptimize Next image
 
@@ -84,3 +86,5 @@ export const parameters = {
     }
   },
 }
+
+// addDecorator((story) => <NiceModal.Provider>{story()}</NiceModal.Provider>)

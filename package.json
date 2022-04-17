@@ -14,11 +14,14 @@
 		"prepare": "husky install",
 		"storybook": "start-storybook -p 6006 -s ./public",
 		"build-storybook": "build-storybook -s public",
-		"generate": "plop"
+		"gen:component": "plop",
+		"gen:theme": "chakra-cli tokens src/theme/chakraTheme.ts",
+		"postinstall": "yarn gen:theme"
 	},
 	"dependencies": {
 		"@chakra-ui/icons": "^1.1.7",
 		"@chakra-ui/react": "^1.8.8",
+		"@ebay/nice-modal-react": "^1.2.4",
 		"@emotion/react": "^11",
 		"@emotion/styled": "^11",
 		"@types/ramda": "^0.28.10",
@@ -38,6 +41,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.17.9",
+		"@chakra-ui/cli": "^1.9.0",
 		"@chakra-ui/storybook-addon": "^1.0.3",
 		"@next/bundle-analyzer": "^12.1.4",
 		"@next/eslint-plugin-next": "^12.1.5",

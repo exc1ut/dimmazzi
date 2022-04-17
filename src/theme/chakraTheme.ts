@@ -11,3 +11,5 @@ export const chakraTheme = extendTheme({
   fonts,
   breakPoints,
 })
+
+export default chakraTheme

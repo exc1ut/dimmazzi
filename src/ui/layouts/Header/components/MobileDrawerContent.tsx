@@ -100,7 +100,9 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({}) => {
       </VStack>
       <HStack py={4}>
         {languages.map((language) => (
-          <Button colorScheme={language.isActive ? 'red' : undefined}>{language.name}</Button>
+          <Button colorScheme="premium_red" variant={language.isActive ? 'solid' : 'outline'}>
+            {language.name}
+          </Button>
         ))}
       </HStack>
     </VStack>

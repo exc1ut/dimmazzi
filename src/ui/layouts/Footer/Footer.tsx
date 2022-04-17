@@ -45,7 +45,7 @@ export const Footer = (props: FooterProps) => {
   if (isLessThanLg) return null
 
   return (
-    <Box py={10} color="dark.5" bg="dark.100">
+    <Box py={10} color="premium_dark.50" bg="premium_dark.1000">
       <Container maxW={'container.xl'}>
         <SimpleGrid alignItems={'center'} templateColumns="2fr 6fr 2fr">
           <Image src="/assets/images/logo_light.svg" width={150} height={50} />

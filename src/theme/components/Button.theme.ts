@@ -1,4 +1,6 @@
-export const Button = {
+import { ComponentStyleConfig } from '@chakra-ui/react'
+
+export const Button: ComponentStyleConfig = {
   variants: {
     modal_gray: {
       width: '100%',
@@ -11,5 +13,18 @@ export const Button = {
       color: 'white',
       textTransform: 'uppercase',
     },
+    solid: {
+      bg: 'premium_red.1000',
+      color: 'white',
+    },
+    outline: {
+      border: '1.5px solid',
+      borderColor: 'premium_red.1000',
+      color: 'premium_red.1000',
+      backgroundColor: 'white',
+    },
+  },
+  baseStyle: {
+    fontWeight: 600,
   },
 }
