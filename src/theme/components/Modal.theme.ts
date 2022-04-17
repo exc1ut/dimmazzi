@@ -17,5 +17,12 @@ export const Modal = {
         boxShadow: 'none',
       },
     },
+
+    header: {
+      fontSize: '24px',
+      lineHeight: '32px',
+      fontWeigth: 700,
+      color: 'dark.100',
+    },
   },
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Modal, ModalOverlay, ModalContent, CloseButton, VStack, Heading, Button, Input, Box, ModalCloseButton } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, CloseButton, VStack, Heading, Button, Input, Box, ModalCloseButton, ModalHeader } from '@chakra-ui/react';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type AddressFormProps = {}
 
@@ -14,9 +14,9 @@ export const AddressForm = (props: AddressFormProps) => {
         <ModalCloseButton />
         <Box p="40px">
           <VStack spacing={6} align="center">
-            <Heading variant="modal">
+            <ModalHeader>
               Manzilni kiriting
-            </Heading>
+            </ModalHeader>
             <Input placeholder={inputs[0]} />
             <Input placeholder={inputs[1]} />
             <Input placeholder={inputs[2]} />

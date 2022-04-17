@@ -20,9 +20,5 @@ export const Text = {
       textAlign: 'center',
       color: 'dark.50',
     },
-    highlighted: (props: { color: string }) => ({
-      display: 'inline',
-      color: props.color ? props.color : 'dark.100',
-    }),
   },
 }
