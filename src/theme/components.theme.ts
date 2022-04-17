@@ -4,6 +4,7 @@ import { CloseButton } from './components/CloseButton.theme'
 import { Heading } from './components/Heading.theme'
 import { Text } from './components/Text.theme'
 import { Modal } from './components/Modal.theme'
+import { Textarea } from './components/Textarea.theme'
 export const components = {
   Input,
   CloseButton,
@@ -11,4 +12,5 @@ export const components = {
   Heading,
   Text,
   Modal,
+  Textarea,
 }

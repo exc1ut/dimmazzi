@@ -1,10 +1,10 @@
 import { Meta, Story } from '@storybook/react';
 
-import { OrderCard } from './OrderCard';
+import { Footer } from './Footer';
 
 const meta: Meta = {
-  title: 'Components/OrderCard',
-  component: OrderCard,
+  title: 'Components/Footer',
+  component: Footer,
   parameters: {
     controls: { expanded: true },
   },
@@ -12,7 +12,7 @@ const meta: Meta = {
 
 export default meta;
 
-const Template: Story = (props) => <OrderCard {...props}></OrderCard>;
+const Template: Story = (props) => <Footer {...props}>Hello</Footer>;
 
 export const Default = Template.bind({});
 Default.args = {};

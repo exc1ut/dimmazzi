@@ -20,7 +20,7 @@ export const AddressForm = (props: AddressFormProps) => {
             <Input placeholder={inputs[0]} />
             <Input placeholder={inputs[1]} />
             <Input placeholder={inputs[2]} />
-            <Button variant="modal_gray">Tasdiqlash</Button>
+            <Button variant="modal">Tasdiqlash</Button>
 
           </VStack>
         </Box>

@@ -6,7 +6,7 @@ export const CloseButton = {
       position: 'absolute',
       right: '22px',
       top: '22px',
-      color: 'red.100',
+      color: 'premium_red.1000',
       _hover: { bg: 'none' },
       _active: { bg: 'none' },
       _focus: {
