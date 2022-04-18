@@ -1,7 +1,6 @@
 export const Modal = {
   baseStyle: {
     dialog: {
-      width: '416px',
       padding: '0px',
     },
     closeButton: {

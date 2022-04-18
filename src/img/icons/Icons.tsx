@@ -116,3 +116,19 @@ export const StarIcon = (props: { color: string | undefined }) => (
   </svg>
 
 )
+
+export const SmallStarIcon = () => (
+  <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 14.9663L14.562 18.5L13.086 11.84L18 7.35895L11.529 6.78105L9 0.5L6.471 6.78105L0 7.35895L4.914 11.84L3.438 18.5L9 14.9663Z" fill="#FFA505" />
+  </svg>
+
+)
+
+export const CircleIcon = (props: any) => (
+  <Icon viewBox='0 0 200 200' {...props}>
+    <path
+      fill='currentColor'
+      d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
+    />
+  </Icon>
+)

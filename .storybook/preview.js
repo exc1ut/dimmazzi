@@ -2,6 +2,7 @@ import { chakraTheme } from '../src/theme/chakraTheme'
 import * as NextImage from 'next/image'
 import { addDecorator } from '@storybook/react'
 import NiceModal from '@ebay/nice-modal-react'
+import '../src/lib/i18n'
 
 // Deoptimize Next image
 

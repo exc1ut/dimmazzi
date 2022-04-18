@@ -1,15 +1,18 @@
 
-import { chakra, Modal, CloseButton, ModalContent, ModalOverlay, Box, Button, Text, VStack, Input, HStack, ModalCloseButton, ModalHeader, ChakraProvider, PinInput, PinInputField } from "@chakra-ui/react";
+import { chakra, Modal, CloseButton, ModalContent, ModalOverlay, Box, Button, Text, VStack, Input, HStack, ModalCloseButton, ModalHeader, ChakraProvider, PinInput, PinInputField, useBreakpointValue } from "@chakra-ui/react";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type VerifyCodeModalProps = {}
 
 export const VerifyCodeModal = (props: VerifyCodeModalProps) => {
   const inputPoxes = [1, 2, 3, 4, 5, 6];
+  const { t } = useTranslation();
+  const values = useBreakpointValue({ sm: 'full', md: 'md' })
   return (
     <Box>
-      <Modal isOpen={true} onClose={() => console.log("close")}>
+      <Modal size={values} isOpen={true} onClose={() => console.log("close")}>
         <ModalOverlay />
         <ModalContent sx={{
           padding: "0px",
@@ -22,7 +25,8 @@ export const VerifyCodeModal = (props: VerifyCodeModalProps) => {
             <VStack align="center" spacing={6}>
               <VStack align="center" spacing={4}>
                 <ModalHeader>
-                  Tizimga kirish
+                  {/* Tizimga kirish */}
+                  {t('verify_code')}
                 </ModalHeader>
                 <Text variant="modal_sub">
                   Tasdiqlash kodi <chakra.span color="premium_dark.1000">+998 99 987 65 43 </chakra.span>raqamiga yuborildi

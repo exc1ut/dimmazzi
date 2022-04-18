@@ -6,7 +6,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const AnyComponent = Component as any
 
   return (
-    <Providers>
+    <Providers >
       <AnyComponent {...pageProps} />
     </Providers>
   )

@@ -1,14 +1,14 @@
 import * as React from "react";
-import { Modal, ModalOverlay, ModalContent, CloseButton, VStack, Heading, Button, Input, Box, ModalCloseButton, ModalHeader } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, CloseButton, VStack, Heading, Button, Input, Box, ModalCloseButton, ModalHeader, useBreakpointValue } from '@chakra-ui/react';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type AddressFormProps = {}
 
 export const AddressForm = (props: AddressFormProps) => {
 
   const inputs = ['Xonadon', 'Kocha', 'Orientir']
-
+  const values = useBreakpointValue({ sm: 'full', md: 'md' })
   return (
-    <Modal isOpen={true} onClose={() => console.log('close')}>
+    <Modal size={values} isOpen={true} onClose={() => console.log('close')}>
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
