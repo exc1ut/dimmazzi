@@ -21,26 +21,26 @@ const StyledImage = styled(Image)`
   vertical-align: middle;
 `
 
-type CommonProps = {
+export type CommonProps = {
   image: string
   isLiked: boolean
-  state: 'open' | 'closed'
+  state: "open" | "closed"
   name: string
   star: number
   distance: number
 }
 
-type ConditionalProps =
+export type ConditionalProps =
   | {
-      isDeliverable: true
-      time: number
-      cost: number
-    }
+    isDeliverable: true
+    time: number
+    cost: number
+  }
   | {
-      isDeliverable?: false
-      time?: never
-      cost?: never
-    }
+    isDeliverable?: false
+    time?: never
+    cost?: never
+  }
 
 export type RestourantCardProps = CommonProps & ConditionalProps
 

@@ -1,15 +1,18 @@
 
-import { chakra, Modal, CloseButton, ModalContent, ModalOverlay, Box, Button, Text, VStack, Input, HStack, ModalCloseButton, ModalHeader, ChakraProvider } from "@chakra-ui/react";
+import { chakra, Modal, CloseButton, ModalContent, ModalOverlay, Box, Button, Text, VStack, Input, HStack, ModalCloseButton, ModalHeader, ChakraProvider, PinInput, PinInputField, useBreakpointValue } from "@chakra-ui/react";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type VerifyCodeModalProps = {}
 
 export const VerifyCodeModal = (props: VerifyCodeModalProps) => {
   const inputPoxes = [1, 2, 3, 4, 5, 6];
+  const { t } = useTranslation();
+  const values = useBreakpointValue({ sm: 'full', md: 'md' })
   return (
     <Box>
-      <Modal isOpen={true} onClose={() => console.log("close")}>
+      <Modal size={values} isOpen={true} onClose={() => console.log("close")}>
         <ModalOverlay />
         <ModalContent sx={{
           padding: "0px",
@@ -22,18 +25,22 @@ export const VerifyCodeModal = (props: VerifyCodeModalProps) => {
             <VStack align="center" spacing={6}>
               <VStack align="center" spacing={4}>
                 <ModalHeader>
-                  Tizimga kirish
+                  {/* Tizimga kirish */}
+                  {t('verify_code')}
                 </ModalHeader>
                 <Text variant="modal_sub">
-                  Tasdiqlash kodi <chakra.span color="dark.100">+998 99 987 65 43 </chakra.span>raqamiga yuborildi
+                  Tasdiqlash kodi <chakra.span color="premium_dark.1000">+998 99 987 65 43 </chakra.span>raqamiga yuborildi
                 </Text>
               </VStack>
               <HStack spacing={2}>
-                {inputPoxes.map((item, index) => {
-                  return <Input key={index} variant="box" type="number" />
-                })}
+                <PinInput focusBorderColor="premium_dark.1000" placeholder="" errorBorderColor="premium_red.1000" >
+                  {inputPoxes.map((item, index) => {
+                    return <PinInputField w={12} h={12} key={index} required />
+                  })}
+                </PinInput>
               </HStack>
-              <Button variant="modal_gray">Tastiqlash</Button>
+
+              <Button variant="modal">Tastiqlash</Button>
 
             </VStack>
           </Box>

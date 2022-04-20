@@ -2,17 +2,22 @@ import { ComponentStyleConfig } from '@chakra-ui/react'
 
 export const Button: ComponentStyleConfig = {
   variants: {
-    modal_gray: {
+    modal: (props: any) => ({
       width: '100%',
       height: '48px',
-      backgroundColor: 'dark.40',
+      backgroundColor: props.bgColor || 'premium_dark.400',
       fontSize: '14px',
       lineheight: '18px',
       fontWeight: '600',
       letterSpacing: '0.25px',
       color: 'white',
       textTransform: 'uppercase',
-    },
+      _focus: {
+        outline: 'none',
+        border: 'none',
+        boxShadow: 'none',
+      },
+    }),
     solid: {
       bg: 'premium_red.1000',
       color: 'white',

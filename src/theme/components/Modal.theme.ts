@@ -9,12 +9,26 @@ export const Modal = {
       position: 'absolute',
       right: '22px',
       top: '22px',
-      color: 'red.100',
+      color: 'premium_red.1000',
       _hover: { bg: 'none' },
       _active: { bg: 'none' },
       _focus: {
         boxShadow: 'none',
       },
+    },
+    body: {
+      textAlign: 'center',
+      fontSize: '20px',
+      lineHeight: '24.2px',
+      fontWeight: '500',
+      color: '#000000',
+      padding: '0px',
+    },
+    header: {
+      fontSize: '24px',
+      lineHeight: '32px',
+      fontWeigth: 700,
+      color: 'premium_dark.1000',
     },
   },
 }

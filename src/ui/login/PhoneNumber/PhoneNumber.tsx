@@ -33,13 +33,13 @@ export const PhoneNumber = (props: PhoneNumberProps) => {
                 </VStack>
 
                 <Input />
-                <Button variant="modal_gray">Tizimga kirish</Button>
+                <Button variant="modal">Tizimga kirish</Button>
                 <Box w="100%">
                   <Text
                     variant="modal_info"
                   >
                     "Kirish" tugmasini bosish orqali
-                    <chakra.span color="red.100"> foydalanuvchi shartnomasi </chakra.span>
+                    <chakra.span color="premium_red.1000"> foydalanuvchi shartnomasi </chakra.span>
                     shartlarini qabul qilaman.</Text>
                 </Box>
 
