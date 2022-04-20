@@ -17,7 +17,7 @@ export const Head: React.FC<HeadProps> = ({ image, menu, onMenuClick, selected }
   return (
     <Box d="flex" justifyContent="right" position="relative" h={200} w={'full'}>
       <Box zIndex={-1} h={'full'} w="full" position="absolute">
-        <NextImage placeholder="blur" w={'full'} h={'full'} src={image} />
+        <NextImage objectFit={'cover'} placeholder="blur" w={'full'} h={'full'} src={image} />
       </Box>
       <Box pr={4} pt={4}>
         <ButtonGroup colorScheme="premium_red" size="sm" isAttached variant="outline">

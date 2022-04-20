@@ -35,7 +35,7 @@ export const MealModalCard = NiceModal.create<MealModalCardProps>((props) => {
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton color={'premium_red.1000'} />
-        <ModalBody>
+        <ModalBody p={5}>
           <Content {...props} />
         </ModalBody>
       </ModalContent>
