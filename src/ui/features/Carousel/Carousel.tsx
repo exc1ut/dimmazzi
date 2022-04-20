@@ -1,6 +1,7 @@
 import { CommonProps, ConditionalProps, RestourantCard } from "../../cards/RestourantCard/RestourantCard";
-import { Flex, HStack } from "@chakra-ui/react";
 import * as React from "react";
+import Slider from "react-slick"
+import { Box, Input, Textarea } from "@chakra-ui/react";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type CarouselProps = {}
@@ -18,11 +19,25 @@ export const Carousel: React.FC<CarouselProps> = ({ }) => {
     cost: 8000,
     time: 12,
   }
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    prevArrow: <div>prev</div>,
+    nextArrow: <div>next</div>,
+
+  }
   return (
-    <Flex w="1350px" overflow="scroll" wrap="nowrap">
-      {cards.map(item => {
-        return <RestourantCard {...restProps} />
-      })}
-    </Flex>
+    <Box width="400px" height="300px">
+      <Slider {...settings}>
+        <div>rsdf</div>
+        <div>rsdf</div>
+        <div>rsdf</div>
+        <div>rsdf</div>
+      </Slider>
+
+    </Box>
+
   );
 };

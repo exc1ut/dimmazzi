@@ -35,8 +35,8 @@ export const Restourant: React.FC<RestourantProps> = ({ imgSrc, status, logoSrc,
           bottom={bottom}
           left={left}
         />
-        <Box position="absolute" zIndex={100} right="0px" h="100%">
-          <Flex direction="column" align="flex-end" height="100%" padding={small ? ".8rem" : "1.5rem"} justify="space-between">
+        <Box position="absolute" zIndex={100} right="0px" h="100%" w={small ? "100%" : "auto"}>
+          <Flex direction={small ? "row-reverse" : "column"} align={small ? "flex-start" : "flex-end"} height="100%" w={small ? "100%" : "auto"} padding={small ? ".8rem" : "1.5rem"} justify="space-between">
             <Box boxSize={12} borderRadius="50%" bgColor="white" display="flex" justifyContent="center" alignItems="center">
               <Icon as={HeartOutlined} color="red" w="1.3em" h="1.5em" />
             </Box>
