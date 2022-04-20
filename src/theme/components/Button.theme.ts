@@ -26,5 +26,11 @@ export const Button: ComponentStyleConfig = {
   },
   baseStyle: {
     fontWeight: 600,
+    // _focus: {
+    //   boxShadow: '0 0 1px 3px rgba(209, 52, 6, .30), 0 1px 1px rgba(0, 0, 0, .15)',
+    // },
+  },
+  defaultProps: {
+    // colorScheme: 'premium_red',
   },
 }
