@@ -16,8 +16,9 @@ export const NextImage: React.FC<NextImageProps> = (props) => {
   return (
     <Box width={props.width || props.w} height={props.height || props.h} position="relative">
       <NextImage
+        placeholder={props.placeholder || 'blur'}
         backgroundPosition={'center'}
-        objectFit={'cover'}
+        objectFit={'contain'}
         loader={() => props.src}
         layout="fill"
         {...props}

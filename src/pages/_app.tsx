@@ -7,10 +7,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const AnyComponent = Component as any
 
   return (
+<<<<<<< HEAD
     <Providers>
       <AppLayout>
         <AnyComponent {...pageProps} />
       </AppLayout>
+=======
+    <Providers >
+      <AnyComponent {...pageProps} />
+>>>>>>> master
     </Providers>
   )
 }
