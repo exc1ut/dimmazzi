@@ -51,8 +51,8 @@ export const Footer = (props: FooterProps) => {
           <Image src="/assets/images/logo_light.svg" width={150} height={50} />
           <Box>
             <HStack justifyContent="center" spacing={10}>
-              {listItems.map((item) => (
-                <Button color={'dark.5'} fontWeight={400} variant={'link'}>
+              {listItems.map((item, index) => (
+                <Button key={index} color={'dark.5'} fontWeight={400} variant={'link'}>
                   {item.name}
                 </Button>
               ))}
