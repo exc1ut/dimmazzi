@@ -17,5 +17,5 @@ module.exports = withBundleAnalyzer({
   typescript: {
     ignoreBuildErrors: true,
   },
-  distDir: 'build',
+  // distDir: 'build',
 })
