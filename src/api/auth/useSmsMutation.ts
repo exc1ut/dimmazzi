@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from 'react-query'
 import jwtAxios from '../../services/jwtAxios'
 
 type SmsResponse = {
@@ -14,4 +15,8 @@ export const sendSms = async (phone: string) => {
   })
 
   return data
+}
+
+export const useSmsMutation = () => {
+  return useMutation((phone: string) => sendSms(phone))
 }

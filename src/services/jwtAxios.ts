@@ -1,5 +1,4 @@
 import axios from 'axios'
-import i18n from '../lib/i18n'
 
 const languageMap = {
   uz: 'uz',
@@ -11,6 +10,7 @@ const jwtAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL, // YOUR_API_URL HERE
   headers: {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
   },
 })
 jwtAxios.interceptors.response.use(

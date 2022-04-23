@@ -30,6 +30,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
 
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+
     "jsx": "preserve",
     "noEmit": true,
     "isolatedModules": true,
