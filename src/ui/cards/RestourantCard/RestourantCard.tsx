@@ -24,7 +24,7 @@ const StyledImage = styled(Image)`
 export type CommonProps = {
   image: string
   isLiked: boolean
-  state: "open" | "closed"
+  state: 'open' | 'closed'
   name: string
   star: number
   distance: number
@@ -32,15 +32,15 @@ export type CommonProps = {
 
 export type ConditionalProps =
   | {
-    isDeliverable: true
-    time: number
-    cost: number
-  }
+      isDeliverable: true
+      time: number
+      cost: number
+    }
   | {
-    isDeliverable?: false
-    time?: never
-    cost?: never
-  }
+      isDeliverable?: false
+      time?: never
+      cost?: never
+    }
 
 export type RestourantCardProps = CommonProps & ConditionalProps
 
@@ -67,7 +67,7 @@ export const RestourantCard = (props: RestourantCardProps) => {
       cursor={'pointer'}
       overflow={'hidden'}
       borderRadius={'lg'}
-      shadow={'lg'}
+      shadow={'md'}
       w={'full'}
       direction={'column'}
     >
