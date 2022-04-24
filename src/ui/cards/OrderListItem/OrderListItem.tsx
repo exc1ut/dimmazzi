@@ -14,13 +14,13 @@ export type OrderListItemProps = {
 export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, orderId, status }) => {
   const { t } = useTranslation();
   return (
-    <Box w="100%" borderRadius="0.5rem" bgColor="premium_dark.100" padding=".625rem" boxShadow="0px 1px 2px rgba(20, 38, 73, 0.12)">
+    <Box w="100%" borderRadius="0.5rem" bgColor="premium_dark.50" padding=".625rem" boxShadow="0px 1px 2px rgba(20, 38, 73, 0.12)">
       <Flex w="100%" justify="space-between" align="center">
         <HStack spacing={3}>
-          <Box boxSize="2.5rem" borderRadius="50%" bgColor="premium_dark.100" padding=".625rem, .75rem, .75rem, .75rem">
+          <Box boxSize="2.5rem" borderRadius="50%" bgColor="premium_dark.100" padding=".625rem, .75rem, .75rem, .75rem" display="flex" justifyContent="center" alignItems="center">
             <BagIcon />
           </Box>
-          <VStack>
+          <VStack align="start">
             <Text fontSize="1.07rem" fontWeight={600} lineHeight="1.25rem">
               {orderId}
             </Text>
@@ -29,7 +29,7 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, order
             </Text>
           </VStack>
         </HStack>
-        <HStack spacing=".625rem">
+        <HStack spacing=".625rem" align="center">
           <VStack>
             <Text fontSize="1.07rem" fontWeight={600} lineHeight="1.25rem">
               {price}
@@ -38,7 +38,7 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, order
               {date}
             </Text>
           </VStack>
-          <Box boxSize="1.5rem" padding=".375rem, .5rem">
+          <Box boxSize="1.5rem" padding=".375rem, .5rem" display="flex" alignItems="center" justifyContent="center">
             <ForwardIcon />
           </Box>
         </HStack>

@@ -43,12 +43,21 @@ export const Button: ComponentStyleConfig = {
     solid: {
       bg: 'premium_red.1000',
       color: 'white',
+      _focus: {
+        boxShadow: 'none',
+      },
+      _hover: {
+        background: 'premium_red.900',
+      },
     },
     outline: {
       border: '1.5px solid',
       borderColor: 'premium_red.1000',
       color: 'premium_red.1000',
       backgroundColor: 'white',
+      _focus: {
+        boxShadow: 'none',
+      },
     },
   },
   baseStyle: {
