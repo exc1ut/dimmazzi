@@ -180,3 +180,17 @@ export const StepIcon = () => (
   // </svg>
   <></>
 )
+
+export const RightArrow = () => (
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0.333984 9.66658H16.5606L9.10732 2.21325L11.0006 0.333252L21.6673 10.9999L11.0006 21.6666L9.12065 19.7866L16.5606 12.3333H0.333984V9.66658Z" fill="white" />
+  </svg>
+
+)
+
+export const LeftArrow = () => (
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.6673 9.66658H5.44065L12.894 2.21325L11.0006 0.333252L0.333984 10.9999L11.0006 21.6666L12.8806 19.7866L5.44065 12.3333H21.6673V9.66658Z" fill="white" />
+  </svg>
+
+)

@@ -18,6 +18,28 @@ export const Button: ComponentStyleConfig = {
         boxShadow: 'none',
       },
     }),
+    slider_right: {
+      position: 'absolute',
+      right: '-4.5rem',
+      top: '30%',
+      zIndex: 100,
+      width: '3rem',
+      maxW: '3rem',
+      height: '3rem',
+      borderRadius: '50%',
+      bgColor: 'premium_dark.1000',
+    },
+    slider_left: {
+      position: 'absolute',
+      left: '-4.5rem',
+      top: '30%',
+      zIndex: 100,
+      width: '3rem',
+      maxW: '3rem',
+      height: '3rem',
+      borderRadius: '50%',
+      bgColor: 'premium_dark.1000',
+    },
     solid: {
       bg: 'premium_red.1000',
       color: 'white',
@@ -31,5 +53,12 @@ export const Button: ComponentStyleConfig = {
   },
   baseStyle: {
     fontWeight: 600,
+    // _focus: {
+    //   boxShadow: '0 0 1px 3px rgba(209, 52, 6, .30), 0 1px 1px rgba(0, 0, 0, .15)',
+    // },
+  },
+
+  defaultProps: {
+    // colorScheme: 'premium_red',
   },
 }

@@ -69,6 +69,8 @@ export const RestourantCard = (props: RestourantCardProps) => {
       borderRadius={'lg'}
       shadow={'lg'}
       w={'full'}
+      maxW='26rem'
+      margin="0px"
       direction={'column'}
     >
       <Head
