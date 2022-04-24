@@ -163,6 +163,11 @@ export const NavIcon = (props: { color: string | undefined, fill?: string | unde
 export const ArrowUp = () => (
   <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M10 5.5L5 0.5L0 5.5L10 5.5Z" fill="#727C91" />
+  </svg>)
+
+export const BagIcon = () => (
+  <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14.2222 4.5H12.4444C12.4444 2.016 10.4533 0 8 0C5.54667 0 3.55556 2.016 3.55556 4.5H1.77778C0.8 4.5 0.00888888 5.31 0.00888888 6.3L0 16.2C0 17.19 0.8 18 1.77778 18H14.2222C15.2 18 16 17.19 16 16.2V6.3C16 5.31 15.2 4.5 14.2222 4.5ZM8 1.8C9.47556 1.8 10.6667 3.006 10.6667 4.5H5.33333C5.33333 3.006 6.52444 1.8 8 1.8ZM8 10.8C5.54667 10.8 3.55556 8.784 3.55556 6.3H5.33333C5.33333 7.794 6.52444 9 8 9C9.47556 9 10.6667 7.794 10.6667 6.3H12.4444C12.4444 8.784 10.4533 10.8 8 10.8Z" fill="#727C91" />
   </svg>
 
 )
@@ -175,10 +180,9 @@ export const ArrowDown = () => (
 )
 
 export const StepIcon = () => (
-  // <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-  //   <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.58 18 2 14.42 2 10C2 5.58 5.58 2 10 2C14.42 2 18 5.58 18 10C18 14.42 14.42 18 10 18Z" fill="#B8BDC8" />
-  // </svg>
-  <></>
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.58 18 2 14.42 2 10C2 5.58 5.58 2 10 2C14.42 2 18 5.58 18 10C18 14.42 14.42 18 10 18Z" fill="#B8BDC8" />
+  </svg>
 )
 
 export const RightArrow = () => (
@@ -191,6 +195,10 @@ export const RightArrow = () => (
 export const LeftArrow = () => (
   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M21.6673 9.66658H5.44065L12.894 2.21325L11.0006 0.333252L0.333984 10.9999L11.0006 21.6666L12.8806 19.7866L5.44065 12.3333H21.6673V9.66658Z" fill="white" />
-  </svg>
+  </svg>)
 
+export const ForwardIcon = () => (
+  <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1.70687 12L0.296875 10.59L4.87687 6L0.296875 1.41L1.70687 0L7.70687 6L1.70687 12Z" fill="#727C91" />
+  </svg>
 )
