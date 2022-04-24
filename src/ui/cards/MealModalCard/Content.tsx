@@ -48,22 +48,20 @@ export const Content: React.FC<ContentProps> = ({ image, price, title, types }) 
         {title}
       </Text>
       <Box w={'full'} position="relative" borderRadius={'md'} overflow={'hidden'}>
-        <NextImage zIndex={-1} src={image} w={'full'} h={200} />
-        <ButtonGroup
-          position={'absolute'}
-          bottom={4}
-          right={'50%'}
-          transform={'translateX(50%)'}
-          isAttached
-          colorScheme="premium_red"
-          size="sm"
-        >
-          {types?.map((v) => (
-            <Button variant={v === selected ? 'solid' : 'outline'} onClick={() => setSelected(v)}>
-              {v}
-            </Button>
-          ))}
-        </ButtonGroup>
+        <NextImage objectFit="cover" zIndex={-1} src={image} w={'full'} h={200} />
+        <Box position={'absolute'} bottom={4} w="full" px={'25%'}>
+          <ButtonGroup w="full" isAttached colorScheme="premium_red" size="sm">
+            {types?.map((v) => (
+              <Button
+                w={'full'}
+                variant={v === selected ? 'solid' : 'outline'}
+                onClick={() => setSelected(v)}
+              >
+                {v}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </Box>
       </Box>
       <HStack pt={2} w={'full'} justifyContent="space-between" alignContent="center">
         <Box>

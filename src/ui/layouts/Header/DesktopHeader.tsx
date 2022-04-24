@@ -10,8 +10,11 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
+import { useModal } from '@ebay/nice-modal-react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
+import { AuthModal } from '../../../modules/auth/auth/AuthModal'
+import { useAuth } from '../../../stores/useAuth'
 import { Cart } from './components/Cart'
 import { Menu } from './components/Menu'
 
@@ -19,6 +22,13 @@ interface DesktopHeaderProps {}
 
 export const DesktopHeader: React.FC<DesktopHeaderProps> = ({}) => {
   const { t } = useTranslation()
+  const { isAuthenticated } = useAuth()
+  const modal = useModal(AuthModal)
+
+  const handleClick = () => {
+    modal.show()
+  }
+
   return (
     <Box>
       <Container maxW={'container.xl'}>
@@ -46,8 +56,15 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({}) => {
           </GridItem>
           <GridItem>
             <Center h={'full'}>
-              {/* <Button w={'full'}>{t`Signin`}</Button> */}
-              <Menu />
+              {isAuthenticated ? (
+                <Menu />
+              ) : (
+                <Button
+                  colorScheme="premium_red"
+                  onClick={handleClick}
+                  w={'full'}
+                >{t`Signin`}</Button>
+              )}
             </Center>
           </GridItem>
         </Grid>

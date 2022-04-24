@@ -21,7 +21,7 @@ const StyledImage = styled(Image)`
   vertical-align: middle;
 `
 
-type CommonProps = {
+export type CommonProps = {
   image: string
   isLiked: boolean
   state: 'open' | 'closed'
@@ -30,7 +30,7 @@ type CommonProps = {
   distance: number
 }
 
-type ConditionalProps =
+export type ConditionalProps =
   | {
       isDeliverable: true
       time: number
@@ -67,7 +67,7 @@ export const RestourantCard = (props: RestourantCardProps) => {
       cursor={'pointer'}
       overflow={'hidden'}
       borderRadius={'lg'}
-      shadow={'lg'}
+      shadow={'md'}
       w={'full'}
       direction={'column'}
     >

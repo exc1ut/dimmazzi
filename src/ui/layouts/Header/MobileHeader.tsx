@@ -22,6 +22,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({}) => {
             size={'lg'}
             icon={<HamburgerIcon boxSize="1.5em" color={'dark.90'} />}
             onClick={onOpen}
+            mr={6}
           />
         </Box>
       </SimpleGrid>
