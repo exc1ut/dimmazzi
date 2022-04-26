@@ -3,6 +3,8 @@ import * as NextImage from 'next/image'
 import { addDecorator } from '@storybook/react'
 import NiceModal from '@ebay/nice-modal-react'
 import '../src/lib/i18n'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 // Deoptimize Next image
 

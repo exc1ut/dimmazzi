@@ -14,6 +14,9 @@ export const Input = {
         lineheight: '24px',
         fontWeigth: 400,
       },
+      _invalid: {
+        borderColor: 'premium_red.1000',
+      },
     },
   },
   variants: {
