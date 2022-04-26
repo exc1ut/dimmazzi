@@ -21,7 +21,7 @@ export const Restourant: React.FC<RestourantProps> = ({ imgSrc, status, logoSrc,
   const size = useBreakpointValue({ base: 'xl', sm: 'xl', md: 'xl', lg: '2xl', xl: "2xl" });
   const bottom = useBreakpointValue({ base: '-40px', sm: '-44px', md: '-52px' });
   const left = useBreakpointValue({ base: '35%', sm: '35%', md: '40px' });
-  const [small] = useMediaQuery('(max-width: 512px)');
+  //const [small] = useMediaQuery('(max-width: 512px)');
   return (
     <VStack spacing="76">
       <Box w="100%" height='280px' position='relative' borderRadius='0.5rem'>
@@ -35,8 +35,8 @@ export const Restourant: React.FC<RestourantProps> = ({ imgSrc, status, logoSrc,
           bottom={bottom}
           left={left}
         />
-        <Box position="absolute" zIndex={100} right="0px" h="100%" w={small ? "100%" : "auto"}>
-          <Flex direction={small ? "row-reverse" : "column"} align={small ? "flex-start" : "flex-end"} height="100%" w={small ? "100%" : "auto"} padding={small ? ".8rem" : "1.5rem"} justify="space-between">
+        <Box position="absolute" zIndex={100} right="0px" h="100%" w={["100%", "auto"]}>
+          <Flex direction={["row-reverse", "column"]} align={["flex-start", "flex-end"]} height="100%" w={["100%", "auto"]} padding={[".8rem", "1.5rem"]} justify="space-between">
             <Box boxSize={12} borderRadius="50%" bgColor="white" display="flex" justifyContent="center" alignItems="center">
               <Icon as={HeartOutlined} color="red" w="1.3em" h="1.5em" />
             </Box>
@@ -51,9 +51,9 @@ export const Restourant: React.FC<RestourantProps> = ({ imgSrc, status, logoSrc,
           w={"full"} h={'full'} placeholder='blur'
           objectFit="cover" borderRadius="0.5rem" />
       </Box>
-      <Box padding={small ? '0' : '0px 2.5rem'} w="100%">
+      <Box padding={['0', '0px 2.5rem']} w="100%">
         <VStack>
-          <Flex flexDirection={small ? 'column' : 'row'} justify="space-between" align="flex-start" w="100%">
+          <Flex flexDirection={['column', 'row']} justify="space-between" align="flex-start" w="100%">
             <VStack spacing={4} align="flex-start">
               <Heading fontSize="1.8rem" lineHeight="2.5rem">{t(title)}</Heading>
               <HStack fontWeight={600} color="premium_dark.300" w="100%" lineHeight="1.5rem" spacing={1}>
@@ -70,14 +70,14 @@ export const Restourant: React.FC<RestourantProps> = ({ imgSrc, status, logoSrc,
               </Box>
             </VStack>
 
-            <Flex w={small ? "100%" : "auto"} direction={small ? "column" : "row"} marginTop={small ? '1.5rem' : '0'} >
+            <Flex w={["100%", "auto"]} direction={["column", "row"]} marginTop={['1.5rem', '0']} >
               <Button variant="outline" borderColor="premium_green.1000" color="premium_green.1000">
                 <Icon as={Tick} />
-                <Text fontSize={small ? "0.8rem" : "1em"} textTransform="uppercase" marginLeft=".8rem "> Olib ketish </Text>
+                <Text fontSize={["0.8rem", "1em"]} textTransform="uppercase" marginLeft=".8rem "> {t`Olib ketish`} </Text>
               </Button>
-              <Button marginTop={small ? "0.5rem " : "0"}
-                marginLeft={small ? "0" : "0.5rem"}
-                fontSize={small ? "0.8rem" : ".8rem"} variant="outline" borderColor="premium_green.1000" color="premium_green.1000">
+              <Button marginTop={["0.5rem ", "0"]}
+                marginLeft={["0", "0.5rem"]}
+                fontSize={["0.8rem", ".8rem"]} variant="outline" borderColor="premium_green.1000" color="premium_green.1000">
                 <Icon as={Tick} />
                 <Text textTransform="uppercase" marginLeft=".5rem "> Yetkazib berish </Text>
 
