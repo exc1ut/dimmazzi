@@ -15,4 +15,7 @@ export default meta;
 const Template: Story = (props) => <SearchCard {...props} />
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  name: "Evos - Lavash center",
+  category: "fastfood",
+};
