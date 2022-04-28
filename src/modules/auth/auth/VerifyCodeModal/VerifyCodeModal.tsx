@@ -17,9 +17,13 @@ import {
   PinInputField,
   useBreakpointValue,
 } from '@chakra-ui/react'
+import { useModal } from '@ebay/nice-modal-react'
 import * as React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { useLoginMutation } from '../../../../api/auth/useLoginMutation'
+import { setAuthToken } from '../../../../services/jwtAxios'
+import { useAuth } from '../../../../stores/useAuth'
 import { MotionBox } from '../MotionBox'
 import { resolver } from '../PhoneNumber/phone.validation'
 import { useAuthStore } from '../useAuthStore'
@@ -38,13 +42,37 @@ export const VerifyCodeModal = (props: VerifyCodeModalProps) => {
   })
   const { t } = useTranslation()
   const values = useBreakpointValue({ sm: 'full', md: 'md' })
-  const { setStep, phone } = useAuthStore()
+  const { setStep, phone, reset } = useAuthStore()
+  const { setAuth } = useAuth()
+  const mutation = useLoginMutation()
+  const modal = useModal()
 
   const watchAll = watch('code')
   console.log(watchAll)
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data)
+    if (phone) {
+      const formattedPhone = phone.replaceAll(' ', '').replace('+', '')
+      mutation.mutate(
+        {
+          phone: formattedPhone,
+          code: data.code,
+        },
+        {
+          onSuccess: (data) => {
+            if (data.is_new_user) {
+              setStep('name')
+            } else {
+              setAuth(true)
+              modal.resolve()
+              modal.hide()
+              reset()
+            }
+            setAuthToken(data.token)
+          },
+        }
+      )
+    }
   })
 
   return (
@@ -90,12 +118,15 @@ export const VerifyCodeModal = (props: VerifyCodeModalProps) => {
           />
 
           <Button
-            backgroundColor={formState.isValid ? 'premium_red.1000' : undefined}
             type="submit"
-            variant="modal"
-          >
-            {t`Tastiqlash`}
-          </Button>
+            backgroundColor={
+              formState.isValid && !mutation.isLoading ? 'premium_red.1000' : undefined
+            }
+            variant={'modal'}
+            isLoading={mutation.isLoading}
+            disabled={!formState.isValid}
+            loadingText={t`Submitting`}
+          >{t`Submit`}</Button>
         </VStack>
       </form>
     </MotionBox>

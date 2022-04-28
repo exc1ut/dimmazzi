@@ -41,9 +41,12 @@ export const PhoneNumber = (props: PhoneNumberProps) => {
 
   const onSubmit = handleSubmit((data) => {
     const phone = data.phone_number.replaceAll(' ', '').replace('+', '')
-    mutation.mutate(phone)
-    setStep('sms')
-    setPhone(data.phone_number)
+    mutation.mutate(phone, {
+      onSuccess: () => {
+        setStep('sms')
+        setPhone(data.phone_number)
+      },
+    })
   })
 
   return (
@@ -76,8 +79,13 @@ export const PhoneNumber = (props: PhoneNumberProps) => {
 
           <Button
             type="submit"
-            backgroundColor={formState.isValid ? 'premium_red.1000' : undefined}
+            backgroundColor={
+              formState.isValid && !mutation.isLoading ? 'premium_red.1000' : undefined
+            }
             variant={'modal'}
+            isLoading={mutation.isLoading}
+            disabled={!formState.isValid}
+            loadingText={t`Submitting`}
           >{t`Tizimga kirish`}</Button>
 
           <Box w="100%">
