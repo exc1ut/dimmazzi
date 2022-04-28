@@ -36,22 +36,18 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
   }
   return (
     <Box bgImage="/assets/images/search_background.jpg" position='relative'
-      w='max-conent'
+      w='100%'
       h='max-content'
       display='flex'
       justifyContent='center'
       alignItems='center'
       borderRadius={8}
-      //  height='150px'
+      height='10rem'
       bgSize='cover'
       bgRepeat='no-repeat'
-      _before={
-        {
-          content: '""',
-          filter: "brightness(.7)",
-        }
-      }
+    // filter='brightness(0.8)'
     >
+
 
       <Popover isOpen={isOpen} autoFocus={false} size='md'>
         <PopoverTrigger >

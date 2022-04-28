@@ -1,3 +1,5 @@
+import { HomeSearch } from '@/ui/features/HomeSearch'
+import { Container, VStack } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 
 const Index = () => {
@@ -5,8 +7,12 @@ const Index = () => {
 
   return (
     <>
-      <>{t`sample`}</>
-      <>{t('sample')}</>
+      <Container maxW="81rem" w={["full", "full", "full", "81rem"]}>
+        <VStack marginTop="1.5rem">
+          <HomeSearch />
+
+        </VStack>
+      </Container>
     </>
   )
 }
