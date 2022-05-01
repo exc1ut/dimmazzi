@@ -7,12 +7,18 @@ export type AuthStoreType = {
   phone?: string
   setStep: (step: Steps) => void
   setPhone: (phone: string) => void
+  reset: () => void
 }
 
 const store: StoreType<AuthStoreType> = (set) => ({
   step: 'phone',
   setStep: (step) => set({ step }),
   setPhone: (phone) => set({ phone }),
+  reset() {
+    set(initialState)
+  },
 })
 
 export const useAuthStore = createStore(store)
+
+var initialState = useAuthStore.getState()

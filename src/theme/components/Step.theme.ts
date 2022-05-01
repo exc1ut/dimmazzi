@@ -76,7 +76,7 @@ export const Steps: any = {
       height: '8px',
     },
   }),
-  sizes: (props: any) => ({
+  sizes: () => ({
     ...StepsStyleConfig.sizes,
     xl: {
       stepIconContainer: {

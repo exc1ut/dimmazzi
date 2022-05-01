@@ -23,7 +23,15 @@ const store: StoreType<MapStore> = (set, get) => ({
     lat: 41.328443,
     lng: 69.242346,
   },
-  reset: () => set({}),
+  reset: () =>
+    set({
+      zoom: 15,
+      position: {
+        lat: 41.328443,
+        lng: 69.242346,
+      },
+      location: undefined,
+    }),
   setZoom: (zoom) => set({ zoom }),
   setPosition: (position) => set({ position }),
   increase: () => {

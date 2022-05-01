@@ -8,9 +8,15 @@ export type PaymentOptionsProps = {}
 
 export const PaymentOptions: React.FC<PaymentOptionsProps> = ({ }) => {
   const { t } = useTranslation();
+<<<<<<< HEAD
   //const [small] = useMediaQuery("(max-width: 512px)");
   return (
     <Stack direction={["column", "row"]} spacing={4} align={["center", "flex-start"]}>
+=======
+  const [small] = useMediaQuery("(max-width: 512px)");
+  return (
+    <Stack direction={small ? "column" : "row"} spacing={4} align={small ? "center" : "flex-start"}>
+>>>>>>> d25dbb856460fcb8be6b197211136be736a67569
       <Box cursor="pointer" w="11.25rem" h="7.7rem" padding="0.625rem 1rem" borderRadius="0.5rem" border="1.5px solid" borderColor="premium_red.1000">
         <VStack spacing="5px" align="start">
           <MoneyIcon color="#D13406" />

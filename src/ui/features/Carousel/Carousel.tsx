@@ -52,18 +52,21 @@ export const Carousel: React.FC<CarouselProps> = ({ }) => {
           breakpoint: 1537,
           settings: {
             slidesToShow: 3,
+            slidesToScroll: 3,
           },
         },
         {
           breakpoint: 961,
           settings: {
             slidesToShow: 2,
+            slidesToScroll: 2,
           },
         },
         {
           breakpoint: 760,
           settings: {
             slidesToShow: 1,
+            slidesToScroll: 1,
           },
         },
       ],
@@ -75,8 +78,8 @@ export const Carousel: React.FC<CarouselProps> = ({ }) => {
     <Box w={'full'} px={{ sm: 0, md: 6 }}>
       <Slider {...settings}>
         {cards.map((item, index) => (
-          <Box py={4} px={{ sm: 0, md: 4 }}>
-            <RestourantCard key={index} {...restProps} />
+          <Box key={index} py={4} px={{ sm: 0, md: 4 }}>
+            <RestourantCard {...restProps} />
           </Box>
         ))}
       </Slider>

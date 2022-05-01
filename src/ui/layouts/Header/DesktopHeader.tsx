@@ -13,21 +13,27 @@ import {
 import { useModal } from '@ebay/nice-modal-react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
+import { useAddressQuery } from '../../../api/address/useAddressQuery'
 import { AuthModal } from '../../../modules/auth/auth/AuthModal'
 import { useAuth } from '../../../stores/useAuth'
+import { useLocation } from '../../../stores/useLocation'
+import { ILanguage } from '../../../utils/language'
 import { Cart } from './components/Cart'
 import { Menu } from './components/Menu'
 
-interface DesktopHeaderProps {}
+interface DesktopHeaderProps {
+  handleAuth: () => void
+  handleLocation: () => void
+}
 
-export const DesktopHeader: React.FC<DesktopHeaderProps> = ({}) => {
+export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
+  handleAuth,
+  handleLocation,
+  language,
+}) => {
   const { t } = useTranslation()
   const { isAuthenticated } = useAuth()
-  const modal = useModal(AuthModal)
-
-  const handleClick = () => {
-    modal.show()
-  }
+  const location = useLocation((state) => state.place_name)
 
   return (
     <Box>
@@ -40,14 +46,18 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({}) => {
           </GridItem>
           <GridItem>
             <Center justifyContent={'flex-start'} h={'full'}>
-              <HStack spacing={2}>
+              <HStack cursor={'pointer'} onClick={handleLocation} spacing={2}>
                 <Image src="/assets/images/location.svg" width={30} height={30} />
-                {/* <Text color={'dark.40'} fontSize={'md'}>{t`No location has entered`}</Text> */}
-                <Text
-                  color={'dark.90'}
-                  fontSize={'md'}
-                  fontWeight={400}
-                >{t`Urganch shahar, Mustaqillik ko‘cha, 6`}</Text>
+                {location ? (
+                  <Text color={'premium_dark.900'} fontSize={'md'} fontWeight={400}>
+                    {location}
+                  </Text>
+                ) : (
+                  <Text
+                    color={'premium_dark.400'}
+                    fontSize={'md'}
+                  >{t`No location has entered`}</Text>
+                )}
               </HStack>
             </Center>
           </GridItem>
@@ -61,7 +71,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({}) => {
               ) : (
                 <Button
                   colorScheme="premium_red"
-                  onClick={handleClick}
+                  onClick={handleAuth}
                   w={'full'}
                 >{t`Signin`}</Button>
               )}

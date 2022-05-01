@@ -2,7 +2,10 @@ import { BagIcon, ForwardIcon } from "../../../img/icons/Icons";
 import { Box, Flex, HStack, VStack, Text } from "@chakra-ui/react";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
+<<<<<<< HEAD
 import { stat } from "fs";
+=======
+>>>>>>> d25dbb856460fcb8be6b197211136be736a67569
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type OrderListItemProps = {
@@ -14,12 +17,15 @@ export type OrderListItemProps = {
 
 export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, orderId, status }) => {
   const { t } = useTranslation();
+<<<<<<< HEAD
 
   const getStatus = React.useMemo(() => ({
     finished: t`finished`,
     pending: t`pending`,
   }), [status])
 
+=======
+>>>>>>> d25dbb856460fcb8be6b197211136be736a67569
   return (
     <Box w="100%" borderRadius="0.5rem" bgColor="premium_dark.50" padding=".625rem" boxShadow="0px 1px 2px rgba(20, 38, 73, 0.12)">
       <Flex w="100%" justify="space-between" align="center">
@@ -32,7 +38,11 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, order
               {orderId}
             </Text>
             <Text textTransform="uppercase" color={status === "finished" ? "premium_green.1000" : "premium_orange.1000"} lineHeight="1rem" fontSize=".8rem" fontWeight={600}>
+<<<<<<< HEAD
               {getStatus[status]}
+=======
+              {t(status)}
+>>>>>>> d25dbb856460fcb8be6b197211136be736a67569
             </Text>
           </VStack>
         </HStack>

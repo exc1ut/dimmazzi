@@ -2,6 +2,7 @@ import { Modal, ModalOverlay, ModalContent, ModalCloseButton } from '@chakra-ui/
 import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import { AnimatePresence } from 'framer-motion'
 import { useCallback, useMemo } from 'react'
+import { NameForm } from './NameForm'
 import { PhoneNumber } from './PhoneNumber'
 import { useAuthStore } from './useAuthStore'
 import { VerifyCodeModal } from './VerifyCodeModal'
@@ -14,6 +15,8 @@ export const AuthModal = NiceModal.create(({}) => {
     switch (step) {
       case 'sms':
         return <VerifyCodeModal key={step} />
+      case 'name':
+        return <NameForm key={step} />
       case 'phone':
       default:
         return <PhoneNumber key={step} />

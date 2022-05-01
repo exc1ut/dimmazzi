@@ -17,6 +17,14 @@ export const Button: ComponentStyleConfig = {
         border: 'none',
         boxShadow: 'none',
       },
+      _hover: {
+        _disabled: {
+          bgColor: 'premium_dark.800',
+        },
+      },
+      _disabled: {
+        bgColor: 'premium_dark.800',
+      },
     }),
     slider_right: {
       position: 'absolute',

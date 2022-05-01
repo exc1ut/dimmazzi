@@ -1,19 +1,16 @@
-import { HomeSearch } from '@/ui/features/HomeSearch'
-import { Container, VStack } from '@chakra-ui/react'
+import Home from '../modules/home'
+import { Box, Container } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
+import { Carousel } from '../ui/features/Carousel'
 
 const Index = () => {
   const { t } = useTranslation()
 
   return (
-    <>
-      <Container maxW="81rem" w={["full", "full", "full", "81rem"]}>
-        <VStack marginTop="1.5rem">
-          <HomeSearch />
-
-        </VStack>
-      </Container>
-    </>
+    <Container maxW={'container.xl'}>
+      <Home />
+      {/* <Carousel /> */}
+    </Container>
   )
 }
 

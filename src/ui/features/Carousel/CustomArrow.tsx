@@ -8,7 +8,7 @@ interface CustomArrowProps extends Omit<IconButtonProps, 'onClick'>, CProps {
 }
 
 export const CustomArrow: React.FC<CustomArrowProps> = ({ style, direction, ...rest }) => {
-  const props: IconButtonProps = useMemo(() => {
+  const props = useMemo(() => {
     switch (direction) {
       case 'right':
         return {
@@ -24,16 +24,19 @@ export const CustomArrow: React.FC<CustomArrowProps> = ({ style, direction, ...r
   return (
     <IconButton
       // {...rest}
+      aria-label="arrow"
       icon={direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />}
       position="absolute"
       borderRadius={'full'}
       top={'45%'}
       translateY="0%"
-      zIndex={999}
       backgroundColor="premium_dark.1000"
       colorScheme={'premium_dark'}
       _focus={{
         borderColor: 'none',
+      }}
+      _hover={{
+        backgroundColor: 'premium_dark.800',
       }}
       onClick={rest.onClick}
       {...props}

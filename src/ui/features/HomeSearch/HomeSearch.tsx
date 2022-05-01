@@ -37,7 +37,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
   return (
     <Box bgImage="/assets/images/search_background.jpg" position='relative'
       w='100%'
-      h='max-content'
+      h='10rem'
       display='flex'
       justifyContent='center'
       alignItems='center'

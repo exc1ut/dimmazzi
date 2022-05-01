@@ -32,15 +32,15 @@ export type CommonProps = {
 
 export type ConditionalProps =
   | {
-      isDeliverable: true
-      time: number
-      cost: number
-    }
+    isDeliverable: true
+    time: number
+    cost: number
+  }
   | {
-      isDeliverable?: false
-      time?: never
-      cost?: never
-    }
+    isDeliverable?: false
+    time?: never
+    cost?: never
+  }
 
 export type RestourantCardProps = CommonProps & ConditionalProps
 
@@ -62,8 +62,8 @@ export const RestourantCard = (props: RestourantCardProps) => {
   return (
     <Stack
       as={motion.div}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 1 }}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.98 }}
       cursor={'pointer'}
       overflow={'hidden'}
       borderRadius={'lg'}
