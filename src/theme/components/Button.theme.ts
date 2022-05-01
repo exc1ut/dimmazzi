@@ -57,6 +57,9 @@ export const Button: ComponentStyleConfig = {
       _hover: {
         background: 'premium_red.900',
       },
+      _active: {
+        background: 'premium_red.700',
+      },
     },
     outline: {
       border: '1.5px solid',

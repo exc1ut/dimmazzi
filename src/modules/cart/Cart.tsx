@@ -1,4 +1,5 @@
 import { Box, Button, Container, Divider, Text, VStack } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { CarIcon, CookIcon } from '../../img/icons/Icons'
 import { totalMealCostSelector, useCart } from '../../stores/useCart'
@@ -22,6 +23,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
     decreaseMealQuantity,
     increaseMealQuantity,
   } = useCart()
+  const router = useRouter()
 
   const totalCost = useCart(totalMealCostSelector)
 
@@ -84,6 +86,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
             w="full"
             shadow={'2xl'}
             justifyContent={'space-between'}
+            onClick={() => console.log('here')}
           >
             <Text color={'white'}>{t`Tasdiqlash`}</Text>
             <Text color={'white'}>{totalCost}</Text>

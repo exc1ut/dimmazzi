@@ -46,7 +46,7 @@ export const MealListItem: React.FC<MealListItemProps> = ({
             </VStack>
           </HStack>
           {type === 'order' ? (
-            <Box>{quantity}</Box>
+            <Text fontWeight={600}>{quantity}</Text>
           ) : (
             <HStack spacing={4}>
               <CountChange onClick={handleDecrease} operator="-" />

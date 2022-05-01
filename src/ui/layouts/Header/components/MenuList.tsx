@@ -40,7 +40,10 @@ export const MenuList: React.FC<MenuListProps> = (props) => {
         imageSrc={'/assets/images/person.svg'}
       >{t`Profile`}</MenuItem>
       <Divider />
-      <MenuItem imageSrc={'/assets/images/task.svg'}>{t`Product history`}</MenuItem>
+      <MenuItem
+        onClick={() => router.push('/order')}
+        imageSrc={'/assets/images/task.svg'}
+      >{t`Product history`}</MenuItem>
       <Divider />
       <MenuItem
         onClick={() => router.push('/address')}
