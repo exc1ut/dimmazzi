@@ -4,6 +4,7 @@ import { useAuth } from '../../stores/useAuth'
 import { queryKeys } from '../queryKeys'
 
 export interface IMe {
+  phone_number: string
   first_name: string
   last_name: string
 }

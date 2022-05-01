@@ -14,6 +14,9 @@ import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { useAuth } from '../../../../stores/useAuth'
 import { getLanguageProps } from '../../../../utils/language'
 import i18n from '../../../../lib/i18n'
+import { useModal } from '@ebay/nice-modal-react'
+import { EditProfileModal } from '../../../../modules/profile'
+import { useRouter } from 'next/router'
 
 interface MenuListProps extends ChakraMenuListProps {}
 
@@ -21,8 +24,8 @@ export const MenuList: React.FC<MenuListProps> = (props) => {
   const { t, i18n } = useTranslation()
   const [isLanguageOpen, setLanguageOpen] = useState(false)
   const { logout } = useAuth()
-
-  ;(window as any).asd = i18n
+  const editProfileModal = useModal(EditProfileModal)
+  const router = useRouter()
 
   const handleLogout = () => {
     logout()
@@ -32,11 +35,17 @@ export const MenuList: React.FC<MenuListProps> = (props) => {
 
   return (
     <ChakraMenuList boxShadow="lg" {...props}>
-      <MenuItem imageSrc={'/assets/images/person.svg'}>{t`Profile`}</MenuItem>
+      <MenuItem
+        onClick={() => editProfileModal.show()}
+        imageSrc={'/assets/images/person.svg'}
+      >{t`Profile`}</MenuItem>
       <Divider />
       <MenuItem imageSrc={'/assets/images/task.svg'}>{t`Product history`}</MenuItem>
       <Divider />
-      <MenuItem imageSrc={'/assets/images/location.svg'}>{t`Location list`}</MenuItem>
+      <MenuItem
+        onClick={() => router.push('/address')}
+        imageSrc={'/assets/images/location.svg'}
+      >{t`Location list`}</MenuItem>
       <Divider />
       <MenuItem imageSrc={'/assets/images/heart.svg'}>{t`Favorite restorans`}</MenuItem>
       <Divider />

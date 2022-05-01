@@ -7,7 +7,7 @@ interface FooterProps {
   onAdd: () => void
 }
 
-export const Footer: React.FC<FooterProps> = ({ onAdd, price, title }) => {
+export const Footer: React.FC<FooterProps> = ({ onAdd, price, title, children }) => {
   return (
     <Box w={'full'} p={4}>
       <HStack>
