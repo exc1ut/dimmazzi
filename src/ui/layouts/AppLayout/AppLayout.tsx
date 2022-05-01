@@ -10,7 +10,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      <Container maxW={'container.xl'}>{children}</Container>
+      <Container py={6} maxW={'container.xl'}>
+        {children}
+      </Container>
       <Footer />
     </>
   )

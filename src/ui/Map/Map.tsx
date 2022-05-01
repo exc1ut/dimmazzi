@@ -21,18 +21,34 @@ import { AddressValidation } from './AddressForm/Address.validation'
 import { useLocation } from '../../stores/useLocation'
 import { useTranslation } from 'react-i18next'
 import { useAddAdressMutation } from '../../api/address/useAddAddressMutation'
+import { IAddress } from '../../api/address/IAddress.interface'
+import { useUpdateAdressMutation } from '../../api/address/useUpdateAddress'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type MapProps = {}
+export type MapProps = {
+  address?: IAddress
+}
 
-export const Map = NiceModal.create(({}) => {
+export const Map = NiceModal.create<MapProps>(({ address: initialAddress }) => {
   const modal = useModal()
-  const { location, reset } = useMapStore()
+  const { location, reset, setLocation, setCurrentPosition, setPosition } = useMapStore()
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { setStore } = useLocation()
   const toast = useToast()
   const { t } = useTranslation()
   const mutation = useAddAdressMutation()
+  const updateMutation = useUpdateAdressMutation()
+
+  React.useEffect(() => {
+    if (initialAddress) {
+      const position = {
+        lat: +initialAddress.latitude,
+        lng: +initialAddress.longitude,
+      }
+      setLocation(position)
+      setPosition(position)
+    }
+  }, [])
 
   const handleClick = () => {
     onOpen()
@@ -41,28 +57,31 @@ export const Map = NiceModal.create(({}) => {
   const onSubmit = (data: AddressValidation) => {
     const address = `${data.approximateLocation}, ${data.street}, ${data.home}`
     if (typeof location?.lat === 'number' && typeof location?.lng === 'number') {
-      mutation.mutate(
-        {
-          latitude: location?.lat + '',
-          longitude: location?.lng + '',
-          place_name: address,
-        },
-        {
-          onSuccess: () => {
-            setStore({
-              latitude: location?.lat + '',
-              longitude: location?.lng + '',
-              place_name: address,
-            })
+      const addressDto = {
+        latitude: location?.lat + '',
+        longitude: location?.lng + '',
+        place_name: address,
+      }
+      const handleOnSuccess = () => {
+        setStore(addressDto)
+        onClose()
+        modal.resolve()
+        reset()
+        modal.hide()
+      }
 
-            onClose()
-
-            modal.resolve()
-            reset()
-            modal.hide()
-          },
-        }
-      )
+      if (initialAddress) {
+        updateMutation.mutate(
+          { id: initialAddress.id, ...addressDto },
+          {
+            onSuccess: handleOnSuccess,
+          }
+        )
+      } else {
+        mutation.mutate(addressDto, {
+          onSuccess: handleOnSuccess,
+        })
+      }
     } else {
       toast({
         duration: 3000,

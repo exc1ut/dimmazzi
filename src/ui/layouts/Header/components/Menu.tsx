@@ -31,7 +31,7 @@ export const Menu: React.FC<MenuProps> = ({}) => {
         rightIcon={<ChevronDownIcon />}
       >
         <HStack spacing={2}>
-          <Avatar size={'sm'} name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+          <Avatar size={'sm'} name="Dan Abrahmov" src="/assets/images/Avatar.svg" />
           <Text>{data.first_name}</Text>
         </HStack>
       </MenuButton>

@@ -38,7 +38,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
 
   return (
     <>
-      <Box py={6}>
+      <Box>
         <AppBreadCrumb items={breadCrumb} />
       </Box>
       <Container maxW={'container.sm'}>
@@ -85,8 +85,8 @@ export const Cart: React.FC<CartProps> = ({}) => {
             shadow={'2xl'}
             justifyContent={'space-between'}
           >
-            <Text>{t`Tasdiqlash`}</Text>
-            <Text>{totalCost}</Text>
+            <Text color={'white'}>{t`Tasdiqlash`}</Text>
+            <Text color={'white'}>{totalCost}</Text>
           </Button>
         </VStack>
       </Container>

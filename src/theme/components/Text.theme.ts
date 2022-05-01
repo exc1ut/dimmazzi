@@ -26,4 +26,7 @@ export const Text = {
       fontWeight: '600',
     },
   },
+  baseStyle: {
+    color: 'premium_dark.1000',
+  },
 }
