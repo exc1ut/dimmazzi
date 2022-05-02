@@ -1,17 +1,4 @@
-import FavouriteRestaurant from "@/modules/restaurants/favourite";
-import { Container } from "@chakra-ui/react";
-import { FunctionComponent } from "react";
+import { asyncComponent } from "../../utils/asyncComponent";
 
-interface FavouriteRestaurantPageProps {
 
-}
-
-const FavouriteRestaurantPage: FunctionComponent<FavouriteRestaurantPageProps> = () => {
-  return (
-    <Container maxW="container.xl">
-      <FavouriteRestaurant />
-    </Container>
-  );
-}
-
-export default FavouriteRestaurantPage;
+export default asyncComponent(() => import('../../modules/restaurants/favourite'));

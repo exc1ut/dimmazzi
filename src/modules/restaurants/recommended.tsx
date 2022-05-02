@@ -1,15 +1,14 @@
-import { RestourantCard } from "../../ui/cards/RestourantCard";
-import { HomeSearch } from "../../ui/features/HomeSearch";
+import { RestourantCard } from "@/ui/cards/RestourantCard";
+import { HomeSearch } from "@/ui/features/HomeSearch";
 import { Container, Heading, SimpleGrid, useMediaQuery, VStack } from "@chakra-ui/react";
-
 import { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 
-interface FavouriteRestaurantProps {
+interface RecommendedRestaurantProps {
 
 }
 
-const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
+const RecommendedRestaurant: FunctionComponent<RecommendedRestaurantProps> = () => {
   const { t } = useTranslation();
   const [small] = useMediaQuery("(max-width: 512px)");
   const restaurantsArray = Array.from({ length: 10 }, (v, k) => k);
@@ -30,7 +29,7 @@ const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
       <VStack spacing={14} w="100%" mt="1.5rem">
         {small ? null : <HomeSearch />}
         <VStack w="100%" spacing={6} align="start">
-          <Heading fontSize="1.5rem" lineHeight="2rem">{t`Favourite Restaurants`}</Heading>
+          <Heading fontSize="1.5rem" lineHeight="2rem">{t`Recommended Restaurants`}</Heading>
           <SimpleGrid
             sx={{
               '&::-webkit-scrollbar': {
@@ -55,4 +54,4 @@ const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
   );
 }
 
-export default FavouriteRestaurant;
+export default RecommendedRestaurant;
