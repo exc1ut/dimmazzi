@@ -27,7 +27,10 @@ jwtAxios.interceptors.response.use(
 jwtAxios.interceptors.request.use(
   (req) => {
     const currentLanguage = i18n.language
-    ;(req.headers as any).common.Authorization = `Token ${localStorage.getItem('token')}`
+    const token = localStorage.getItem('token')
+    if (token) {
+      ;(req.headers as any).common.Authorization = `Token ${token}`
+    }
     ;(req.headers as any).common['Content-Language'] = (languageMap as any)?.[currentLanguage]
     return req
   },
