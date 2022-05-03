@@ -6,25 +6,49 @@ import {
   MenuListProps as ChakraMenuListProps,
   Text,
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem } from './MenuItem'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
+import { useAuth } from '../../../../stores/useAuth'
+import { getLanguageProps } from '../../../../utils/language'
+import i18n from '../../../../lib/i18n'
+import { useModal } from '@ebay/nice-modal-react'
+import { EditProfileModal } from '../../../../modules/profile'
+import { useRouter } from 'next/router'
 
 interface MenuListProps extends ChakraMenuListProps {}
 
 export const MenuList: React.FC<MenuListProps> = (props) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [isLanguageOpen, setLanguageOpen] = useState(false)
+  const { logout } = useAuth()
+  const editProfileModal = useModal(EditProfileModal)
+  const router = useRouter()
+
+  const handleLogout = () => {
+    logout()
+  }
+
+  const language = useMemo(getLanguageProps, [i18n.language])
 
   return (
     <ChakraMenuList boxShadow="lg" {...props}>
-      <MenuItem imageSrc={'/assets/images/person.svg'}>{t`Profile`}</MenuItem>
+      <MenuItem
+        onClick={() => editProfileModal.show()}
+        imageSrc={'/assets/images/person.svg'}
+      >{t`Profile`}</MenuItem>
       <Divider />
-      <MenuItem imageSrc={'/assets/images/task.svg'}>{t`Product history`}</MenuItem>
+      <MenuItem
+        onClick={() => router.push('/order')}
+        imageSrc={'/assets/images/task.svg'}
+      >{t`Product history`}</MenuItem>
       <Divider />
-      <MenuItem imageSrc={'/assets/images/location.svg'}>{t`Location list`}</MenuItem>
+      <MenuItem
+        onClick={() => router.push('/address')}
+        imageSrc={'/assets/images/location.svg'}
+      >{t`Location list`}</MenuItem>
       <Divider />
       <MenuItem imageSrc={'/assets/images/heart.svg'}>{t`Favorite restorans`}</MenuItem>
       <Divider />
@@ -34,7 +58,8 @@ export const MenuList: React.FC<MenuListProps> = (props) => {
         closeOnSelect={false}
       >
         <HStack w={'full'} justifyContent="space-between">
-          <Text>{t`O'zbekcha`}</Text> {isLanguageOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          <Text>{language.activeLanguage}</Text>{' '}
+          {isLanguageOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </HStack>
       </MenuItem>
       <AnimatePresence exitBeforeEnter>
@@ -46,13 +71,19 @@ export const MenuList: React.FC<MenuListProps> = (props) => {
             as={motion.div}
             zIndex={-1}
           >
-            <MenuItem>{t`Узбекча`}</MenuItem>
-            <MenuItem>{t`Русскик`}</MenuItem>
+            {language.availableLanguages.map((v) => (
+              <MenuItem onClick={() => i18n.changeLanguage(v.key)}>{v.value}</MenuItem>
+            ))}
+
+            {/* <MenuItem>{t`Русский`}</MenuItem> */}
           </Box>
         )}
       </AnimatePresence>
       <Divider />
-      <MenuItem imageSrc={'/assets/images/logout.svg'}>{t`Log out`}</MenuItem>
+      <MenuItem
+        onClick={handleLogout}
+        imageSrc={'/assets/images/logout.svg'}
+      >{t`Log out`}</MenuItem>
     </ChakraMenuList>
   )
 }

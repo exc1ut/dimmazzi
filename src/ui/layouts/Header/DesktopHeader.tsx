@@ -4,55 +4,68 @@ import {
   Button,
   Center,
   Container,
+  Flex,
   Grid,
   GridItem,
   HStack,
   SimpleGrid,
   Text,
+  VStack,
 } from '@chakra-ui/react'
 import { useModal } from '@ebay/nice-modal-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
+import { useAddressQuery } from '../../../api/address/useAddressQuery'
 import { AuthModal } from '../../../modules/auth/auth/AuthModal'
 import { useAuth } from '../../../stores/useAuth'
+import { totalMealSelector, useCart } from '../../../stores/useCart'
+import { useLocation } from '../../../stores/useLocation'
+import { ILanguage } from '../../../utils/language'
 import { Cart } from './components/Cart'
 import { Menu } from './components/Menu'
 
-interface DesktopHeaderProps {}
+interface DesktopHeaderProps {
+  handleAuth: () => void
+  handleLocation: () => void
+}
 
-export const DesktopHeader: React.FC<DesktopHeaderProps> = ({}) => {
+export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ handleAuth, handleLocation }) => {
   const { t } = useTranslation()
   const { isAuthenticated } = useAuth()
-  const modal = useModal(AuthModal)
-
-  const handleClick = () => {
-    modal.show()
-  }
+  const location = useLocation((state) => state.place_name)
+  const totalMeals = useCart(totalMealSelector)
 
   return (
     <Box>
       <Container maxW={'container.xl'}>
         <Grid templateColumns="2fr 4fr 1fr 1.5fr" gap={4}>
           <GridItem alignContent={'center'}>
-            <Center w={'full'}>
-              <Image src="/assets/images/logo.svg" width={200} height={50} />
-            </Center>
+            <Link href={'/'}>
+              <Flex cursor={'pointer'} as="a" justifyContent={'start'} alignItems="center">
+                <Image src="/assets/images/logo.svg" width={140} height={50} />
+              </Flex>
+            </Link>
           </GridItem>
           <GridItem>
             <Center justifyContent={'flex-start'} h={'full'}>
-              <HStack spacing={2}>
+              <HStack cursor={'pointer'} onClick={handleLocation} spacing={2}>
                 <Image src="/assets/images/location.svg" width={30} height={30} />
-                {/* <Text color={'dark.40'} fontSize={'md'}>{t`No location has entered`}</Text> */}
-                <Text
-                  color={'dark.90'}
-                  fontSize={'md'}
-                  fontWeight={400}
-                >{t`Urganch shahar, Mustaqillik ko‘cha, 6`}</Text>
+                {location ? (
+                  <Text color={'premium_dark.900'} fontSize={'md'} fontWeight={400}>
+                    {location}
+                  </Text>
+                ) : (
+                  <Text
+                    color={'premium_dark.400'}
+                    fontSize={'md'}
+                  >{t`No location has entered`}</Text>
+                )}
               </HStack>
             </Center>
           </GridItem>
           <GridItem>
-            <Cart count={5} />
+            <Cart count={totalMeals} />
           </GridItem>
           <GridItem>
             <Center h={'full'}>
@@ -61,7 +74,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({}) => {
               ) : (
                 <Button
                   colorScheme="premium_red"
-                  onClick={handleClick}
+                  onClick={handleAuth}
                   w={'full'}
                 >{t`Signin`}</Button>
               )}

@@ -4,9 +4,11 @@ import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type SearchCardProps = {
   img?: string;
+  name: string,
+  category: string,
 }
 
-export const SearchCard = ({ img }: SearchCardProps) => {
+export const SearchCard = ({ img, name, category }: SearchCardProps) => {
   const imgDefault = 'https://icons.iconarchive.com/icons/dakirby309/simply-styled/256/Minecraft-icon.png';
 
   return (
@@ -23,10 +25,10 @@ export const SearchCard = ({ img }: SearchCardProps) => {
         </Box>
         <Box>
           <VStack justify="center" spacing={0} align="flex-start">
-            <Heading variant="search">Restoran nomi</Heading>
+            <Heading variant="search">{name}</Heading>
             <Text
               variant="category"
-            >kategoriasi</Text>
+            >{category}</Text>
           </VStack>
         </Box>
       </HStack>

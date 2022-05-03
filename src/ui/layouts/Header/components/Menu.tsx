@@ -10,12 +10,17 @@ import {
   HStack,
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
+import { useCurrentUser } from '../../../../api/user/useCurrentUser'
 import { MenuList } from './MenuList'
 
 interface MenuProps {}
 
 export const Menu: React.FC<MenuProps> = ({}) => {
   const { t } = useTranslation()
+  const { data, isLoading, isSuccess } = useCurrentUser()
+
+  if (isLoading || !isSuccess) return null
+
   return (
     <ChakraMenu>
       <MenuButton
@@ -26,8 +31,8 @@ export const Menu: React.FC<MenuProps> = ({}) => {
         rightIcon={<ChevronDownIcon />}
       >
         <HStack spacing={2}>
-          <Avatar size={'sm'} name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-          <Text>Muhammaddiyor</Text>
+          <Avatar size={'sm'} name="Dan Abrahmov" src="/assets/images/Avatar.svg" />
+          <Text>{data.first_name}</Text>
         </HStack>
       </MenuButton>
       <MenuList />

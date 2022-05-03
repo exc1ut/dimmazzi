@@ -5,9 +5,27 @@ import { AppLayout } from '../ui/layouts/AppLayout'
 
 import { initMock } from '../mocks/'
 
-initMock()
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import '../ui/features/Carousel/styles.css'
+import { useEffect, useState } from 'react'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const [shouldRender, setShouldRender] = useState(false)
+
+  useEffect(() => {
+    ;(async () => {
+      if (process.env.NEXT_PUBLIC_ENV === 'mock') {
+        await initMock()
+        setShouldRender(true)
+      } else {
+        setShouldRender(true)
+      }
+    })()
+  })
+
+  if (!shouldRender) return null
+
   const AnyComponent = Component as any
 
   return (

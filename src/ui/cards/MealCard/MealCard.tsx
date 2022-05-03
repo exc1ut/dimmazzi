@@ -15,7 +15,7 @@ export type MealCardProps = {
 export const MealCard: React.FC<MealCardProps> = ({ image, types, onAdd, name, price }) => {
   const [selected, setSelected] = React.useState(types?.[0])
   return (
-    <VStack overflow="hidden" shadow={'xl'} borderRadius="lg">
+    <VStack overflow="hidden" shadow={'md'} borderRadius="lg">
       <Head image={image} menu={types} onMenuClick={setSelected} selected={selected} />
       <Footer onAdd={onAdd} price={price} title={name} />
     </VStack>

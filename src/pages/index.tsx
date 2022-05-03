@@ -1,14 +1,3 @@
-import { useTranslation } from 'react-i18next'
+import { asyncComponent } from '../utils/asyncComponent'
 
-const Index = () => {
-  const { t } = useTranslation()
-
-  return (
-    <>
-      <>{t`sample`}</>
-      <>{t('sample')}</>
-    </>
-  )
-}
-
-export default Index
+export default asyncComponent(() => import('../modules/home/index'))

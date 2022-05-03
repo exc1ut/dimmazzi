@@ -18,4 +18,13 @@ export const handlers = [
     }
     return res(ctx.json(response))
   }),
+
+  rest.get('*/account/me/', (req, res, ctx) => {
+    const user = {
+      first_name: 'John',
+      last_name: 'Doe',
+    }
+
+    return res(ctx.json(user))
+  }),
 ]

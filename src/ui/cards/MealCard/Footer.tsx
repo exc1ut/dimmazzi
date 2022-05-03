@@ -7,9 +7,9 @@ interface FooterProps {
   onAdd: () => void
 }
 
-export const Footer: React.FC<FooterProps> = ({ onAdd, price, title }) => {
+export const Footer: React.FC<FooterProps> = ({ onAdd, price, title, children }) => {
   return (
-    <Box w={'full'} p={4}>
+    <Box w={'full'} mt={0} p={4} py={3}>
       <HStack>
         <Text fontSize={'1em'} fontWeight={500} color="premium_dark.700">
           {title}
