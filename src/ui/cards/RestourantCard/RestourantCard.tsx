@@ -1,5 +1,5 @@
 import { CalendarIcon } from '@chakra-ui/icons'
-import { Box, HStack, IconButton, Stack, Text } from '@chakra-ui/react'
+import { Box, HStack, IconButton, Stack, StackProps, Text } from '@chakra-ui/react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -26,7 +26,7 @@ export type CommonProps = {
   isLiked: boolean
   state: 'open' | 'closed'
   name: string
-  star: number
+  star: string
   distance: number
 }
 
@@ -42,7 +42,7 @@ export type ConditionalProps =
       cost?: never
     }
 
-export type RestourantCardProps = CommonProps & ConditionalProps
+export type RestourantCardProps = CommonProps & ConditionalProps & StackProps
 
 export const RestourantCard = (props: RestourantCardProps) => {
   const { t } = useTranslation()
@@ -69,7 +69,10 @@ export const RestourantCard = (props: RestourantCardProps) => {
       borderRadius={'lg'}
       shadow={'md'}
       w={'full'}
+      maxW="26rem"
+      margin="0px"
       direction={'column'}
+      {...props}
     >
       <Head
         image={props.image}
@@ -83,16 +86,16 @@ export const RestourantCard = (props: RestourantCardProps) => {
         <HStack spacing={2} color="premium_dark.500">
           <HStack spacing={1.5}>
             <Start boxSize={'1.2em'} color={'premium_orange.1000'} />
-            <Text fontWeight={500} fontSize={'sm'}>
+            <Text color="premium_dark.500" fontWeight={500} fontSize={'sm'}>
               {props.star}
             </Text>
           </HStack>
           {props.isDeliverable && (
             <>
-              <Text px={0.5} fontWeight={500} fontSize={'sm'}>
+              <Text color="premium_dark.500" px={0.5} fontWeight={500} fontSize={'sm'}>
                 ●
               </Text>
-              <Text fontWeight={500} fontSize={'sm'}>
+              <Text color="premium_dark.500" fontWeight={500} fontSize={'sm'}>
                 {props.distance} {t`km`}
               </Text>
             </>

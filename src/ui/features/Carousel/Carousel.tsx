@@ -1,8 +1,10 @@
 import { RestourantCard, RestourantCardProps } from '../../cards/RestourantCard/RestourantCard'
 import { Box, BoxProps, Flex, HStack, useMediaQuery } from '@chakra-ui/react'
 import * as React from 'react'
-import Slider, { Settings } from 'react-slick'
+import Slider from 'react-slick'
 import { CustomArrow } from './CustomArrow'
+import { LeftArrow, RightArrow } from '../../../img/icons/Icons'
+import { Settings } from 'http2'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type CarouselProps = {

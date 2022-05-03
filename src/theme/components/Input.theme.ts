@@ -31,6 +31,7 @@ export const Input = {
         },
       },
     },
+
     box: {
       field: {
         maxLength: '1',
