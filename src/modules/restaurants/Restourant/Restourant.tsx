@@ -20,6 +20,7 @@ import { NextImage } from '../../../ui/NextImage'
 import { RestaurantDetail } from '../../../api/restourant/useRestourantDetail'
 import { title } from 'process'
 import { getTime } from '../../../utils/getTime'
+import { motion } from 'framer-motion'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type RestourantProps = RestaurantDetail

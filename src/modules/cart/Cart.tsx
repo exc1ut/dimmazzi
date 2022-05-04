@@ -8,6 +8,7 @@ import { AppBreadCrumbItem } from '../../ui/AppComponents/AppBreadCrumb/AppBread
 import { MealListItem } from '../../ui/cards/MealListItem'
 import { ServiceDetails } from '../../ui/cards/ServiceDetails'
 import { TabButton } from '../../ui/features/TabButton'
+import { PageMotion } from '../../ui/PageMotion'
 
 interface CartProps {}
 
@@ -39,7 +40,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
   ]
 
   return (
-    <>
+    <PageMotion>
       <Box>
         <AppBreadCrumb items={breadCrumb} />
       </Box>
@@ -93,7 +94,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
           </Button>
         </VStack>
       </Container>
-    </>
+    </PageMotion>
   )
 }
 
