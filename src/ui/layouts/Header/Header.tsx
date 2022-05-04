@@ -1,3 +1,4 @@
+import { useMapStore } from '@/ui/Map/useMapStore'
 import { Box, useMediaQuery } from '@chakra-ui/react'
 import { useModal } from '@ebay/nice-modal-react'
 import { useMemo } from 'react'
@@ -16,6 +17,7 @@ export const Header = () => {
   const { data } = useAddressQuery()
   const { setStore } = useLocation()
   const { i18n, t } = useTranslation()
+  // const { setMapIsOpen } = useMapStore()
 
   const handleAuth = async () => {
     await authModal.show()
@@ -24,11 +26,13 @@ export const Header = () => {
       setStore((state) => ({ ...state, ...lastAddress }))
     } else {
       await locationModal.show()
+      // setMapIsOpen(true)
     }
   }
 
   const handleLocation = () => {
     locationModal.show()
+
   }
 
   return (

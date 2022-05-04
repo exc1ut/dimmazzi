@@ -4,13 +4,15 @@ import { Container, Heading, SimpleGrid, useMediaQuery, VStack } from '@chakra-u
 
 import { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useRestaurantListQuery } from '@/api/restaurant/useRestaurantListQuery'
 
-interface FavouriteRestaurantProps {}
+interface FavouriteRestaurantProps { }
 
 const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
   const { t } = useTranslation()
   const [small] = useMediaQuery('(max-width: 512px)')
   const restaurantsArray = Array.from({ length: 10 }, (v, k) => k)
+
   const restaurantProps = {
     image:
       'https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg',
@@ -25,7 +27,7 @@ const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
   }
   return (
     <Container maxW="container.xl">
-      <VStack spacing={14} w="100%" mt="1.5rem">
+      <VStack spacing={14} w="100%" mt="1.5rem" mb="1.5rem">
         {small ? null : <HomeSearch />}
         <VStack w="100%" spacing={6} align="start">
           <Heading fontSize="1.5rem" lineHeight="2rem">{t`Favourite Restaurants`}</Heading>

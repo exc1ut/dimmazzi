@@ -8,7 +8,7 @@ import { useRestaurantListQuery } from '../../api/restaurant/useRestaurantListQu
 import { RestourantCard } from '../../ui/cards/RestourantCard'
 import { useRouter } from 'next/router'
 
-interface HomeProps {}
+interface HomeProps { }
 
 const Home: FunctionComponent<HomeProps> = () => {
   const { t } = useTranslation()
@@ -62,7 +62,7 @@ const Home: FunctionComponent<HomeProps> = () => {
           <Flex alignSelf="center" w={'full'} justify="space-between">
             <Heading fontSize="1.5rem" lineHeight="2rem">{t`Recomended Restaunrants`}</Heading>
             <Text fontSize="1.25rem" color="premium_red.1000">
-              <Link href="/restaurant/favourites">
+              <Link href="/restaurant/recommended">
                 <a>{t`All`}</a>
               </Link>
             </Text>

@@ -6,8 +6,10 @@ type Position = google.maps.LatLng | google.maps.LatLngLiteral
 
 export type MapStore = {
   zoom: number
+  //mapIsOpen: boolean
   position: Position
   location?: Position
+  //setMapIsOpen: (mapIsOpen: boolean) => void
   setZoom: (num: number) => void
   setPosition: (position: Position) => void
   increase: () => void
@@ -18,11 +20,15 @@ export type MapStore = {
 }
 
 const store: StoreType<MapStore> = (set, get) => ({
+  // mapIsOpen: false,
   zoom: 15,
   position: {
     lat: 41.328443,
     lng: 69.242346,
   },
+  // setMapIsOpen: (isOpen) => {
+  //   set({ mapIsOpen: isOpen })
+  // },
   reset: () =>
     set({
       zoom: 15,
