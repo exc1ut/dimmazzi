@@ -9,9 +9,12 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import '../ui/features/Carousel/styles.css'
 import { useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import router, { useRouter } from 'next/router'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [shouldRender, setShouldRender] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     ;(async () => {
@@ -31,7 +34,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <Providers>
       <AppLayout>
-        <AnyComponent {...pageProps} />
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <AnyComponent {...pageProps} canonical={router.pathname} key={router.pathname} />
+        </AnimatePresence>
       </AppLayout>
     </Providers>
   )

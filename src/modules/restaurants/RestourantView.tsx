@@ -6,6 +6,7 @@ import { AppBreadCrumb, BreadCrumb } from '../../ui/AppComponents/AppBreadCrumb'
 import { AppLoader } from '../../ui/AppComponents/AppLoader'
 import { MealCard } from '../../ui/cards/MealCard'
 import { Carousel } from '../../ui/features/Carousel'
+import { PageMotion } from '../../ui/PageMotion'
 import { getTime } from '../../utils/getTime'
 import { Restourant } from './Restourant/Restourant'
 
@@ -30,7 +31,7 @@ export default () => {
   if (!isSuccess) return null
 
   return (
-    <>
+    <PageMotion>
       <Box mb={6}>
         <AppBreadCrumb items={breadCrumb} />
       </Box>
@@ -122,6 +123,6 @@ export default () => {
           ))}
         </SimpleGrid>
       </Box>
-    </>
+    </PageMotion>
   )
 }

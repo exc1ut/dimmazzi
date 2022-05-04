@@ -13,6 +13,7 @@ import { PaymentOptions } from '../../ui/cards/PaymentOptions'
 import { ServiceDetails } from '../../ui/cards/ServiceDetails'
 import { OrderProgress } from '../../ui/features/OrderProgress'
 import { DeliveryAddress } from '../../ui/inputs/DeliveryAddress'
+import { PageMotion } from '../../ui/PageMotion'
 
 export default () => {
   const { query } = useRouter()
@@ -32,7 +33,7 @@ export default () => {
   ]
 
   return (
-    <>
+    <PageMotion>
       <Box>
         <AppBreadCrumb items={breadCrumb} />
       </Box>
@@ -90,6 +91,6 @@ export default () => {
           </VStack>
         </VStack>
       </Container>
-    </>
+    </PageMotion>
   )
 }

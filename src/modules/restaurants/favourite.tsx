@@ -4,6 +4,7 @@ import { Container, Heading, SimpleGrid, useMediaQuery, VStack } from '@chakra-u
 
 import { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { PageMotion } from '../../ui/PageMotion'
 
 interface FavouriteRestaurantProps {}
 
@@ -24,35 +25,37 @@ const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
     time: 12,
   }
   return (
-    <Container maxW="container.xl">
-      <VStack spacing={14} w="100%" mt="1.5rem">
-        {small ? null : <HomeSearch />}
-        <VStack w="100%" spacing={6} align="start">
-          <Heading fontSize="1.5rem" lineHeight="2rem">{t`Favourite Restaurants`}</Heading>
-          <SimpleGrid
-            sx={{
-              '&::-webkit-scrollbar': {
-                appearance: 'none',
-                display: 'none',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                display: 'none',
-              },
-              '&::-webkit-scrollbar-track': {
-                display: 'none',
-              },
-            }}
-            columns={[1, 2, 2, 3]}
-            w="100%"
-            spacing={[3, 4, 6]}
-          >
-            {restaurantsArray.map((item) => (
-              <RestourantCard {...restaurantProps} />
-            ))}
-          </SimpleGrid>
+    <PageMotion>
+      <Container maxW="container.xl">
+        <VStack spacing={14} w="100%" mt="1.5rem">
+          {small ? null : <HomeSearch />}
+          <VStack w="100%" spacing={6} align="start">
+            <Heading fontSize="1.5rem" lineHeight="2rem">{t`Favourite Restaurants`}</Heading>
+            <SimpleGrid
+              sx={{
+                '&::-webkit-scrollbar': {
+                  appearance: 'none',
+                  display: 'none',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  display: 'none',
+                },
+                '&::-webkit-scrollbar-track': {
+                  display: 'none',
+                },
+              }}
+              columns={[1, 2, 2, 3]}
+              w="100%"
+              spacing={[3, 4, 6]}
+            >
+              {restaurantsArray.map((item) => (
+                <RestourantCard {...restaurantProps} />
+              ))}
+            </SimpleGrid>
+          </VStack>
         </VStack>
-      </VStack>
-    </Container>
+      </Container>
+    </PageMotion>
   )
 }
 
