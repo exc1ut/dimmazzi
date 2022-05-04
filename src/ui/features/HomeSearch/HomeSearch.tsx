@@ -8,6 +8,7 @@ import { useRestaurantListQuery } from "../../../api/restaurant/useRestaurantLis
 import { IRestaurantBody } from "../../../api/restaurant/IRestaurantQuery.interface";
 import { resourceLimits } from "worker_threads";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import { NextImage } from "@/ui/NextImage";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type HomeSearchProps = {}
@@ -22,7 +23,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
   const [debounce, setDebounce] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
-  const restaurants = ["Evos - Lavash center", "Shohona - Milliy taomlar", "Retro - Turk taomlari", "SamOsh - Plov center", "Kebab - Plov center"];
+  // const restaurants = ["Evos - Lavash center", "Shohona - Milliy taomlar", "Retro - Turk taomlari", "SamOsh - Plov center", "Kebab - Plov center"];
 
   const response = useRestaurantListQuery(["search", debounce], { latitude: "37.78825", longtiude: "37.78825", search: debounce }, {
     onSuccess: (data: { data: { results: [IRestaurantBody] } }) => {
@@ -107,7 +108,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
 
   }, [value])
   return (
-    <Box bgImage="/assets/images/search_background.jpg" position='relative'
+    <Box position='relative'
       w='100%'
       h='10rem'
       display='flex'
@@ -120,6 +121,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
     // filter='brightness(0.8)'
     >
 
+      <NextImage src="/assets/images/search_background.jpg" w="full" h="full" objectFit="cover" borderRadius="0.5rem" filter="brightness(0.7)" />
 
       <Popover isOpen={isOpen} autoFocus={false} size='md'>
         <PopoverTrigger >

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { AppBreadCrumb, BreadCrumb } from '../../ui/AppComponents/AppBreadCrumb'
 import { OrderListItem } from '../../ui/cards/OrderListItem'
 import { TabButton } from '../../ui/features/TabButton'
+import { PageMotion } from '../../ui/PageMotion'
 
 interface OrderListProps {}
 
@@ -25,7 +26,7 @@ export default ({}) => {
   ]
 
   return (
-    <>
+    <PageMotion>
       <Box>
         <AppBreadCrumb items={breadCrumb} />
       </Box>
@@ -53,6 +54,6 @@ export default ({}) => {
           ))}
         </VStack>
       </Container>
-    </>
+    </PageMotion>
   )
 }

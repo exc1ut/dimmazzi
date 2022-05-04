@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Box,
   Button,
   Container,
@@ -12,6 +13,7 @@ import {
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { NextImage } from '../../NextImage'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type FooterProps = {}
@@ -42,32 +44,54 @@ export const Footer = (props: FooterProps) => {
     []
   )
 
-  if (isLessThanLg) return null
-
   return (
     <Box py={10} color="premium_dark.50" bg="premium_dark.1000">
       <Container maxW={'container.xl'}>
-        <SimpleGrid alignItems={'center'} templateColumns="2fr 6fr 2fr">
+        <SimpleGrid
+          alignItems={'center'}
+          templateColumns={{ lg: '2fr 5fr 3fr', md: '1fr' }}
+          spacing={10}
+        >
           <Image src="/assets/images/logo_light.svg" width={150} height={50} />
           <Box>
-            <HStack justifyContent="center" spacing={10}>
+            <Stack
+              direction={{ sm: 'row', lg: 'row' }}
+              justifyContent={'space-around'}
+              spacing={10}
+            >
               {listItems.map((item, index) => (
-                <Button key={index} color={'dark.5'} fontWeight={400} variant={'link'}>
+                <Button key={index} color={'dark.50'} fontWeight={400} variant={'link'}>
                   {item.name}
                 </Button>
               ))}
-            </HStack>
+            </Stack>
           </Box>
-          <HStack justifyContent={'space-between'}>
-            <Box>
-              <Image src="/assets/images/appstore.svg" width={100} height={50} />
-            </Box>
-            <Box>
-              <Image src="/assets/images/google_play.svg" width={100} height={50} />
-            </Box>
+          <HStack justifyContent={['space-around', null, null, 'space-between']}>
+            {/* <Box>
+              <Image
+                layout="fill"
+                src="/assets/images/appstore.svg"
+                width={'40%'}
+                height={'auto'}
+              />
+            </Box> */}
+            <AspectRatio w={['50%', null, '35%', '40%']} ratio={4.267 / 1}>
+              <Box w={'full'} h={'full'}>
+                <NextImage h={'full'} w={'full'} src="/assets/images/appstore.svg" />
+              </Box>
+            </AspectRatio>
+            <AspectRatio w={['50%', null, '35%', '40%']} ratio={4.267 / 1}>
+              <Box w={'full'} h={'full'}>
+                <NextImage h={'full'} w={'full'} src="/assets/images/google_play.svg" />
+              </Box>
+            </AspectRatio>
           </HStack>
         </SimpleGrid>
-        <SimpleGrid pt={6} alignItems={'center'} templateColumns="2fr 6fr 2fr">
+        <SimpleGrid
+          pt={6}
+          alignItems={'center'}
+          templateColumns={['1fr 0fr 1fr', null, null, '2fr 5fr 3fr	']}
+        >
           <HStack justifyContent={'center'} spacing={6}>
             <Box>
               <Image src="/assets/images/telegram.svg" width={25} height={25} />
@@ -80,7 +104,11 @@ export const Footer = (props: FooterProps) => {
             </Box>
           </HStack>
           <Box></Box>
-          <Text textAlign={'right'} fontSize={'xs'}>
+          <Text
+            color={'premium_dark.400'}
+            textAlign={['center', null, null, 'right']}
+            fontSize={'xs'}
+          >
             © 2022 «Dmozzi» MChJ
           </Text>
         </SimpleGrid>

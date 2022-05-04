@@ -7,6 +7,7 @@ import { useDeleteAdressMutation } from '../../api/address/useDeleteAdressMutati
 import { AppBreadCrumb, BreadCrumb } from '../../ui/AppComponents/AppBreadCrumb'
 import { AppLoader } from '../../ui/AppComponents/AppLoader'
 import { Map } from '../../ui/Map'
+import { PageMotion } from '../../ui/PageMotion'
 import { AddressItem } from './AddressItem'
 
 interface AddressProps {}
@@ -52,7 +53,7 @@ export const Address: React.FC<AddressProps> = ({}) => {
   }
 
   return (
-    <>
+    <PageMotion>
       <Box>
         <AppBreadCrumb items={breadCrumb} />
         <Container py={6} maxW={'container.sm'}>
@@ -75,7 +76,7 @@ export const Address: React.FC<AddressProps> = ({}) => {
           >{t`Yangi manzil qo'shish`}</Button>
         </Container>
       </Box>
-    </>
+    </PageMotion>
   )
 }
 
