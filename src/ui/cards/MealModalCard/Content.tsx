@@ -12,16 +12,16 @@ import { MealModalDto } from './modal.dto'
 
 interface ContentProps extends MealModalCardProps {}
 
-export const Content: React.FC<ContentProps> = ({ image, price, title, types }) => {
+export const Content: React.FC<ContentProps> = ({ image, title, types }) => {
   // Local states
   const [quantity, setQuantity] = useState(1)
-  const [selected, setSelected] = useState(types?.[0])
+  const [selected, setSelected] = useState(types[0]!)
 
   //Libraries
   const { t } = useTranslation()
   const modal = useModal()
 
-  const cost = useMemo(() => price * quantity, [price, quantity])
+  const cost = useMemo(() => +selected.price * quantity, [selected, quantity])
 
   const handleQuantityChange = (type: 'increase' | 'decrease') => {
     if (type === 'decrease' && quantity > 1) {
@@ -34,7 +34,7 @@ export const Content: React.FC<ContentProps> = ({ image, price, title, types }) 
   const handleSubmit = () => {
     const dto: MealModalDto = {
       quantity,
-      totalPrice: quantity * price,
+      totalPrice: quantity * +selected.price,
       type: selected,
     }
 
@@ -51,15 +51,16 @@ export const Content: React.FC<ContentProps> = ({ image, price, title, types }) 
         <NextImage objectFit="cover" zIndex={-1} src={image} w={'full'} h={200} />
         <Box position={'absolute'} bottom={4} w="full" px={'25%'}>
           <ButtonGroup w="full" isAttached colorScheme="premium_red" size="sm">
-            {types?.map((v) => (
-              <Button
-                w={'full'}
-                variant={v === selected ? 'solid' : 'outline'}
-                onClick={() => setSelected(v)}
-              >
-                {v}
-              </Button>
-            ))}
+            {types.length > 1 &&
+              types?.map((v) => (
+                <Button
+                  w={'full'}
+                  variant={v === selected ? 'solid' : 'outline'}
+                  onClick={() => setSelected(v)}
+                >
+                  {v.type}
+                </Button>
+              ))}
           </ButtonGroup>
         </Box>
       </Box>

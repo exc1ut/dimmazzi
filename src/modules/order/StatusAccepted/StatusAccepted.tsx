@@ -11,14 +11,14 @@ import {
   Button,
 } from '@chakra-ui/react'
 import { AcceptIcon } from '../../../img/icons/Icons'
-import NiceModal, { useModal } from '@ebay/nice-modal-react'
+import NiceModal, { create, useModal } from '@ebay/nice-modal-react'
 import { useTranslation } from 'react-i18next'
+import { OrderCreateResponse } from '../../../api/order/useOrderCreateMutation'
+import { useRouter } from 'next/router'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type StatusAcceptedProps = {}
-
-export const StatusAccepted = NiceModal.create<StatusAcceptedProps>(({}) => {
+export const StatusAccepted = NiceModal.create<OrderCreateResponse>(({ order_id }) => {
   const { t } = useTranslation()
+  const router = useRouter()
 
   const modal = useModal()
 
@@ -40,8 +40,22 @@ export const StatusAccepted = NiceModal.create<StatusAcceptedProps>(({}) => {
                 variant="modal"
                 bgColor="premium_red.1000"
                 w="100%"
+                onClick={() => {
+                  router.push('/')
+                  modal.resolve()
+                  modal.hide()
+                }}
               >{t`Yana buyurtma qilish`}</Button>
-              <Button variant="outline" w="100%" h="48px">{t`Buyurtmani kuzatib borish`}</Button>
+              <Button
+                onClick={() => {
+                  router.push(`/order/${order_id}`)
+                  modal.resolve()
+                  modal.hide()
+                }}
+                variant="outline"
+                w="100%"
+                h="48px"
+              >{t`Buyurtmani kuzatib borish`}</Button>
             </VStack>
           </VStack>
         </Box>
