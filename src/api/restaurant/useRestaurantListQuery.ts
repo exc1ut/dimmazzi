@@ -1,25 +1,22 @@
-import { API_URL } from '../../config/constants/api.constants'
 import jwtAxios from '@/services/jwtAxios'
-import { IRestaurantQuery } from './IRestaurantQuery.interface'
 import { useQuery } from 'react-query'
-
-const fetcher = ({ ...queryParams }: IRestaurantQuery) => {
-  const query: string = Object.keys(queryParams)
-    .map((key) => {
-      let queryR: any = { ...queryParams }
-      return `${key}=${queryR[key]}`
-    })
-    .join('&')
-
-  return jwtAxios({
-    url: `${API_URL}customer/restaurant/list/?${query}`,
-    method: 'GET',
-    headers: {
-      Authorization: `Token ${localStorage.getItem('token')}`,
-    },
-  })
+import { IPagination } from '../IPagination.interface'
+import { queryKeys } from '../queryKeys'
+import { IRestaurantList } from './IRestaurnatList.interface'
+export interface IRestaurantListDto {
+  latitude?: string
+  longitude?: string
+  search?: string
+  recommended?: 'true' | 'false'
 }
 
-export const useRestaurantListQuery = (filters: [string & any], fetchArgs: any, options: any) => {
-  return useQuery([...filters], () => fetcher(fetchArgs), { ...options })
+const fetcher = async (dto: IRestaurantListDto) => {
+  const { data } = await jwtAxios.get<IPagination<IRestaurantList>>('/customer/restaurant/list/', {
+    params: dto,
+  })
+  return data
+}
+
+export const useRestaurantListQuery = (dto: IRestaurantListDto) => {
+  return useQuery([queryKeys.restaurantList, dto], () => fetcher(dto))
 }

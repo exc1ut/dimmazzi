@@ -1,8 +1,10 @@
 import { Box, Button, Divider, Flex, HStack, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 import { useModal } from '@ebay/nice-modal-react'
+import image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { IMeal } from '../../api/meal/IMeal.interface'
+import { useMealComboList } from '../../api/meal/useMealComboList'
 import { useRestourantDetail } from '../../api/restourant/useRestourantDetail'
 import { mockProduct } from '../../mocks/mockProduct'
 import { useCart } from '../../stores/useCart'
@@ -14,12 +16,15 @@ import { MealModalDto } from '../../ui/cards/MealModalCard/modal.dto'
 import { Carousel } from '../../ui/features/Carousel'
 import { PageMotion } from '../../ui/PageMotion'
 import { getTime } from '../../utils/getTime'
+import index from '../auth'
 import { Restourant } from './Restourant/Restourant'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 export default () => {
   const router = useRouter()
   const { id } = router.query
   const { data, isLoading, isSuccess } = useRestourantDetail(+id!)
+  const comboList = useMealComboList(id as string)
   const { t } = useTranslation()
   const modal = useModal(MealModalCard)
   const { addMeal } = useCart()
@@ -35,8 +40,8 @@ export default () => {
     },
   ]
 
-  if (isLoading) return <AppLoader />
-  if (!isSuccess) return null
+  if (isLoading || comboList.isLoading) return <AppLoader />
+  if (!isSuccess || !comboList.isSuccess) return null
 
   const handleAddMeal = async (meal: IMeal) => {
     const response = (await modal.show({
@@ -104,21 +109,24 @@ export default () => {
         </Flex>
         <Box py={6}>
           <Carousel>
-            {new Array(10).fill(null).map((v, index) => (
-              <Carousel.Item>
-                <MealCard
-                  image="http://45.12.214.152/media/418513-svetik.2022-04-18.06-34-07.jpg"
-                  name="Burger"
-                  onAdd={() => handleAddMeal(mockProduct)}
-                  price={25000}
-                  key={index}
-                />
-              </Carousel.Item>
-            ))}
+            {comboList.data &&
+              comboList.data.results.map((v, index) => (
+                <SwiperSlide>
+                  <Box py={1.5} px={1.5}>
+                    <MealCard
+                      image={v.thumbnail}
+                      name={v.title}
+                      onAdd={() => {}}
+                      price={+v.price}
+                      key={index}
+                    />
+                  </Box>
+                </SwiperSlide>
+              ))}
           </Carousel>
         </Box>
       </Box>
-      <Box w="full" mt={16}>
+      {/* <Box w="full" mt={16}>
         <Flex justifyContent={'space-between'} w="full">
           <Text fontWeight={700} fontSize={'3xl'}>{t`Xaridlarim`}</Text>
           <Button size={'lg'} color="premium_red.1000" variant={'link'}>{t`Barchasi`}</Button>
@@ -138,7 +146,7 @@ export default () => {
             ))}
           </Carousel>
         </Box>
-      </Box>
+      </Box> */}
       <Box w="full" mt={16}>
         <Flex justifyContent={'space-between'} w="full">
           <Text fontWeight={700} fontSize={'3xl'}>{t`Birinchi taom`}</Text>

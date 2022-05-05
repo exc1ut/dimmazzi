@@ -1,70 +1,52 @@
-import { RestourantCard, RestourantCardProps } from '../../cards/RestourantCard/RestourantCard'
-import { Box, BoxProps, Flex, HStack, useMediaQuery } from '@chakra-ui/react'
+import { Box, useBreakpointValue, useMediaQuery } from '@chakra-ui/react'
 import * as React from 'react'
-import Slider from 'react-slick'
 import { CustomArrow } from './CustomArrow'
-import { LeftArrow, RightArrow } from '../../../img/icons/Icons'
-import { Settings } from 'http2'
+import 'swiper/css'
+import { Swiper as ReactSwiper } from 'swiper/react'
+import Swiper, { Controller } from 'swiper'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type CarouselProps = {
   children: React.ReactNode
+  maxChildren?: number
 }
 
-function Carousel({ children }: CarouselProps) {
+function Carousel({ children, maxChildren }: CarouselProps) {
   const [isLessThanMd, isLessThanLg] = useMediaQuery(['(max-width: 760px)', '(max-width: 1280px)'])
-
-  const settings: Settings = React.useMemo(
-    () => ({
-      dots: false,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      nextArrow: !isLessThanLg && <CustomArrow aria-label="rightArrow" direction="right" />,
-      prevArrow: !isLessThanLg && <CustomArrow aria-label="leftArrow" direction="left" />,
-      responsive: [
-        {
-          breakpoint: 1537,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-          },
-        },
-        {
-          breakpoint: 961,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1,
-          },
-        },
-        {
-          breakpoint: 760,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
-        },
-      ],
-    }),
-    [isLessThanLg]
-  )
+  const slidesPerView = useBreakpointValue([1, 2, 2, 3, maxChildren || 4])
+  const [controlledSwiper, setControlledSwiper] = React.useState<Swiper>()
+  const count = React.Children.count(children)
 
   return (
-    <Box w={'full'} px={{ sm: 0 }}>
-      <Slider {...settings}>{children}</Slider>
+    <Box w={'full'} px={{ sm: 0 }} position="relative">
+      <ReactSwiper
+        spaceBetween={16}
+        slidesPerView={slidesPerView}
+        modules={[Controller]}
+        onSwiper={setControlledSwiper}
+        controller={{ control: controlledSwiper }}
+      >
+        {children}
+        {/* <CustomArrow aria-label="leftArrow" direction="left" /> */}
+      </ReactSwiper>
+      {!isLessThanLg && count > 3 && (
+        <>
+          <CustomArrow
+            onClick={() => controlledSwiper?.slideNext()}
+            zIndex={999}
+            aria-label="rightArrow"
+            direction="right"
+          />
+          <CustomArrow
+            onClick={() => controlledSwiper?.slidePrev()}
+            zIndex={999}
+            aria-label="leftArrow"
+            direction="left"
+          />
+        </>
+      )}
     </Box>
   )
 }
-
-function CarouselItem({ children, ...rest }: BoxProps) {
-  return (
-    <Box py={2} px={{ sm: 0, md: 3 }} {...rest}>
-      {children}
-    </Box>
-  )
-}
-
-Carousel.Item = CarouselItem
 
 export { Carousel }
