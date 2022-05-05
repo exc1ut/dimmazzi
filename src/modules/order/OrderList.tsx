@@ -1,3 +1,4 @@
+import Empty from '@/ui/features/Status/Empty'
 import { Box, Container, Text, VStack } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
@@ -10,9 +11,9 @@ import { OrderListItem } from '../../ui/cards/OrderListItem'
 import { TabButton } from '../../ui/features/TabButton'
 import { PageMotion } from '../../ui/PageMotion'
 
-interface OrderListProps {}
+interface OrderListProps { }
 
-export default ({}) => {
+export default ({ }) => {
   const { t } = useTranslation()
   const [tabState, setTabState] = useState<'rigth' | 'left'>('left')
   const router = useRouter()
@@ -49,7 +50,7 @@ export default ({}) => {
             rightTab={t`Olib ketish`}
           />
           {isLoading && <AppLoader />}
-          {data &&
+          {data?.results.length ?
             data.results.map((v) => (
               <Box
                 as={motion.div}
@@ -66,7 +67,7 @@ export default ({}) => {
                   status={v.status === 'pending' ? 'pending' : 'finished'}
                 />
               </Box>
-            ))}
+            )) : <Empty />}
         </VStack>
       </Container>
     </PageMotion>

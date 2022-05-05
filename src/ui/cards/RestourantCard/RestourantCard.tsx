@@ -80,8 +80,8 @@ export const RestourantCard = (props: RestourantCardProps) => {
         image={props.image}
         shade={props.state === 'open' ? 'success' : 'warning'}
         status={getStatus(props.state)}
-        isLiked={props.isLiked}
-        onLike={() => { setLiked(!liked), props.onLike() }}
+        isLiked={liked}
+        onLike={() => { setLiked(!liked); props.onLike() }}
       />
       <HStack justifyContent={'space-between'} py={2} px={4}>
         <Text fontWeight={500} color={'pemium_dark.1000'} fontSize={'lg'}>

@@ -1,14 +1,20 @@
+import { EditProfileModal } from '@/modules/profile'
+import { useAuth } from '@/stores/useAuth'
 import { Avatar, Button, Center, Divider, HStack, Text, VStack } from '@chakra-ui/react'
+import { useModal } from '@ebay/nice-modal-react'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Cart } from './Cart'
 
-interface MobileDrawerContentProps {}
+interface MobileDrawerContentProps { }
 
-export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({}) => {
+export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => {
   const { t } = useTranslation()
-
+  const { push } = useRouter()
+  const { logout } = useAuth()
+  const editProfileModal = useModal(EditProfileModal)
   const menus = useMemo(
     () => [
       {
@@ -18,22 +24,27 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({}) => {
       {
         iconName: 'cart',
         name: t`Cart`,
+        link: '/cart'
       },
       {
         iconName: 'task',
         name: t`Product history`,
+        link: '/order'
       },
       {
         iconName: 'location',
         name: t`Location list`,
+        link: '/address'
       },
       {
         iconName: 'heart',
         name: t`Favorite restorans`,
+        link: '/restaurant/favourites/'
       },
       {
         iconName: 'logout',
         name: t`Log out`,
+
       },
     ],
     []
@@ -91,6 +102,17 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({}) => {
               justifyContent={'left'}
               variant="ghost"
               size={'lg'}
+              onClick={() => {
+                if (menu.link) {
+                  push(menu.link)
+                }
+                else if (menu.name === t`Log out`) {
+                  logout()
+                }
+                else if (menu.name === t`Profile`) {
+                  editProfileModal.show()
+                }
+              }}
             >
               {menu.name}
             </Button>

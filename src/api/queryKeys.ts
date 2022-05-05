@@ -6,4 +6,5 @@ export const queryKeys = {
   mealComboList: 'meal-combo-list',
   orderList: 'order-list',
   orderDetail: 'order-detail',
+  favouriteRestaurantList: 'favourite-restaurant-list',
 }

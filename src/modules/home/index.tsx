@@ -1,7 +1,7 @@
 import { Carousel } from '../../ui/features/Carousel/'
 import { HomeSearch } from '../../ui/features/HomeSearch'
 import { Box, Flex, Heading, VStack, Text, SimpleGrid, Skeleton, HStack } from '@chakra-ui/react'
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 import { useRestaurantListQuery } from '../../api/restaurant/useRestaurantListQuery'
@@ -19,7 +19,7 @@ interface HomeProps { }
 const Home: FunctionComponent<HomeProps> = () => {
   const { t } = useTranslation()
   const router = useRouter()
-  const [query_key, setQueryKey] = React.useState('')
+  const [query_key, setQueryKey] = useState('')
   const { latitude, longitude } = useLocation()
   const recommendedList = useRestaurantListQuery({
     latitude,
