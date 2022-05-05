@@ -14,13 +14,12 @@ import {
   IconButton,
 } from '@chakra-ui/react'
 import * as React from 'react'
-import { HeartOutlined, SmallStarIcon, Tick, CircleIcon } from '../../../img/icons/Icons'
 import { useTranslation } from 'react-i18next'
-import { NextImage } from '../../../ui/NextImage'
-import { RestaurantDetail } from '../../../api/restourant/useRestourantDetail'
-import { title } from 'process'
-import { getTime } from '../../../utils/getTime'
 import { motion } from 'framer-motion'
+import { RestaurantDetail } from '../../../../api/restourant/useRestourantDetail'
+import { HeartOutlined, SmallStarIcon, CircleIcon, Tick } from '../../../../img/icons/Icons'
+import { NextImage } from '../../../../ui/NextImage'
+import { getTime } from '../../../../utils/getTime'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type RestourantProps = RestaurantDetail
