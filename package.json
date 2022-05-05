@@ -40,6 +40,7 @@
 		"i18next-http-backend": "^1.4.0",
 		"i18next-parser": "^6.3.0",
 		"immer": "^9.0.12",
+		"lottie-react-web": "^2.2.2",
 		"msw": "^0.39.2",
 		"next": "^12.1.4",
 		"next-seo": "^5.4.0",
@@ -53,6 +54,7 @@
 		"react-query": "^3.38.0",
 		"react-slick": "^0.29.0",
 		"slick-carousel": "^1.8.1",
+		"swiper": "^8.1.4",
 		"zod": "^3.14.4",
 		"zustand": "^3.7.2"
 	},

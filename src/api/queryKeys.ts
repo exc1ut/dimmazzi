@@ -2,5 +2,8 @@ export const queryKeys = {
   currentUser: 'current_user',
   addressList: 'address_list',
   restaurantDetail: 'restaurant-detail',
-  maelComboList: 'meal-combo-list',
+  restaurantList: 'restaurant-list',
+  mealComboList: 'meal-combo-list',
+  orderList: 'order-list',
+  orderDetail: 'order-detail',
 }

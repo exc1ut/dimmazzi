@@ -27,26 +27,28 @@ export type CommonProps = {
   state: 'open' | 'closed'
   name: string
   star: string
-  distance: number
+  distance: number,
+  onLike: () => void
+
 }
 
 export type ConditionalProps =
   | {
-      isDeliverable: true
-      time: number
-      cost: number
-    }
+    isDeliverable: true
+    time: number
+    cost: number
+  }
   | {
-      isDeliverable?: false
-      time?: never
-      cost?: never
-    }
+    isDeliverable?: false
+    time?: never
+    cost?: never
+  }
 
 export type RestourantCardProps = CommonProps & ConditionalProps & StackProps
 
 export const RestourantCard = (props: RestourantCardProps) => {
   const { t } = useTranslation()
-
+  const [liked, setLiked] = React.useState(props.isLiked)
   const getStatus = React.useCallback(
     (status: RestourantCardProps['state']) => {
       switch (status) {
@@ -78,6 +80,8 @@ export const RestourantCard = (props: RestourantCardProps) => {
         image={props.image}
         shade={props.state === 'open' ? 'success' : 'warning'}
         status={getStatus(props.state)}
+        isLiked={props.isLiked}
+        onLike={() => { setLiked(!liked), props.onLike() }}
       />
       <HStack justifyContent={'space-between'} py={2} px={4}>
         <Text fontWeight={500} color={'pemium_dark.1000'} fontSize={'lg'}>

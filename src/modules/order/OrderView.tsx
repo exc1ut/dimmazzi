@@ -5,9 +5,11 @@ import { data } from 'msw/lib/types/context'
 import { useRouter } from 'next/router'
 import { type } from 'ramda'
 import { useTranslation } from 'react-i18next'
+import { useOrderDetailQuery } from '../../api/order/useOrderDetailQuery'
 import { CookIcon, CarIcon, MoneyIcon } from '../../img/icons/Icons'
 import { useCart } from '../../stores/useCart'
 import { AppBreadCrumb, BreadCrumb } from '../../ui/AppComponents/AppBreadCrumb'
+import { AppLoader } from '../../ui/AppComponents/AppLoader'
 import { MealListItem } from '../../ui/cards/MealListItem'
 import { PaymentOptions } from '../../ui/cards/PaymentOptions'
 import { ServiceDetails } from '../../ui/cards/ServiceDetails'
@@ -16,10 +18,11 @@ import { DeliveryAddress } from '../../ui/inputs/DeliveryAddress'
 import { PageMotion } from '../../ui/PageMotion'
 
 export default () => {
-  const { query } = useRouter()
+  const { query, push } = useRouter()
   const { id } = query
   const { meals } = useCart()
   const { t } = useTranslation()
+  const { data, isLoading, isSuccess } = useOrderDetailQuery(+id!)
 
   const breadCrumb: BreadCrumb[] = [
     {
@@ -31,6 +34,9 @@ export default () => {
       link: '/order',
     },
   ]
+
+  if (isLoading) return <AppLoader />
+  if (!isSuccess) return null
 
   return (
     <PageMotion>
@@ -47,6 +53,7 @@ export default () => {
             textTransform="uppercase"
             justifyContent={'flex-start'}
             pl={0}
+            onClick={() => push('/cart')}
           >{t`savatga qaytish`}</Button>
           <Text fontSize={'3xl'} fontWeight={700}>{`Buyurtma ID: ${id}`}</Text>
           <Text pt={4} color={'premium_dark.600'}>
@@ -62,14 +69,14 @@ export default () => {
           <Divider />
 
           <VStack py={4} spacing={2} w={'full'}>
-            {meals.map((v) => (
+            {data.products.map((v) => (
               <MealListItem
                 type="order"
-                imgSrc={v.image}
-                mealName={v.name}
+                imgSrc={v.meal.image}
+                mealName={v.meal.name}
                 price={v.price}
                 quantity={v.quantity}
-                key={v.mealId}
+                key={v.id}
               />
             ))}
           </VStack>
@@ -77,17 +84,25 @@ export default () => {
             <ServiceDetails
               icon={<CookIcon />}
               title={t`Tayyorlanish o’rtacha vaqti`}
-              value={'40 daqiqa'}
+              value={data.preparation_time + ''}
             />
             <Divider />
-            <ServiceDetails icon={<MoneyIcon />} title={t`Taom narxi`} value={`234`} />
+            <ServiceDetails
+              icon={<MoneyIcon />}
+              title={t`Taom narxi`}
+              value={data.meal_total_price}
+            />
             <ServiceDetails
               icon={<MoneyIcon />}
               title={t`Yetkazib berish narxi`}
-              value={`234234`}
+              value={data.delivery_price + ''}
             />
             <Divider />
-            <ServiceDetails icon={<MoneyIcon />} title={t`Umumiy to’lov`} value={`234234`} />
+            <ServiceDetails
+              icon={<MoneyIcon />}
+              title={t`Umumiy to’lov`}
+              value={data.total_price}
+            />
           </VStack>
         </VStack>
       </Container>

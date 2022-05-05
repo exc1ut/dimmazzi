@@ -11,13 +11,13 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 import { Content } from './Content'
+import { IMealType } from '../../../api/meal/IMealType.interface'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type MealModalCardProps = {
   title: string
-  price: number
   image: string
-  types?: string[]
+  types: IMealType[]
 }
 
 export const MealModalCard = NiceModal.create<MealModalCardProps>((props) => {

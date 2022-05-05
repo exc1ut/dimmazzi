@@ -1,8 +1,11 @@
 import { Box, Container, Text, VStack } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useOrderListQuery } from '../../api/order/useOrderLIstQuery'
 import { AppBreadCrumb, BreadCrumb } from '../../ui/AppComponents/AppBreadCrumb'
+import { AppLoader } from '../../ui/AppComponents/AppLoader'
 import { OrderListItem } from '../../ui/cards/OrderListItem'
 import { TabButton } from '../../ui/features/TabButton'
 import { PageMotion } from '../../ui/PageMotion'
@@ -13,6 +16,9 @@ export default ({}) => {
   const { t } = useTranslation()
   const [tabState, setTabState] = useState<'rigth' | 'left'>('left')
   const router = useRouter()
+  const { data, isLoading, isSuccess } = useOrderListQuery(
+    tabState === 'left' ? 'delivery' : 'pick_up'
+  )
 
   const breadCrumb: BreadCrumb[] = [
     {
@@ -42,16 +48,25 @@ export default ({}) => {
             rightHandle={() => setTabState('rigth')}
             rightTab={t`Olib ketish`}
           />
-          {new Array(4).fill(null).map((v) => (
-            <Box w="full" cursor={'pointer'} onClick={() => router.push('/order/123432142')}>
-              <OrderListItem
-                date={new Date().toLocaleDateString()}
-                orderId={123432142}
-                price={23423}
-                status={'finished'}
-              />
-            </Box>
-          ))}
+          {isLoading && <AppLoader />}
+          {data &&
+            data.results.map((v) => (
+              <Box
+                as={motion.div}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                w="full"
+                cursor={'pointer'}
+                onClick={() => router.push(`/order/${v.id}`)}
+              >
+                <OrderListItem
+                  date={new Date(v.created_at).toLocaleDateString()}
+                  orderId={v.id}
+                  price={+v.total_price}
+                  status={v.status === 'pending' ? 'pending' : 'finished'}
+                />
+              </Box>
+            ))}
         </VStack>
       </Container>
     </PageMotion>

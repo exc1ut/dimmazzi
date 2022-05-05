@@ -19,7 +19,13 @@ export const Footer: React.FC<FooterProps> = ({ onAdd, price, title, children })
         <Text verticalAlign={'baseline'} fontSize={'1.3em'} fontWeight={'700'}>
           {price}
         </Text>
-        <IconButton colorScheme="premium_red" size={'sm'} aria-label="add" icon={<AddIcon />} />
+        <IconButton
+          onClick={onAdd}
+          colorScheme="premium_red"
+          size={'sm'}
+          aria-label="add"
+          icon={<AddIcon />}
+        />
       </HStack>
     </Box>
   )
