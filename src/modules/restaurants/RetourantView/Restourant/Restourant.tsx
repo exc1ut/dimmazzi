@@ -45,35 +45,7 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
           borderColor={'white'}
           borderWidth={4}
         />
-        <Box position="absolute" zIndex={100} right="0px" h="100%">
-          <Flex
-            direction="column"
-            align="flex-end"
-            height="100%"
-            padding={small ? '.8rem' : '1.5rem'}
-            justify="space-between"
-          >
-            <IconButton
-              aria-label="button"
-              boxSize={12}
-              borderRadius="50%"
-              bgColor="white"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              _hover={{
-                bgColor: 'premium_red.200',
-              }}
-              _active={{
-                bgColor: 'premium_red.400',
-              }}
-            >
-              <Icon as={HeartOutlined} color="red" w="1.3em" h="1.5em" />
-            </IconButton>
 
-            <Button bgColor="premium_green.1000">{props.is_open ? t('Ochiq') : t`Yopiq`}</Button>
-          </Flex>
-        </Box>
         <NextImage
           filter="brightness(0.6)"
           src={props.background.file}
@@ -83,6 +55,40 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
           objectFit="cover"
           borderRadius="0.5rem"
         />
+
+        <Box position="absolute" top={0} right="0px" h="100%">
+          <Flex
+            direction="column"
+            align="flex-end"
+            height="100%"
+            padding={small ? '.8rem' : '1.5rem'}
+            justify="space-between"
+          >
+            <IconButton
+              as={motion.div}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.8 }}
+              cursor={'pointer'}
+              aria-label="button"
+              boxSize={12}
+              borderRadius="50%"
+              bgColor="white"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              _hover={{
+                bgColor: 'none',
+              }}
+              _active={{
+                bgColor: 'none',
+              }}
+            >
+              <Icon as={HeartOutlined} color="red" w="1.3em" h="1.5em" />
+            </IconButton>
+
+            <Button bgColor="premium_green.1000">{props.is_open ? t('Ochiq') : t`Yopiq`}</Button>
+          </Flex>
+        </Box>
       </Box>
       <Box padding={small ? '0' : '0px 2.5rem'} w="100%">
         <VStack>
@@ -157,7 +163,6 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
               )}
               {props.has_delivery && (
                 <Button
-                  size="md"
                   variant="outline"
                   borderColor="premium_green.900"
                   color="premium_green.900"

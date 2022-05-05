@@ -15,7 +15,7 @@ import { Favorite } from './Favorite/Favorite'
 import { Recommended } from './Recommended/Recommended'
 import { AllRestaurants } from './AllRestaurants/AllRestaurants'
 
-interface HomeProps {}
+interface HomeProps { }
 
 const Home: FunctionComponent<HomeProps> = () => {
   const { t } = useTranslation()
@@ -23,7 +23,7 @@ const Home: FunctionComponent<HomeProps> = () => {
 
   return (
     <PageMotion>
-      <VStack marginTop="1.5rem" spacing={14} marginBottom="1.5rem">
+      <VStack spacing={14} marginBottom="1.5rem">
         <HomeSearch />
         <Recommended />
         <AllRestaurants />
