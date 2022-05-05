@@ -12,11 +12,11 @@ export const CustomArrow: React.FC<CustomArrowProps> = ({ style, direction, ...r
     switch (direction) {
       case 'right':
         return {
-          right: -12,
+          right: -16,
         }
       default:
         return {
-          left: -12,
+          left: -16,
         }
     }
   }, [direction])

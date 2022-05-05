@@ -1,11 +1,13 @@
-.slick-list {
-  padding: 10px 0px !important;
+.swiper-container {
+  overflow: visible;
 }
-
-.slick-slider {
-  padding: 10px 0px !important;
+.swiper-slide {
+  opacity: 0;
+  visibility: hidden;
 }
-
-.slick-slide {
-  margin-right: 1.5rem;
+.swiper-slide.swiper-slide-active,
+.swiper-slide.swiper-slide-next,
+.swiper-slide.swiper-slide-prev {
+  opacity: 1;
+  visibility: visible;
 }
