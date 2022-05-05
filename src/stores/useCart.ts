@@ -2,92 +2,162 @@ import produce from 'immer'
 import { DRAFT_STATE } from 'immer/dist/internal'
 import { SetState } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { createImmerStore, createStore, StoreImmerType, StoreType } from '../lib/zustand'
+import { IMeal } from '../api/meal/IMeal.interface'
+import { IMealType } from '../api/meal/IMealType.interface'
+import { createStore, StoreType } from '../lib/zustand'
+import { createStandaloneToast } from '@chakra-ui/react'
+import chakraTheme from '../theme/chakraTheme'
+import i18n from '../lib/i18n'
+
+const toast = createStandaloneToast({
+  theme: chakraTheme,
+})
+
+const { t } = i18n
 
 // Todo handle same product
-export type MealType = {
-  mealId: number
+export interface ICartMeal {
+  id: number
+  title: string
+  category: number
   image: string
-  name: string
-  price: number
+  meal_type: IMealType
+  total_price: number
   quantity: number
 }
 
+export interface ICartCombo {
+  id: number
+  title: string
+  price: number
+  total_price: number
+  quantity: number
+  image: string
+}
+
+export interface ICartRestaurant {
+  restourantId: number
+  preparingTime: string
+  deliveryTime: number
+  deliveryPrice: number
+}
+
 export interface ICart {
-  type: 'pickup' | 'delivery'
-  meals: MealType[]
+  type: 'pick_up' | 'delivery'
+  meals: ICartMeal[]
+  combos: ICartCombo[]
   restourantId?: number
   preparingTime: string
   deliveryTime: number
   deliveryPrice: number
-  addMeal: (meal: MealType) => void
-  changeType: (type: 'pickup' | 'delivery') => void
+  addMeal: (meal: ICartMeal, restaurant: ICartRestaurant) => void
+  changeType: (type: 'pick_up' | 'delivery') => void
   removeMeal: (mealId: number) => void
   increaseMealQuantity: (mealId: number) => void
   decreaseMealQuantity: (mealId: number) => void
+  addCombo: (combo: ICartCombo) => void
+  removeCombo: (mealId: number) => void
+  increaseComboQuantity: (mealId: number) => void
+  decreaseComboQuantity: (mealId: number) => void
   reset: () => void
 }
-
-const dummyData: MealType[] = [
-  {
-    image: 'https://static.onecms.io/wp-content/uploads/sites/44/2019/08/26231113/5783153.jpg',
-    mealId: 1,
-    name: 'Stake',
-    price: 25000,
-    quantity: 1,
-  },
-  {
-    image:
-      'https://assets-global.website-files.com/5d03b4e13011831ae4624b37/61ff6b8686c6708c070e7d41_production-meal-image-e4122aa8-0fe7-4854-b6f5-e27e0c5be918.jpeg',
-    mealId: 2,
-    name: 'Burger',
-    price: 35000,
-    quantity: 2,
-  },
-  {
-    image: 'https://static.toiimg.com/photo/76942221.cms',
-    mealId: 3,
-    name: 'Hot-dog',
-    price: 45000,
-    quantity: 2,
-  },
-]
 
 const store: StoreType<ICart> = (set, get) => ({
   type: 'delivery',
   deliveryPrice: 12,
   deliveryTime: 12,
-  meals: dummyData,
+  meals: [],
+  combos: [],
   preparingTime: '',
-  addMeal: (meal) =>
+  addMeal: (meal, { deliveryPrice, deliveryTime, preparingTime, restourantId }: ICartRestaurant) =>
     set(
       produce<ICart>((state) => {
-        state.meals.push(meal)
+        const currentRestaurantId = get().restourantId
+
+        if (!currentRestaurantId || restourantId === currentRestaurantId) {
+          const existingMealIndex = get().meals.findIndex((v) => v.id === meal.id)
+          if (existingMealIndex > -1) {
+            state.meals[existingMealIndex] = meal
+          } else {
+            state.meals.push(meal)
+            state.deliveryPrice = deliveryPrice
+            state.deliveryTime = deliveryTime
+            state.preparingTime = preparingTime
+            state.restourantId = restourantId
+          }
+        } else {
+          toast({
+            title: t`Error while adding to card`,
+            description: t`You can add meals only from a single restaurant!`,
+            status: 'error',
+          })
+        }
       })
     ),
   removeMeal(mealId) {
-    set(
-      produce<ICart>((state) => {
-        const filteredMeals = get().meals.filter((meal) => meal.mealId !== mealId)
-        state.meals = filteredMeals
-      })
-    )
+    const filteredMeals = get().meals.filter((meal) => meal.id !== mealId)
+    set((state) => ({ ...state, meals: filteredMeals }))
   },
   increaseMealQuantity(mealId) {
     set(
       produce<ICart>((state) => {
-        const mealIndex = get().meals.findIndex((v) => v.mealId === mealId)
+        const mealIndex = get().meals.findIndex((v) => v.id === mealId)
         state.meals[mealIndex]!.quantity++
+        state.meals[mealIndex]!.total_price += +state.meals[mealIndex]!.meal_type.price
       })
     )
   },
   decreaseMealQuantity(mealId) {
     set(
       produce<ICart>((state) => {
-        const mealIndex = get().meals.findIndex((v) => v.mealId === mealId)
-        const meal = state.meals[mealIndex]!
+        const mealIndex = get().meals.findIndex((v) => v.id === mealId)
+        const meal = get().meals[mealIndex]!
         if (meal.quantity > 1) {
           state.meals[mealIndex]!.quantity--
+          state.meals[mealIndex]!.total_price -= +state.meals[mealIndex]!.meal_type.price
+        } else {
+          const filtered = get().meals.filter((v) => v.id !== mealId)
+          state.meals = filtered
+        }
+      })
+    )
+    const meals = get().meals
+    const combos = get().combos
+    if (meals.length === 0 && combos.length === 0) {
+      get().reset()
+    }
+  },
+  addCombo: (combo) =>
+    set(
+      produce<ICart>((state) => {
+        state.combos.push(combo)
+      })
+    ),
+  removeCombo(comboId) {
+    set(
+      produce<ICart>((state) => {
+        const filteredCombos = get().combos.filter((combo) => combo.id !== comboId)
+        state.combos = filteredCombos
+      })
+    )
+  },
+  increaseComboQuantity(comboId) {
+    set(
+      produce<ICart>((state) => {
+        const comboIndex = get().combos.findIndex((v) => v.id === comboId)
+        state.combos[comboIndex]!.quantity++
+      })
+    )
+  },
+  decreaseComboQuantity(comboId) {
+    set(
+      produce<ICart>((state) => {
+        const comboIndex = get().combos.findIndex((v) => v.id === comboId)
+        const combo = state.combos[comboIndex]!
+        if (combo.quantity > 1) {
+          state.combos[comboIndex]!.quantity--
+        } else {
+          get().removeCombo(comboId)
         }
       })
     )
@@ -102,17 +172,22 @@ const store: StoreType<ICart> = (set, get) => ({
       deliveryTime: 0,
       meals: [],
       preparingTime: '',
+      combos: [],
+      restourantId: undefined,
     })
   },
 })
 
 export const totalMealCostSelector = (state: ICart) => {
-  const totalCost = state.meals.reduce((prev, cur) => (prev += cur.price * cur.quantity), 0)
-  return totalCost
+  const totalMealCost = state.meals.reduce((prev, cur) => (prev += cur.total_price), 0)
+  const totalComboCost = state.combos.reduce((prev, cur) => (prev += cur.total_price), 0)
+  return totalComboCost + totalMealCost
 }
 
 export const totalMealSelector = (state: ICart) => {
-  return state.meals.reduce((prev) => (prev += 1), 0)
+  const totalMeal = state.meals.reduce((prev) => (prev += 1), 0)
+  const totalCombo = state.combos.reduce((prev) => (prev += 1), 0)
+  return totalCombo + totalMeal
 }
 
 export const useCart = createStore(

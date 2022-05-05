@@ -1,10 +1,16 @@
 import { Box, Button, Divider, Flex, HStack, SimpleGrid, Text, VStack } from '@chakra-ui/react'
+import { useModal } from '@ebay/nice-modal-react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
+import { IMeal } from '../../api/meal/IMeal.interface'
 import { useRestourantDetail } from '../../api/restourant/useRestourantDetail'
+import { mockProduct } from '../../mocks/mockProduct'
+import { useCart } from '../../stores/useCart'
 import { AppBreadCrumb, BreadCrumb } from '../../ui/AppComponents/AppBreadCrumb'
 import { AppLoader } from '../../ui/AppComponents/AppLoader'
 import { MealCard } from '../../ui/cards/MealCard'
+import { MealModalCard } from '../../ui/cards/MealModalCard'
+import { MealModalDto } from '../../ui/cards/MealModalCard/modal.dto'
 import { Carousel } from '../../ui/features/Carousel'
 import { PageMotion } from '../../ui/PageMotion'
 import { getTime } from '../../utils/getTime'
@@ -15,6 +21,8 @@ export default () => {
   const { id } = router.query
   const { data, isLoading, isSuccess } = useRestourantDetail(+id!)
   const { t } = useTranslation()
+  const modal = useModal(MealModalCard)
+  const { addMeal } = useCart()
 
   const breadCrumb: BreadCrumb[] = [
     {
@@ -29,6 +37,33 @@ export default () => {
 
   if (isLoading) return <AppLoader />
   if (!isSuccess) return null
+
+  const handleAddMeal = async (meal: IMeal) => {
+    const response = (await modal.show({
+      image: meal.image,
+      title: meal.title,
+      types: meal.meal_types,
+    })) as MealModalDto
+    if (response) {
+      addMeal(
+        {
+          category: meal.category,
+          id: meal.id,
+          image: meal.image,
+          meal_type: response.type,
+          quantity: response.quantity,
+          title: meal.title,
+          total_price: response.totalPrice,
+        },
+        {
+          deliveryPrice: data.additional.approximate_delivery_price,
+          deliveryTime: data.additional.approximate_delivery_time,
+          preparingTime: data.average_cooking_time,
+          restourantId: data.id,
+        }
+      )
+    }
+  }
 
   return (
     <PageMotion>
@@ -74,7 +109,7 @@ export default () => {
                 <MealCard
                   image="http://45.12.214.152/media/418513-svetik.2022-04-18.06-34-07.jpg"
                   name="Burger"
-                  onAdd={() => {}}
+                  onAdd={() => handleAddMeal(mockProduct)}
                   price={25000}
                   key={index}
                 />

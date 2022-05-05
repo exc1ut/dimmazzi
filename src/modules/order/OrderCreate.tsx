@@ -4,8 +4,14 @@ import { useModal } from '@ebay/nice-modal-react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { undefined } from 'zod'
 import { IAddress } from '../../api/address/IAddress.interface'
 import { useAddressQuery } from '../../api/address/useAddressQuery'
+import {
+  IOrderProduct,
+  IOrderCreate,
+  useOrderCreateMutation,
+} from '../../api/order/useOrderCreateMutation'
 import { CarIcon, CookIcon, MoneyIcon } from '../../img/icons/Icons'
 import { totalMealCostSelector, useCart } from '../../stores/useCart'
 import { AppBreadCrumb, BreadCrumb } from '../../ui/AppComponents/AppBreadCrumb'
@@ -15,17 +21,20 @@ import { PaymentOptions } from '../../ui/cards/PaymentOptions'
 import { ServiceDetails } from '../../ui/cards/ServiceDetails'
 import { DeliveryAddress } from '../../ui/inputs/DeliveryAddress'
 import { Map } from '../../ui/Map'
+import address from '../address'
 import { StatusAccepted } from './StatusAccepted'
 
 export default ({}) => {
-  const [paymentOption, setPaymentOption] = useState<'credit' | 'cash'>('credit')
+  const [paymentOption, setPaymentOption] = useState<'pay_me_uz' | 'cash' | 'click_uz'>('pay_me_uz')
+  const [address, setAddress] = useState<IAddress>()
   const { t } = useTranslation()
   const { query } = useRouter()
-  const { meals, type } = useCart()
+  const { meals, type, deliveryPrice, deliveryTime, preparingTime, reset } = useCart()
   const totalPrice = useCart(totalMealCostSelector)
   const { data, isLoading, isSuccess } = useAddressQuery()
   const modal = useModal(Map)
   const statusModal = useModal(StatusAccepted)
+  const mutation = useOrderCreateMutation()
   const { orderId } = query
 
   const breadCrumb: BreadCrumb[] = [
@@ -47,7 +56,7 @@ export default ({}) => {
   if (!isSuccess) return null
 
   const onAddressChange = (address: IAddress) => {
-    console.log(address)
+    setAddress(address)
   }
 
   const onAddressAdd = () => {
@@ -55,7 +64,37 @@ export default ({}) => {
   }
 
   const onSubmit = () => {
-    statusModal.show()
+    if (type === 'delivery' && !address) return
+
+    const orderProduct: IOrderProduct[] = meals.map((v) => ({
+      meal_type: v.meal_type.id,
+      price: v.total_price,
+      quantity: v.quantity,
+      meal: v.id,
+      combo: null,
+    }))
+
+    const preperationTime = +preparingTime.split(':')?.[1]!
+
+    const dto: IOrderCreate = {
+      address: address!.id,
+      delivery_price: deliveryPrice,
+      delivery_type: type,
+      meal_total_price: totalPrice,
+      payment_type: paymentOption,
+      preparation_time: preperationTime,
+      products: orderProduct,
+      total_price: deliveryPrice + totalPrice,
+    }
+
+    mutation.mutate(dto, {
+      onSuccess: async (data) => {
+        await statusModal.show({
+          order_id: data.data.order_id,
+        })
+        reset()
+      },
+    })
   }
 
   return (
@@ -81,23 +120,26 @@ export default ({}) => {
               <MealListItem
                 type="order"
                 imgSrc={v.image}
-                mealName={v.name}
-                price={v.price}
+                mealName={v.title}
+                price={v.total_price}
                 quantity={v.quantity}
-                key={v.mealId}
+                key={v.id}
               />
             ))}
           </VStack>
-          <VStack py={4} alignItems={'flex-start'} spacing={6} w="full">
-            <Text fontWeight={700} fontSize={'xl'}>
-              {t`Адрес доставки`}:
-            </Text>
-            <DeliveryAddress
-              addresses={data.results}
-              onAddressChange={onAddressChange}
-              onAddressAdd={onAddressAdd}
-            />
-          </VStack>
+          {type === 'delivery' && (
+            <VStack py={4} alignItems={'flex-start'} spacing={6} w="full">
+              <Text fontWeight={700} fontSize={'xl'}>
+                {t`Адрес доставки`}:
+              </Text>
+              <DeliveryAddress
+                addresses={data.results}
+                onAddressChange={onAddressChange}
+                onAddressAdd={onAddressAdd}
+              />
+            </VStack>
+          )}
+
           <VStack spacing={4} w={'full'}>
             <ServiceDetails
               icon={<CookIcon />}
@@ -105,26 +147,42 @@ export default ({}) => {
               value={'40 daqiqa'}
             />
             {type === 'delivery' && (
-              <ServiceDetails
-                icon={<CarIcon />}
-                title={t`Yetkazib berish`}
-                value={'12 daqiqada / 8,000'}
-              />
+              <>
+                <ServiceDetails
+                  icon={<CarIcon />}
+                  title={t`Yetkazib berish`}
+                  value={'12 daqiqada / 8,000'}
+                />
+                <ServiceDetails
+                  icon={<MoneyIcon />}
+                  title={t`Taom narxi`}
+                  value={`${totalPrice}`}
+                />
+                <ServiceDetails
+                  icon={<MoneyIcon />}
+                  title={t`Yetkazib berish narxi`}
+                  value={`${totalPrice}`}
+                />
+                <Divider />
+              </>
             )}
-            <Divider />
-            <ServiceDetails icon={<MoneyIcon />} title={t`Taom narxi`} value={`${totalPrice}`} />
-            <ServiceDetails
-              icon={<MoneyIcon />}
-              title={t`Yetkazib berish narxi`}
-              value={`${totalPrice}`}
-            />
+
             <Divider />
             <ServiceDetails icon={<MoneyIcon />} title={t`Umumiy to’lov`} value={`${totalPrice}`} />
           </VStack>
           <HStack py={4} spacing={6}>
             <PaymentOptions
-              onClick={() => setPaymentOption('credit')}
-              isActive={paymentOption === 'credit'}
+              onClick={() => setPaymentOption('pay_me_uz')}
+              isActive={paymentOption === 'pay_me_uz'}
+              description={t`To’lov O’zbek so’mida
+							kurer tomonidan 
+							qabul qilinadi.`}
+              icon={MoneyIcon}
+              title={t`Naqt to’layman`}
+            />
+            <PaymentOptions
+              onClick={() => setPaymentOption('click_uz')}
+              isActive={paymentOption === 'click_uz'}
               description={t`To’lov O’zbek so’mida
 							kurer tomonidan 
 							qabul qilinadi.`}
