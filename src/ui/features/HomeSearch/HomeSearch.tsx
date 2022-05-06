@@ -119,7 +119,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
       <Popover isOpen={isOpen && !!response.data?.results.length} autoFocus={false} size='md'>
         <PopoverTrigger >
 
-          <InputGroup position="absolute" w="50%" zIndex={modalIsOpen ? 2000 : 1}>
+          <InputGroup position="absolute" w="50%" zIndex={modalIsOpen ? 2000 : 0}>
             <Input filter="invert(-70%)"
               placeholder={t`Search meal or restaurants`}
               autoComplete="off" onFocusCapture={() => { setModalIsOpen(true) }} ref={inputRef} onChange={handleChange} variant="solid" bgColor="white" />

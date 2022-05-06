@@ -4,7 +4,8 @@ export const queryKeys = {
   restaurantDetail: 'restaurant-detail',
   restaurantList: 'restaurant-list',
   mealComboList: 'meal-combo-list',
+  mealList: 'meal-list',
   orderList: 'order-list',
   orderDetail: 'order-detail',
-  favouriteRestaurantList: 'favourite-restaurant-list',
+  favoriteRestaurant: 'favorite-restaurant',
 }

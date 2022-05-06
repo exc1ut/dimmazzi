@@ -8,7 +8,7 @@ const fetcher = (dto: IRestaurantListDto) => {
 }
 
 const useFavouriteRestaurantList = (dto: IRestaurantListDto) => {
-  return useQuery([queryKeys.favouriteRestaurantList], () =>
+  return useQuery([queryKeys.favoriteRestaurant], () =>
     fetcher({ latitude: dto.latitude, longitude: dto.longitude })
   )
 }

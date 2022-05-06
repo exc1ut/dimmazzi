@@ -2,6 +2,7 @@ import { useQuery } from 'react-query'
 import jwtAxios from '../../services/jwtAxios'
 import { queryKeys } from '../queryKeys'
 
+export type OrderStatus = 'pending' | 'processing' | 'ready' | 'finished'
 export interface IOrderDetail {
   id: number
   address: Address
@@ -11,6 +12,7 @@ export interface IOrderDetail {
   delivery_price: number
   meal_total_price: string
   total_price: string
+  status: OrderStatus
   products: Product[]
 }
 
@@ -40,5 +42,7 @@ const fetcher = async (id: number) => {
 }
 
 export const useOrderDetailQuery = (id: number) => {
-  return useQuery([queryKeys.orderDetail, id], () => fetcher(id))
+  return useQuery([queryKeys.orderDetail, id], () => fetcher(id), {
+    refetchInterval: 60 * 1000,
+  })
 }

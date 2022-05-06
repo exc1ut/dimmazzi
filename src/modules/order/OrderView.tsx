@@ -4,6 +4,7 @@ import { t } from 'i18next'
 import { data } from 'msw/lib/types/context'
 import { useRouter } from 'next/router'
 import { type } from 'ramda'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOrderDetailQuery } from '../../api/order/useOrderDetailQuery'
 import { CookIcon, CarIcon, MoneyIcon } from '../../img/icons/Icons'
@@ -38,6 +39,19 @@ export default () => {
   if (isLoading) return <AppLoader />
   if (!isSuccess) return null
 
+  const getStatus = () => {
+    switch (data.status) {
+      case 'pending':
+        return 0
+      case 'processing':
+        return 1
+      case 'ready':
+        return 2
+      case 'finished':
+        return 3
+    }
+  }
+
   return (
     <PageMotion>
       <Box>
@@ -61,7 +75,7 @@ export default () => {
           </Text>
           <Divider />
           <Box pt={3}>
-            <OrderProgress />
+            <OrderProgress activeStep={getStatus()} />
           </Box>
           <Text pt={4} color={'premium_dark.600'}>
             {t`Buyurtma ma’lumotlari`}:
