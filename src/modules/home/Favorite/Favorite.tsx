@@ -1,4 +1,4 @@
-import { VStack, Flex, Heading, Text } from '@chakra-ui/react'
+import { VStack, Flex, Heading, Text, Box } from '@chakra-ui/react'
 import { t } from 'i18next'
 import Link from 'next/link'
 import router from 'next/router'
@@ -19,18 +19,21 @@ export const Favorite: React.FC<FavoriteProps> = ({}) => {
   const renderItems = () =>
     data.results.map((v) => (
       <SwiperSlide>
-        <RestourantCard
-          image={v.background.file}
-          isLiked={v.is_favourite}
-          name={v.title}
-          star={v.rating}
-          distance={v.distance}
-          state={v.is_open ? 'open' : 'closed'}
-          isDeliverable={v.has_delivery}
-          cost={v.additional.approximate_delivery_price}
-          time={v.additional.approximate_delivery_time}
-          onClick={() => router.push(`/restaurant/${v.id}}]`)}
-        />
+        <Box p={2.5}>
+          <RestourantCard
+            restaurantId={v.id}
+            image={v.background.file}
+            isLiked={v.is_favourite}
+            name={v.title}
+            star={v.rating}
+            distance={v.distance}
+            state={v.is_open ? 'open' : 'closed'}
+            isDeliverable={v.has_delivery}
+            cost={v.additional.approximate_delivery_price}
+            time={v.additional.approximate_delivery_time}
+            onClick={() => router.push(`/restaurant/${v.id}`)}
+          />
+        </Box>
       </SwiperSlide>
     ))
 
@@ -42,7 +45,7 @@ export const Favorite: React.FC<FavoriteProps> = ({}) => {
           <Link href="/restaurant/favourites">{t`All`}</Link>
         </Text>
       </Flex>
-      <Carousel>{renderItems()}</Carousel>
+      <Carousel maxChildren={3}>{renderItems()}</Carousel>
     </VStack>
   )
 }

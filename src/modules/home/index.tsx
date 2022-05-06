@@ -24,6 +24,7 @@ const Home: FunctionComponent<HomeProps> = () => {
     <PageMotion>
       <VStack spacing={14} marginBottom="1.5rem">
         <HomeSearch />
+        <Favorite />
         <Recommended />
         <AllRestaurants />
       </VStack>

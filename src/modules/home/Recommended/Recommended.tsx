@@ -24,7 +24,7 @@ export const Recommended: React.FC<RecommendedProps> = ({}) => {
       <Flex alignSelf="center" w={'full'} justify="space-between">
         <Heading fontSize="1.5rem" lineHeight="2rem">{t`Recomended Restaunrants`}</Heading>
         <Text fontSize="1.25rem" color="premium_red.1000">
-          <Link href="/restaurant/favourites">
+          <Link href="/restaurant/recommended">
             <a>{t`All`}</a>
           </Link>
         </Text>
@@ -38,6 +38,7 @@ export const Recommended: React.FC<RecommendedProps> = ({}) => {
               <SwiperSlide>
                 <Box px={2.5} py={2.5}>
                   <RestourantCard
+                    restaurantId={v.id}
                     image={v.background.file}
                     isLiked={v.is_favourite}
                     name={v.title}

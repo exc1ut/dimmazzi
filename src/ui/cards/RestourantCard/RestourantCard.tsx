@@ -5,21 +5,12 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useQueryClient } from 'react-query'
+import { queryKeys } from '../../../api/queryKeys'
+import { useAddRestaurantToFavouriteMutation } from '../../../api/restaurant/useAddRestaurantToFavouriteMutation'
 import { HeartFill, Start, Tick } from '../../../img/icons/Icons'
 import { currencyFormatter, formatCurrency } from '../../../utils/currency'
 import { Head } from './Head'
-
-const StyledImage = styled(Image)`
-  width: 1em;
-  height: 1em;
-  display: inline-block;
-  line-height: 1em;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  color: currentColor;
-  vertical-align: middle;
-`
 
 export type CommonProps = {
   image: string
@@ -27,28 +18,29 @@ export type CommonProps = {
   state: 'open' | 'closed'
   name: string
   star: string
-  distance: number,
-  onLike: () => void
-
+  distance: number
+  restaurantId: number
 }
 
 export type ConditionalProps =
   | {
-    isDeliverable: true
-    time: number
-    cost: number
-  }
+      isDeliverable: true
+      time: number
+      cost: number
+    }
   | {
-    isDeliverable?: false
-    time?: never
-    cost?: never
-  }
+      isDeliverable?: false
+      time?: never
+      cost?: never
+    }
 
 export type RestourantCardProps = CommonProps & ConditionalProps & StackProps
 
 export const RestourantCard = (props: RestourantCardProps) => {
   const { t } = useTranslation()
   const [liked, setLiked] = React.useState(props.isLiked)
+  const mutation = useAddRestaurantToFavouriteMutation()
+  const queryClient = useQueryClient()
   const getStatus = React.useCallback(
     (status: RestourantCardProps['state']) => {
       switch (status) {
@@ -60,6 +52,24 @@ export const RestourantCard = (props: RestourantCardProps) => {
     },
     [props.state]
   )
+
+  React.useEffect(() => {
+    setLiked(props.isLiked)
+  }, [props.isLiked])
+
+  const handleLike = () => {
+    setLiked(!liked)
+    mutation.mutate(props.restaurantId, {
+      onError: () => {
+        setLiked((prev) => !prev)
+      },
+      onSuccess: () => {
+        queryClient.refetchQueries(queryKeys.favoriteRestaurant)
+        queryClient.refetchQueries(queryKeys.restaurantList)
+        queryClient.refetchQueries(queryKeys.restaurantDetail)
+      },
+    })
+  }
 
   return (
     <Stack
@@ -81,7 +91,7 @@ export const RestourantCard = (props: RestourantCardProps) => {
         shade={props.state === 'open' ? 'success' : 'warning'}
         status={getStatus(props.state)}
         isLiked={liked}
-        onLike={() => { setLiked(!liked); props.onLike() }}
+        onLike={handleLike}
       />
       <HStack justifyContent={'space-between'} py={2} px={4}>
         <Text fontWeight={500} color={'pemium_dark.1000'} fontSize={'lg'}>
