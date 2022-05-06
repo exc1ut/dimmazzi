@@ -38,7 +38,7 @@ export const Header = () => {
   return (
     <Box borderBottomWidth={1} borderColor={'dark.10'} py={4}>
       {isLessThanLg ? (
-        <MobileHeader />
+        <MobileHeader handleLocation={handleLocation} handleAuth={handleAuth} />
       ) : (
         <DesktopHeader handleAuth={handleAuth} handleLocation={handleLocation} />
       )}
