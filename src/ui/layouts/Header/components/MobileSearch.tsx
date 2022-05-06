@@ -1,15 +1,18 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { IconButton, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import { ChangeEventHandler, FunctionComponent } from "react";
+import { useMobileStore } from "../useMobileStore";
 
 interface MobileSearchProps {
-  onInputChange: ChangeEventHandler<HTMLInputElement> | undefined;
+  //onInputChange: ChangeEventHandler<HTMLInputElement> | undefined;
 }
 
-const MobileSearch: FunctionComponent<MobileSearchProps> = ({ onInputChange }) => {
+const MobileSearch: FunctionComponent<MobileSearchProps> = ({ }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
-
+  const router = useRouter()
+  const { setSearch } = useMobileStore()
   React.useEffect(() => {
     inputRef?.current?.focus();
   }, [])
@@ -23,10 +26,14 @@ const MobileSearch: FunctionComponent<MobileSearchProps> = ({ onInputChange }) =
         _focus={{
           border: '1.5px solid #D13406',
         }}
-        onChange={onInputChange}
+        onChange={(e) => { setSearch(e.target.value); router.push("/search/mobile") }}
       />
       <InputRightElement>
-        <IconButton display={'flex'} justifyContent={'center'} alignItems={'center'} aria-label='search' backgroundColor="transparent" color="premium_dark.600">
+        <IconButton
+          _hover={{
+            backgroundColor: 'transparent',
+          }}
+          display={'flex'} justifyContent={'center'} alignItems={'center'} aria-label='search' backgroundColor="transparent" color="premium_dark.600">
           <SearchIcon boxSize={6} top='.6rem' />
         </IconButton>
       </InputRightElement>

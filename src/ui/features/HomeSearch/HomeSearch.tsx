@@ -10,6 +10,7 @@ import { resourceLimits } from "worker_threads";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { NextImage } from "@/ui/NextImage";
 import { useLocation } from "@/stores/useLocation";
+import Link from "next/link";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type HomeSearchProps = {}
@@ -130,8 +131,15 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
         </PopoverTrigger>
         <PopoverContent w={`${document.querySelector('input')?.offsetWidth}px` || "100%"}>
           {response?.data?.results.map(item => {
+            console.log("item", item);
+
             if (item?.title.match(value)) {
-              return <SearchCard img={item.logo.file} name={item.title} category="fastfood" />
+              return (<Link href={`/restaurant/${item.id}`}>
+                <a>
+                  <SearchCard img={item.logo.file} name={item.title} category="fastfood" />
+
+                </a>
+              </Link>)
             }
           })}
         </PopoverContent>
