@@ -7,5 +7,9 @@ export const queryKeys = {
   mealList: 'meal-list',
   orderList: 'order-list',
   orderDetail: 'order-detail',
+<<<<<<< HEAD
   favoriteRestaurant: 'favorite-restaurant',
+=======
+  favouriteRestaurantList: 'favourite-restaurant-list',
+>>>>>>> said_dev
 }

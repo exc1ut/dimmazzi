@@ -75,9 +75,13 @@ export const Restourant: React.FC<RestourantProps> = ({ imgSrc, status, logoSrc,
                 <Icon as={Tick} />
                 <Text fontSize={["0.8rem", "1em"]} textTransform="uppercase" marginLeft=".8rem "> {t`Olib ketish`} </Text>
               </Button>
-              <Button marginTop={["0.5rem ", "0"]}
+              <Button
+                marginTop={["0.5rem ", "0"]}
                 marginLeft={["0", "0.5rem"]}
-                fontSize={["0.8rem", ".8rem"]} variant="outline" borderColor="premium_green.1000" color="premium_green.1000">
+                fontSize={["0.8rem", ".8rem"]}
+                variant="outline"
+                borderColor="premium_green.1000"
+                color="premium_green.1000">
                 <Icon as={Tick} />
                 <Text textTransform="uppercase" marginLeft=".5rem "> Yetkazib berish </Text>
 

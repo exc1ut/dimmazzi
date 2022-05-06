@@ -1,3 +1,4 @@
+import Empty from '@/ui/features/Status/Empty'
 import { Box, Button, Container, Divider, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
@@ -12,9 +13,9 @@ import { TabButton } from '../../ui/features/TabButton'
 import { PageMotion } from '../../ui/PageMotion'
 import { getTime } from '../../utils/getTime'
 
-interface CartProps {}
+interface CartProps { }
 
-export const Cart: React.FC<CartProps> = ({}) => {
+export const Cart: React.FC<CartProps> = ({ }) => {
   const { t } = useTranslation()
   const {
     deliveryPrice,
@@ -52,16 +53,20 @@ export const Cart: React.FC<CartProps> = ({}) => {
       </Box>
       <Container maxW={'container.sm'}>
         <VStack mt={4} mb={20} spacing={6} w={'full'} alignItems="flex-start">
+
+
           <Text color={'premium_dark.1000'} fontWeight={700} fontSize={'3xl'}>{t`Savat`}</Text>
-          <TabButton
+          {meals.length && <TabButton
             leftTab={t`Yetkazib bering`}
             rightTab={t`O’zim olib ketaman`}
             active={type === 'delivery' ? 'left' : 'rigth'}
             leftHandle={() => changeType('delivery')}
             rightHandle={() => changeType('pick_up')}
           />
+          }
+
           <VStack spacing={2} py={2} w="full">
-            {meals.map((v) => (
+            {!meals.length ? <Empty /> : meals.map((v) => (
               <MealListItem
                 imgSrc={v.image}
                 price={v.total_price}
@@ -73,7 +78,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
               />
             ))}
           </VStack>
-          <VStack spacing={2} py={4} w="full">
+          {meals.length && <><VStack spacing={2} py={4} w="full">
             <ServiceDetails
               icon={<CookIcon />}
               title="Tayyorlanish o’rtacha vaqti:"
@@ -88,18 +93,18 @@ export const Cart: React.FC<CartProps> = ({}) => {
               />
             )}
           </VStack>
-          <Button
-            size={'lg'}
-            fontSize="lg"
-            fontWeight={500}
-            w="full"
-            shadow={'2xl'}
-            justifyContent={'space-between'}
-            onClick={handleSubmit}
-          >
-            <Text color={'white'}>{t`Tasdiqlash`}</Text>
-            <Text color={'white'}>{totalCost}</Text>
-          </Button>
+            <Button
+              size={'lg'}
+              fontSize="lg"
+              fontWeight={500}
+              w="full"
+              shadow={'2xl'}
+              justifyContent={'space-between'}
+              onClick={handleSubmit}
+            >
+              <Text color={'white'}>{t`Tasdiqlash`}</Text>
+              <Text color={'white'}>{totalCost}</Text>
+            </Button> </>}
         </VStack>
       </Container>
     </PageMotion>

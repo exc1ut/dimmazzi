@@ -12,7 +12,10 @@ export const SearchCard = ({ img, name, category }: SearchCardProps) => {
   const imgDefault = 'https://icons.iconarchive.com/icons/dakirby309/simply-styled/256/Minecraft-icon.png';
 
   return (
-    <Box p="16px">
+    <Box p="16px" _hover={{
+      backgroundColor: "premium_dark.100",
+      cursor: "pointer"
+    }}>
       <HStack spacing={4} justify="flex-start">
         <Box
           borderRadius={4}
