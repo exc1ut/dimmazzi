@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Image, Skeleton, VStack, Text } from "@chakra-ui/react";
+import { Box, Heading, HStack, Image, Skeleton, VStack, Text, useMediaQuery } from "@chakra-ui/react";
 import * as React from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
@@ -10,12 +10,12 @@ export type SearchCardProps = {
 
 export const SearchCard = ({ img, name, category }: SearchCardProps) => {
   const imgDefault = 'https://icons.iconarchive.com/icons/dakirby309/simply-styled/256/Minecraft-icon.png';
-
+  const [small] = useMediaQuery("(max-width:480px)");
   return (
     <Box p="16px" _hover={{
       backgroundColor: "premium_dark.100",
       cursor: "pointer"
-    }}>
+    }} w={small ? "full" : "auto"}>
       <HStack spacing={4} justify="flex-start">
         <Box
           borderRadius={4}

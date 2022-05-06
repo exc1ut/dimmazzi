@@ -1,6 +1,16 @@
 import { Carousel } from '../../ui/features/Carousel/'
 import { HomeSearch } from '../../ui/features/HomeSearch'
-import { Box, Flex, Heading, VStack, Text, SimpleGrid, Skeleton, HStack } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Heading,
+  VStack,
+  Text,
+  SimpleGrid,
+  Skeleton,
+  HStack,
+  useMediaQuery,
+} from '@chakra-ui/react'
 import { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
@@ -19,11 +29,12 @@ interface HomeProps {}
 const Home: FunctionComponent<HomeProps> = () => {
   const { t } = useTranslation()
   const router = useRouter()
+  const [small] = useMediaQuery('(max-width:480px)')
 
   return (
     <PageMotion>
       <VStack spacing={14} marginBottom="1.5rem">
-        <HomeSearch />
+        {small ? null : <HomeSearch />}
         <Favorite />
         <Recommended />
         <AllRestaurants />

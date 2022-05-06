@@ -77,7 +77,7 @@ export default ({}) => {
     const preperationTime = +preparingTime.split(':')?.[1]!
 
     const dto: IOrderCreate = {
-      address: address!.id,
+      address: address?.id || 1,
       delivery_price: deliveryPrice,
       delivery_type: type,
       meal_total_price: totalPrice,

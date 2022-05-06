@@ -10,6 +10,7 @@ import { resourceLimits } from "worker_threads";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { NextImage } from "@/ui/NextImage";
 import { useLocation } from "@/stores/useLocation";
+import Link from "next/link";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type HomeSearchProps = {}
@@ -119,7 +120,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
       <Popover isOpen={isOpen && !!response.data?.results.length} autoFocus={false} size='md'>
         <PopoverTrigger >
 
-          <InputGroup position="absolute" w="50%" zIndex={modalIsOpen ? 2000 : 1}>
+          <InputGroup position="absolute" w="50%" zIndex={modalIsOpen ? 2000 : 0}>
             <Input filter="invert(-70%)"
               placeholder={t`Search meal or restaurants`}
               autoComplete="off" onFocusCapture={() => { setModalIsOpen(true) }} ref={inputRef} onChange={handleChange} variant="solid" bgColor="white" />
@@ -130,8 +131,15 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
         </PopoverTrigger>
         <PopoverContent w={`${document.querySelector('input')?.offsetWidth}px` || "100%"}>
           {response?.data?.results.map(item => {
+            console.log("item", item);
+
             if (item?.title.match(value)) {
-              return <SearchCard img={item.logo.file} name={item.title} category="fastfood" />
+              return (<Link href={`/restaurant/${item.id}`}>
+                <a>
+                  <SearchCard img={item.logo.file} name={item.title} category="fastfood" />
+
+                </a>
+              </Link>)
             }
           })}
         </PopoverContent>
