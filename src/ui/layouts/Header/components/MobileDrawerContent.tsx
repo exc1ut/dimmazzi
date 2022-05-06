@@ -13,7 +13,7 @@ interface MobileDrawerContentProps { }
 export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => {
   const { t } = useTranslation()
   const { push } = useRouter()
-  const { logout } = useAuth()
+  const { logout, isAuthenticated } = useAuth()
   const editProfileModal = useModal(EditProfileModal)
   const menus = useMemo(
     () => [
@@ -70,7 +70,7 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => 
 
   return (
     <VStack spacing={2}>
-      <Center py={8} w={'full'}>
+      {isAuthenticated ? <Center py={8} w={'full'}>
         <VStack spacing={4}>
           <Avatar size={'xl'} name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
           <Text fontSize={'2xl'} fontWeight={500}>
@@ -86,7 +86,7 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => 
             >{t`Urganch shahar, Mustaqillik ko‘cha, 6`}</Text>
           </HStack>
         </VStack>
-      </Center>
+      </Center> : <Image src="/assets/images/logo.svg" width={100} height={40} />}
       <Divider />
 
       <Divider />
@@ -108,6 +108,8 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => 
                 }
                 else if (menu.name === t`Log out`) {
                   logout()
+                  console.log('logout');
+
                 }
                 else if (menu.name === t`Profile`) {
                   editProfileModal.show()
