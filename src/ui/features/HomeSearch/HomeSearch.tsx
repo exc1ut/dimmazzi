@@ -68,7 +68,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
     const match = response.data?.results.some(item => item.title.match(debounce));
 
 
-    if (debounce.length > 0 && !isOpen && match) {
+    if (debounce.length > 0 && !isOpen && match && modalIsOpen) {
       setIsOpen(true);
     }
     else if (debounce.length === 0 && isOpen) {
@@ -123,6 +123,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
           <InputGroup position="absolute" w="50%" zIndex={modalIsOpen ? 2000 : 0}>
             <Input filter="invert(-70%)"
               placeholder={t`Search meal or restaurants`}
+              value={value}
               autoComplete="off" onFocusCapture={() => { setModalIsOpen(true) }} ref={inputRef} onChange={handleChange} variant="solid" bgColor="white" />
             <InputRightElement height="full">
               {response.isFetching ? <Spinner /> : <InputSearchIcon />}
@@ -146,7 +147,9 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
 
       </Popover>
       <Modal isOpen={modalIsOpen} onClose={() => console.log("close")}>
-        <ModalOverlay bgColor="blackAlpha.500" onClick={() => { setIsOpen(false); setModalIsOpen(false) }} />
+        <ModalOverlay bgColor="blackAlpha.500" onClick={() => {
+          setIsOpen(false); setModalIsOpen(false); setDebounce(""); setValue(""); inputRef.current?.blur();
+        }} />
       </Modal>
     </Box>
   );

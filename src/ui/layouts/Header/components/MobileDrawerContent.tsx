@@ -130,7 +130,7 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({
       }
       <Divider w="95%" alignSelf="center" />
 
-      <Divider />
+      {/* <Divider /> */}
 
       <VStack w={'full'} p={2} spacing={3}>
         {isAuthenticated
@@ -170,7 +170,7 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({
               </>
             ))}
       </VStack>
-      <HStack py={4}>
+      <HStack py={4} paddingLeft="1rem" paddingTop="2rem" justify="center" w="100%">
         {languages.map((language) => (
           <Button
             px={0}
