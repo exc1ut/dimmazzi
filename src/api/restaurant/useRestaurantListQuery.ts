@@ -1,5 +1,6 @@
 import jwtAxios from '@/services/jwtAxios'
 import { useQuery } from 'react-query'
+import { useLocation } from '../../stores/useLocation'
 import { IPagination } from '../IPagination.interface'
 import { queryKeys } from '../queryKeys'
 import { IRestaurantList } from './IRestaurnatList.interface'
@@ -18,5 +19,8 @@ const fetcher = async (dto: IRestaurantListDto) => {
 }
 
 export const useRestaurantListQuery = (dto: IRestaurantListDto) => {
-  return useQuery([queryKeys.restaurantList, dto], () => fetcher(dto))
+  const { latitude, longitude } = useLocation()
+  return useQuery([queryKeys.restaurantList, dto], () =>
+    fetcher({ latitude, longitude: longitude, ...dto })
+  )
 }
