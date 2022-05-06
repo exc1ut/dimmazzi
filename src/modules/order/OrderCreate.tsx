@@ -2,7 +2,7 @@ import { ChevronLeftIcon } from '@chakra-ui/icons'
 import { Box, Button, Container, Divider, HStack, Text, VStack } from '@chakra-ui/react'
 import { useModal } from '@ebay/nice-modal-react'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { undefined } from 'zod'
 import { IAddress } from '../../api/address/IAddress.interface'
@@ -36,6 +36,10 @@ export default ({}) => {
   const statusModal = useModal(StatusAccepted)
   const mutation = useOrderCreateMutation()
   const { orderId } = query
+
+  useEffect(() => {
+    setAddress(data?.results?.[0])
+  }, [data])
 
   const breadCrumb: BreadCrumb[] = [
     {
@@ -163,10 +167,8 @@ export default ({}) => {
                   title={t`Yetkazib berish narxi`}
                   value={`${totalPrice}`}
                 />
-                <Divider />
               </>
             )}
-
             <Divider />
             <ServiceDetails icon={<MoneyIcon />} title={t`Umumiy to’lov`} value={`${totalPrice}`} />
           </VStack>
@@ -178,7 +180,7 @@ export default ({}) => {
 							kurer tomonidan 
 							qabul qilinadi.`}
               icon={MoneyIcon}
-              title={t`Naqt to’layman`}
+              title={t`Payme`}
             />
             <PaymentOptions
               onClick={() => setPaymentOption('click_uz')}
@@ -187,14 +189,14 @@ export default ({}) => {
 							kurer tomonidan 
 							qabul qilinadi.`}
               icon={MoneyIcon}
-              title={t`Naqt to’layman`}
+              title={t`Click`}
             />
             <PaymentOptions
               onClick={() => setPaymentOption('cash')}
               isActive={paymentOption === 'cash'}
               description={t`Toʻlov UzCard bank kartalari orqali qabul qilinadi.`}
               icon={MoneyIcon}
-              title={t`Kartada to’layman`}
+              title={t`Naqt to’layman`}
             />
           </HStack>
 

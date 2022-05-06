@@ -18,7 +18,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton colorScheme="premium_red" />
-        <DrawerBody>
+        <DrawerBody px={0}>
           <MobileDrawerContent />
         </DrawerBody>
       </DrawerContent>

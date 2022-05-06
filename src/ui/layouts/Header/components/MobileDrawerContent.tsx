@@ -6,15 +6,25 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useQueryClient } from 'react-query'
+import { getLanguageProps } from '../../../../utils/language'
 import { Cart } from './Cart'
 
-interface MobileDrawerContentProps { }
+interface MobileDrawerContentProps {}
 
-export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => {
-  const { t } = useTranslation()
+export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({}) => {
+  const { t, i18n } = useTranslation()
   const { push } = useRouter()
   const { logout, isAuthenticated } = useAuth()
   const editProfileModal = useModal(EditProfileModal)
+  const language = useMemo(getLanguageProps, [i18n.language])
+  const queryClient = useQueryClient()
+
+  const handleChangeLanguage = (name: string) => {
+    i18n.changeLanguage(name)
+    queryClient.invalidateQueries()
+  }
+
   const menus = useMemo(
     () => [
       {
@@ -24,27 +34,26 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => 
       {
         iconName: 'cart',
         name: t`Cart`,
-        link: '/cart'
+        link: '/cart',
       },
       {
         iconName: 'task',
         name: t`Product history`,
-        link: '/order'
+        link: '/order',
       },
       {
         iconName: 'location',
         name: t`Location list`,
-        link: '/address'
+        link: '/address',
       },
       {
         iconName: 'heart',
         name: t`Favorite restorans`,
-        link: '/restaurant/favourites/'
+        link: '/restaurant/favourites/',
       },
       {
         iconName: 'logout',
         name: t`Log out`,
-
       },
     ],
     []
@@ -54,44 +63,51 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => 
     () => [
       {
         name: 'UZ',
-        isActive: true,
+        isActive: i18n.language === 'uz',
+        key: 'uz',
       },
       {
         name: 'РУ',
-        isActive: false,
+        isActive: i18n.language === 'ru',
+        key: 'ru',
       },
       {
         name: 'УЗ',
-        isActive: false,
+        isActive: i18n.language === 'cr',
+        key: 'cr',
       },
     ],
-    []
+    [i18n.language]
   )
 
   return (
     <VStack spacing={2}>
-      {isAuthenticated ? <Center py={8} w={'full'}>
-        <VStack spacing={4}>
-          <Avatar size={'xl'} name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-          <Text fontSize={'2xl'} fontWeight={500}>
-            Muhammaddiyor
-          </Text>
-          <HStack spacing={2}>
-            <Image src="/assets/images/location.svg" width={30} height={30} />
-            {/* <Text color={'dark.40'} fontSize={'md'}>{t`No location has entered`}</Text> */}
-            <Text
-              color={'dark.90'}
-              fontSize={'md'}
-              fontWeight={400}
-            >{t`Urganch shahar, Mustaqillik ko‘cha, 6`}</Text>
-          </HStack>
-        </VStack>
-      </Center> : <Image src="/assets/images/logo.svg" width={100} height={40} />}
+      {isAuthenticated ? (
+        <Center py={8} w={'full'}>
+          <VStack spacing={4}>
+            <Avatar size={'xl'} name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+            <Text fontSize={'2xl'} fontWeight={500}>
+              Muhammaddiyor
+            </Text>
+            <HStack spacing={2}>
+              <Image src="/assets/images/location.svg" width={30} height={30} />
+              {/* <Text color={'dark.40'} fontSize={'md'}>{t`No location has entered`}</Text> */}
+              <Text
+                color={'dark.90'}
+                fontSize={'md'}
+                fontWeight={400}
+              >{t`Urganch shahar, Mustaqillik ko‘cha, 6`}</Text>
+            </HStack>
+          </VStack>
+        </Center>
+      ) : (
+        <Image src="/assets/images/logo.svg" width={100} height={40} />
+      )}
       <Divider />
 
       <Divider />
 
-      <VStack w={'full'} p={2} spacing={3}>
+      <VStack w={'full'} py={2} px={0} spacing={3}>
         {menus.map((menu) => (
           <>
             <Button
@@ -105,13 +121,10 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => 
               onClick={() => {
                 if (menu.link) {
                   push(menu.link)
-                }
-                else if (menu.name === t`Log out`) {
+                } else if (menu.name === t`Log out`) {
                   logout()
-                  console.log('logout');
-
-                }
-                else if (menu.name === t`Profile`) {
+                  console.log('logout')
+                } else if (menu.name === t`Profile`) {
                   editProfileModal.show()
                 }
               }}
@@ -124,7 +137,13 @@ export const MobileDrawerContent: React.FC<MobileDrawerContentProps> = ({ }) => 
       </VStack>
       <HStack py={4}>
         {languages.map((language) => (
-          <Button colorScheme="premium_red" variant={language.isActive ? 'solid' : 'outline'}>
+          <Button
+            px={0}
+            mx={0}
+            colorScheme="premium_red"
+            variant={language.isActive ? 'solid' : 'outline'}
+            onClick={() => handleChangeLanguage(language.key)}
+          >
             {language.name}
           </Button>
         ))}

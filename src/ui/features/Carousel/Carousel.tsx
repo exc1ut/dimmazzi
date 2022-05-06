@@ -18,7 +18,7 @@ function Carousel({ children, maxChildren }: CarouselProps) {
   const count = React.Children.count(children)
 
   return (
-    <Box w={'full'} px={{ sm: 0 }} position="relative">
+    <Box zIndex={0} w={'full'} px={{ sm: 0 }} position="relative">
       <ReactSwiper
         spaceBetween={16}
         slidesPerView={slidesPerView}
