@@ -53,7 +53,7 @@ export const Restourant: React.FC<RestourantProps> = ({ imgSrc, status, logoSrc,
       </Box>
       <Box padding={['0', '0px 2.5rem']} w="100%">
         <VStack>
-          <Flex flexDirection={['column', 'row']} justify="space-between" align="flex-start" w="100%">
+          <Flex flexDirection={['column-reverse', 'row']} justify="space-between" align="flex-start" w="100%">
             <VStack spacing={4} align="flex-start">
               <Heading fontSize="1.8rem" lineHeight="2.5rem">{t(title)}</Heading>
               <HStack fontWeight={600} color="premium_dark.300" w="100%" lineHeight="1.5rem" spacing={1}>
@@ -65,25 +65,25 @@ export const Restourant: React.FC<RestourantProps> = ({ imgSrc, status, logoSrc,
                 <HStack />
               </HStack>
               <Box borderRadius="0.5rem" padding="0.5rem 1rem" boxShadow="0px .125rem .05rem rgba(20, 38, 73, 0.15)">
-                <Text fontSize="0.875rem" fontWeight={500} lineHeight="1.25rem" color="premium_dark.600">Taom tayyorlash o’rtacha vaqti:
-                  <chakra.span fontWeight={700} color="premium_dark.1000">{cookTime} daqiqa </chakra.span></Text>
+                <Text fontSize="0.875rem" fontWeight={500} lineHeight="1.25rem" color="premium_dark.600">{t`Taom tayyorlash o’rtacha vaqti:`}
+                  <chakra.span fontWeight={700} color="premium_dark.1000">{cookTime} {t`minutes`} </chakra.span></Text>
               </Box>
             </VStack>
 
-            <Flex w={["100%", "auto"]} direction={["column", "row"]} marginTop={['1.5rem', '0']} >
+            <Flex w={["100%", "auto"]} direction={["row"]} marginTop={['1.5rem', '0rem']} >
               <Button variant="outline" borderColor="premium_green.1000" color="premium_green.1000">
                 <Icon as={Tick} />
                 <Text fontSize={["0.8rem", "1em"]} textTransform="uppercase" marginLeft=".8rem "> {t`Olib ketish`} </Text>
               </Button>
               <Button
-                marginTop={["0.5rem ", "0"]}
-                marginLeft={["0", "0.5rem"]}
+                marginTop={["0 ", "0"]}
+                marginLeft={["1rem", "0.5rem"]}
                 fontSize={["0.8rem", ".8rem"]}
                 variant="outline"
                 borderColor="premium_green.1000"
                 color="premium_green.1000">
                 <Icon as={Tick} />
-                <Text textTransform="uppercase" marginLeft=".5rem "> Yetkazib berish </Text>
+                <Text textTransform="uppercase" marginLeft=".5rem "> {t`Yetkazib berish`} </Text>
 
               </Button>
             </Flex>
