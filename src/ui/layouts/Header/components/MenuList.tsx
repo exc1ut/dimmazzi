@@ -17,6 +17,7 @@ import i18n from '../../../../lib/i18n'
 import { useModal } from '@ebay/nice-modal-react'
 import { EditProfileModal } from '../../../../modules/profile'
 import { useRouter } from 'next/router'
+import { useQueryClient } from 'react-query'
 
 interface MenuListProps extends ChakraMenuListProps {}
 
@@ -26,9 +27,15 @@ export const MenuList: React.FC<MenuListProps> = (props) => {
   const { logout } = useAuth()
   const editProfileModal = useModal(EditProfileModal)
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const handleLogout = () => {
     logout()
+  }
+
+  const handleChangeLanguage = (name: string) => {
+    i18n.changeLanguage(name)
+    queryClient.refetchQueries()
   }
 
   const language = useMemo(getLanguageProps, [i18n.language])
@@ -75,7 +82,7 @@ export const MenuList: React.FC<MenuListProps> = (props) => {
             zIndex={-1}
           >
             {language.availableLanguages.map((v) => (
-              <MenuItem onClick={() => i18n.changeLanguage(v.key)}>{v.value}</MenuItem>
+              <MenuItem onClick={() => handleChangeLanguage(v.key)}>{v.value}</MenuItem>
             ))}
 
             {/* <MenuItem>{t`Русский`}</MenuItem> */}

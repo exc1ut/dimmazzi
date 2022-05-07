@@ -17,9 +17,18 @@ import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { RestaurantDetail } from '../../../../api/restourant/useRestourantDetail'
-import { HeartOutlined, SmallStarIcon, CircleIcon, Tick } from '../../../../img/icons/Icons'
+import {
+  HeartOutlined,
+  SmallStarIcon,
+  CircleIcon,
+  Tick,
+  HeartFill,
+} from '../../../../img/icons/Icons'
 import { NextImage } from '../../../../ui/NextImage'
 import { getTime } from '../../../../utils/getTime'
+import { useAddRestaurantToFavouriteMutation } from '../../../../api/restaurant/useAddRestaurantToFavouriteMutation'
+import { useQueryClient } from 'react-query'
+import { queryKeys } from '../../../../api/queryKeys'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type RestourantProps = RestaurantDetail
@@ -30,6 +39,19 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
   const bottom = useBreakpointValue({ base: '-40px', sm: '-44px', md: '-52px' })
   const left = useBreakpointValue({ base: '35%', sm: '35%', md: '40px' })
   const [small] = useMediaQuery('(max-width: 512px)')
+  const mutation = useAddRestaurantToFavouriteMutation()
+  const queryClient = useQueryClient()
+
+  const handleAddFavorite = () => {
+    mutation.mutate(props.id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(queryKeys.favoriteRestaurant)
+        queryClient.invalidateQueries(queryKeys.restaurantList)
+        queryClient.invalidateQueries(queryKeys.restaurantDetail)
+      },
+    })
+  }
+
   return (
     <VStack spacing="76">
       <Box w="100%" height="280px" position="relative" borderRadius="0.5rem">
@@ -82,11 +104,24 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
               _active={{
                 bgColor: 'none',
               }}
+              onClick={handleAddFavorite}
             >
-              <Icon as={HeartOutlined} color="red" w="1.3em" h="1.5em" />
+              <Icon
+                as={props.is_favourite ? HeartFill : HeartOutlined}
+                color="red"
+                w="1.3em"
+                h="1.5em"
+              />
             </IconButton>
 
-            <Button bgColor="premium_green.1000">{props.is_open ? t('Ochiq') : t`Yopiq`}</Button>
+            <Button
+              _active={{ bgColor: 'none' }}
+              _hover={{ bgColor: 'none' }}
+              cursor="auto"
+              bgColor="premium_green.1000"
+            >
+              {props.is_open ? t('Ochiq') : t`Yopiq`}
+            </Button>
           </Flex>
         </Box>
       </Box>
@@ -122,19 +157,41 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
                 </HStack>
                 <HStack />
               </HStack>
-              <Box borderRadius="0.5rem" padding="0.5rem 1rem" shadow={'md'}>
-                <Text
-                  fontSize="0.875rem"
-                  fontWeight={500}
-                  lineHeight="1.25rem"
-                  color="premium_dark.600"
-                >
-                  {t`Taom tayyorlash o’rtacha vaqti`}:{' '}
-                  <chakra.span fontWeight={700} color="premium_dark.1000">
-                    {getTime(props.average_cooking_time)}
-                  </chakra.span>
-                </Text>
-              </Box>
+              <HStack spacing={2}>
+                {props.has_pickup && (
+                  <Box borderRadius="0.5rem" padding="0.5rem 1rem" shadow={'md'}>
+                    <Text
+                      fontSize="0.875rem"
+                      fontWeight={500}
+                      lineHeight="1.25rem"
+                      color="premium_dark.600"
+                    >
+                      {t`Taom tayyorlash o’rtacha vaqti`}:{' '}
+                      <chakra.span fontWeight={700} color="premium_dark.1000">
+                        {getTime(props.average_cooking_time)}
+                      </chakra.span>
+                    </Text>
+                  </Box>
+                )}
+
+                {props.has_delivery && (
+                  <Box borderRadius="0.5rem" padding="0.5rem 1rem" shadow={'md'}>
+                    <Text
+                      fontSize="0.875rem"
+                      fontWeight={500}
+                      lineHeight="1.25rem"
+                      color="premium_dark.600"
+                    >
+                      {t`Yetkazib berish vaqti va narxi`}:
+                      <chakra.span fontWeight={700} color="premium_dark.1000">
+                        {' '}
+                        {props.additional.approximate_delivery_price} /{' '}
+                        {props.additional.approximate_delivery_time}
+                      </chakra.span>
+                    </Text>
+                  </Box>
+                )}
+              </HStack>
             </VStack>
 
             <Flex
@@ -149,6 +206,9 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
                   borderColor="premium_green.900"
                   color="premium_green.900"
                   size="sm"
+                  _hover={{ bgColor: 'none' }}
+                  _active={{ bgColor: 'none' }}
+                  cursor="auto"
                 >
                   <Icon as={Tick} />
                   <Text
@@ -167,6 +227,9 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
                   borderColor="premium_green.900"
                   color="premium_green.900"
                   size="sm"
+                  _hover={{ bgColor: 'none' }}
+                  _active={{ bgColor: 'none' }}
+                  cursor="auto"
                 >
                   <Icon as={Tick} />
                   <Text

@@ -1,3 +1,4 @@
+import Empty from '@/ui/features/Status/Empty'
 import { Box, Container, Text, VStack } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
@@ -49,7 +50,7 @@ export default ({}) => {
             rightTab={t`Olib ketish`}
           />
           {isLoading && <AppLoader />}
-          {data &&
+          {data?.results.length ? (
             data.results.map((v) => (
               <Box
                 as={motion.div}
@@ -66,7 +67,10 @@ export default ({}) => {
                   status={v.status === 'pending' ? 'pending' : 'finished'}
                 />
               </Box>
-            ))}
+            ))
+          ) : (
+            <Empty />
+          )}
         </VStack>
       </Container>
     </PageMotion>

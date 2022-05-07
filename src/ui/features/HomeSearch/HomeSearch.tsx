@@ -1,5 +1,5 @@
 import { SearchCard } from "../../cards/SearchCard";
-import { Box, Input, InputGroup, InputRightElement, Modal, ModalOverlay, Popover, PopoverBody, PopoverContent, PopoverTrigger } from "@chakra-ui/react";
+import { Box, Input, InputGroup, InputRightElement, Modal, ModalOverlay, Popover, PopoverBody, PopoverContent, PopoverTrigger, Spinner } from "@chakra-ui/react";
 import * as React from "react";
 import { InputSearchIcon } from "../../../img/icons/Icons";
 import { t } from "i18next";
@@ -9,6 +9,8 @@ import { IRestaurantBody } from "../../../api/restaurant/IRestaurantQuery.interf
 import { resourceLimits } from "worker_threads";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { NextImage } from "@/ui/NextImage";
+import { useLocation } from "@/stores/useLocation";
+import Link from "next/link";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type HomeSearchProps = {}
@@ -23,18 +25,10 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
   const [debounce, setDebounce] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  //const { latitude, longitude } = useLocation();
   // const restaurants = ["Evos - Lavash center", "Shohona - Milliy taomlar", "Retro - Turk taomlari", "SamOsh - Plov center", "Kebab - Plov center"];
 
-  const response = useRestaurantListQuery(["search", debounce], { latitude: "37.78825", longtiude: "37.78825", search: debounce }, {
-    onSuccess: (data: { data: { results: [IRestaurantBody] } }) => {
-      setMatchList([...data.data.results]);
-
-    },
-    retry: 0,
-
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-  });
+  const response = useRestaurantListQuery({ search: debounce });
 
   // React.useEffect(() => {
   //   let width = document.querySelector('input')?.offsetWidth
@@ -71,10 +65,10 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
 
 
   const handleDebounce = React.useCallback(() => {
-    const match = matchList.some(item => item.title.match(debounce));
+    const match = response.data?.results.some(item => item.title.match(debounce));
 
 
-    if (debounce.length > 0 && !isOpen && match) {
+    if (debounce.length > 0 && !isOpen && match && modalIsOpen) {
       setIsOpen(true);
     }
     else if (debounce.length === 0 && isOpen) {
@@ -87,7 +81,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
     if (!match && isOpen && match !== undefined) {
       setIsOpen(false);
     }
-  }, [debounce, matchList])
+  }, [debounce, response])
 
   // React.useLayoutEffect(() => {
   //   let widthValue = document.querySelector('input')?.offsetWidth;
@@ -123,29 +117,39 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
 
       <NextImage src="/assets/images/search_background.jpg" w="full" h="full" objectFit="cover" borderRadius="0.5rem" filter="brightness(0.7)" />
 
-      <Popover isOpen={isOpen} autoFocus={false} size='md'>
+      <Popover isOpen={isOpen && !!response.data?.results.length} autoFocus={false} size='md'>
         <PopoverTrigger >
 
-          <InputGroup position="absolute" w="50%" zIndex={modalIsOpen ? 2000 : 1}>
+          <InputGroup position="absolute" w="50%" zIndex={modalIsOpen ? 2000 : 0}>
             <Input filter="invert(-70%)"
               placeholder={t`Search meal or restaurants`}
+              value={value}
               autoComplete="off" onFocusCapture={() => { setModalIsOpen(true) }} ref={inputRef} onChange={handleChange} variant="solid" bgColor="white" />
             <InputRightElement height="full">
-              <InputSearchIcon />
+              {response.isFetching ? <Spinner /> : <InputSearchIcon />}
             </InputRightElement>
           </InputGroup>
         </PopoverTrigger>
         <PopoverContent w={`${document.querySelector('input')?.offsetWidth}px` || "100%"}>
-          {matchList.map(item => {
+          {response?.data?.results.map(item => {
+            console.log("item", item);
+
             if (item?.title.match(value)) {
-              return <SearchCard img={item.logo.file} name={item.title} category="fastfood" />
+              return (<Link href={`/restaurant/${item.id}`}>
+                <a>
+                  <SearchCard img={item.logo.file} name={item.title} category="fastfood" />
+
+                </a>
+              </Link>)
             }
           })}
         </PopoverContent>
 
       </Popover>
       <Modal isOpen={modalIsOpen} onClose={() => console.log("close")}>
-        <ModalOverlay bgColor="blackAlpha.500" onClick={() => { setIsOpen(false); setModalIsOpen(false) }} />
+        <ModalOverlay bgColor="blackAlpha.500" onClick={() => {
+          setIsOpen(false); setModalIsOpen(false); setDebounce(""); setValue(""); inputRef.current?.blur();
+        }} />
       </Modal>
     </Box>
   );

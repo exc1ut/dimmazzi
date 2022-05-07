@@ -1,5 +1,6 @@
 import { Box, IconButton, Text } from '@chakra-ui/react'
-import { HeartFill } from '../../../img/icons/Icons'
+import React from 'react'
+import { HeartFill, HeartOutlined } from '../../../img/icons/Icons'
 
 type Shades = 'success' | 'warning'
 
@@ -7,9 +8,12 @@ interface HeadProps {
   image: string
   status: string
   shade: Shades
+  isLiked: boolean
+  onLike: () => void
 }
 
-export const Head: React.FC<HeadProps> = ({ image, status, shade }) => {
+export const Head: React.FC<HeadProps> = ({ image, status, shade, isLiked, onLike }) => {
+
   const statusProps: Record<Shades, { color: string; fontColor: string }> = {
     success: {
       color: 'premium_green.1000',
@@ -42,7 +46,11 @@ export const Head: React.FC<HeadProps> = ({ image, status, shade }) => {
           fontSize="20px"
           aria-label="Call Sage"
           borderRadius={'full'}
-          icon={<HeartFill color={'premium_red.1000'} />}
+          icon={isLiked ? <HeartFill color={'premium_red.1000'} /> : <HeartOutlined color={'premium_red.1000'} />}
+          onClick={(e) => {
+            e.stopPropagation()
+            onLike()
+          }}
         />
       </Box>
       <Box borderRadius={'md'} px={2.5} py={0.5} backgroundColor={statusProps[shade].color}>

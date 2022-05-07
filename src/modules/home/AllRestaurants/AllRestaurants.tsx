@@ -28,6 +28,7 @@ export const AllRestaurants: React.FC<AllRestaurantsProps> = ({}) => {
                   cost={res.additional.approximate_delivery_price}
                   time={res.additional.approximate_delivery_time}
                   onClick={() => router.push(`/restaurant/${res.id}`)}
+                  restaurantId={res.id}
                 />
               )
             })

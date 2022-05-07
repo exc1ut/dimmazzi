@@ -11,7 +11,7 @@ import { DesktopHeader } from './DesktopHeader'
 import { MobileHeader } from './MobileHeader'
 
 export const Header = () => {
-  const [isLessThanLg] = useMediaQuery('(max-width: 959px)')
+  const [isLessThanLg] = useMediaQuery('(max-width: 480px)')
   const authModal = useModal(AuthModal)
   const locationModal = useModal(Map)
   const { data } = useAddressQuery()
@@ -38,7 +38,7 @@ export const Header = () => {
   return (
     <Box borderBottomWidth={1} borderColor={'dark.10'} py={4}>
       {isLessThanLg ? (
-        <MobileHeader />
+        <MobileHeader handleLocation={handleLocation} handleAuth={handleAuth} />
       ) : (
         <DesktopHeader handleAuth={handleAuth} handleLocation={handleLocation} />
       )}
