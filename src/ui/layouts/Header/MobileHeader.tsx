@@ -1,3 +1,4 @@
+import { useRestaurantListQuery } from '@/api/restaurant/useRestaurantListQuery'
 import { useLocation } from '@/stores/useLocation'
 import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
@@ -24,7 +25,7 @@ interface MobileHeaderProps {
 
 export const MobileHeader: React.FC<MobileHeaderProps> = ({ handleLocation, handleAuth }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
-  const [searchVisible, setSearchVisible] = React.useState(false)
+  const { searchVisible, setSearchVisible } = useMobileStore()
   const [searchValue, setSearchValue] = React.useState('')
   const { t } = useTranslation()
   const location = useLocation((state) => state.place_name)
@@ -49,8 +50,8 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ handleLocation, hand
             )}
           </HStack>
         </Box>
-        <SimpleGrid templateColumns={!searchVisible ? 'repeat(3,1fr)' : '1fr 6fr'}>
-          <Box display={'flex'} justifyContent={'left'} marginLeft={'.8rem'}>
+        <SimpleGrid templateColumns={!searchVisible ? 'repeat(3,1fr)' : '1fr'} w="100%">
+          {!searchVisible && <Box display={'flex'} justifyContent={'left'} marginLeft={'.8rem'}>
             <IconButton
               variant="ghost"
               color={searchVisible ? 'white' : 'premium_dark.600'}
@@ -62,12 +63,12 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ handleLocation, hand
               onClick={onOpen}
               mr={6}
             />
-          </Box>
+          </Box>}
 
           {searchVisible ? (
-            <Box w="full" paddingRight=".8rem">
+            <Box w="full" padding={'.5rem'}>
               {' '}
-              <MobileSearch />{' '}
+              <MobileSearch onClose={() => setSearchVisible(false)} />{' '}
             </Box>
           ) : (
             <>

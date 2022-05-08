@@ -18,9 +18,11 @@ const fetcher = async (dto: IRestaurantListDto) => {
   return data
 }
 
-export const useRestaurantListQuery = (dto: IRestaurantListDto) => {
+export const useRestaurantListQuery = (dto: IRestaurantListDto, otpions?: any) => {
   const { latitude, longitude } = useLocation()
-  return useQuery([queryKeys.restaurantList, dto], () =>
-    fetcher({ latitude, longitude: longitude, ...dto })
+  return useQuery(
+    [queryKeys.restaurantList, dto],
+    () => fetcher({ latitude, longitude: longitude, ...dto }),
+    { ...otpions }
   )
 }

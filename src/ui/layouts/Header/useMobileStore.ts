@@ -6,6 +6,8 @@ export type MobileStoreType = {
   search: string
   setSearch: (search: string) => void
   reset: () => void
+  searchVisible: boolean
+  setSearchVisible: (searchVisible: boolean) => void
 }
 
 const store: StoreType<MobileStoreType> = (set) => ({
@@ -14,6 +16,8 @@ const store: StoreType<MobileStoreType> = (set) => ({
   reset: () => {
     set(initialState)
   },
+  searchVisible: false,
+  setSearchVisible: (searchVisible) => set({ searchVisible }),
 })
 
 export const useMobileStore = createStore(store)

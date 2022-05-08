@@ -1,4 +1,4 @@
-import { SearchIcon } from "@chakra-ui/icons";
+import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import { IconButton, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
@@ -7,16 +7,29 @@ import { useMobileStore } from "../useMobileStore";
 
 interface MobileSearchProps {
   //onInputChange: ChangeEventHandler<HTMLInputElement> | undefined;
+  onClose: () => void;
 }
 
-const MobileSearch: FunctionComponent<MobileSearchProps> = ({ }) => {
+const MobileSearch: FunctionComponent<MobileSearchProps> = ({ onClose }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const router = useRouter()
-  const { setSearch } = useMobileStore()
+  const [term, setTerm] = React.useState("");
+  const { search, setSearch } = useMobileStore()
+  //const [debounce, setDebounce] = React.useState("");
+
   React.useEffect(() => {
     inputRef?.current?.focus();
   }, [])
 
+  React.useEffect(() => {
+    console.log(term, "search");
+
+    const interval = setTimeout(() => {
+      console.log("I am here");
+      setSearch(term);
+    }, 500)
+    return () => clearTimeout(interval);
+  }, [term])
 
   return (<>
     <InputGroup w="full">
@@ -26,15 +39,17 @@ const MobileSearch: FunctionComponent<MobileSearchProps> = ({ }) => {
         _focus={{
           border: '1.5px solid #D13406',
         }}
-        onChange={(e) => { setSearch(e.target.value); router.push("/search/mobile") }}
+        onChange={(e) => { setTerm(e.target.value); }}
       />
       <InputRightElement>
         <IconButton
           _hover={{
             backgroundColor: 'transparent',
           }}
+          onClick={() => { setSearch(""); onClose() }}
           display={'flex'} justifyContent={'center'} alignItems={'center'} aria-label='search' backgroundColor="transparent" color="premium_dark.600">
-          <SearchIcon boxSize={6} top='.6rem' />
+          {/* {!term ? <SearchIcon boxSize={6} top='.6rem' /> : <CloseIcon />} */}
+          <CloseIcon />
         </IconButton>
       </InputRightElement>
     </InputGroup>
