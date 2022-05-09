@@ -1,0 +1,13 @@
+.swiper-container {
+  overflow: visible;
+}
+.swiper-slide {
+  opacity: 0;
+  visibility: hidden;
+}
+.swiper-slide.swiper-slide-active,
+.swiper-slide.swiper-slide-next,
+.swiper-slide.swiper-slide-prev {
+  opacity: 1;
+  visibility: visible;
+}
