@@ -12,6 +12,8 @@ interface AppBreadCrumbProps {
 }
 
 const AppBreadCrumb = ({ items }: AppBreadCrumbProps) => {
+  console.log(items);
+
   return (
     <Breadcrumb spacing={2} separator={<ChevronRightIcon boxSize={'1.4em'} />}>
       {items.map((v, index) => {

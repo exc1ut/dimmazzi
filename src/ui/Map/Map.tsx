@@ -23,6 +23,8 @@ import { useTranslation } from 'react-i18next'
 import { useAddAdressMutation } from '../../api/address/useAddAddressMutation'
 import { IAddress } from '../../api/address/IAddress.interface'
 import { useUpdateAdressMutation } from '../../api/address/useUpdateAddress'
+import { useQueryClient } from 'react-query'
+import { queryKeys } from '../../api/queryKeys'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type MapProps = {
@@ -36,6 +38,7 @@ export const Map = NiceModal.create<MapProps>(({ address: initialAddress }) => {
   const { setStore } = useLocation()
   const toast = useToast()
   const { t } = useTranslation()
+  const queryClient = useQueryClient()
   const mutation = useAddAdressMutation()
   const updateMutation = useUpdateAdressMutation()
 
@@ -68,6 +71,7 @@ export const Map = NiceModal.create<MapProps>(({ address: initialAddress }) => {
         modal.resolve()
         reset()
         modal.hide()
+        queryClient.invalidateQueries(queryKeys.addressList)
       }
 
       if (initialAddress) {

@@ -17,6 +17,7 @@
 		"build-storybook": "build-storybook -s public",
 		"gen:component": "plop",
 		"gen:theme": "chakra-cli tokens src/theme/chakraTheme.ts",
+		"gen:translation": "i18next 'src/**/*.{ts,tsx}' [-oc]",
 		"postinstall": "yarn gen:theme"
 	},
 	"dependencies": {
@@ -38,7 +39,7 @@
 		"i18next": "^21.6.16",
 		"i18next-browser-languagedetector": "^6.1.4",
 		"i18next-http-backend": "^1.4.0",
-		"i18next-parser": "^6.3.0",
+		"i18next-parser": "^6.4.0",
 		"immer": "^9.0.12",
 		"lottie-react-web": "^2.2.2",
 		"msw": "^0.39.2",

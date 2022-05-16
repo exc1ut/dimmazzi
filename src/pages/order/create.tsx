@@ -1,3 +1,4 @@
+import { withAuth } from '../../hoc/withAuth'
 import { asyncComponent } from '../../utils/asyncComponent'
 
-export default asyncComponent(() => import('../../modules/order/OrderCreate'))
+export default withAuth(asyncComponent(() => import('../../modules/order/OrderCreate')))
