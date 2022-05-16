@@ -1,6 +1,7 @@
 import { useAuth } from '@/stores/useAuth'
 import Empty from '@/ui/features/Status/Empty'
 import { Box, Button, Container, Divider, Text, VStack } from '@chakra-ui/react'
+import { data } from 'msw/lib/types/context'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { IOrderCreate, IOrderProduct } from '../../api/order/useOrderCreateMutation'
@@ -13,7 +14,11 @@ import { ServiceDetails } from '../../ui/cards/ServiceDetails'
 import { TabButton } from '../../ui/features/TabButton'
 import { PageMotion } from '../../ui/PageMotion'
 import { getTime } from '../../utils/getTime'
-
+import { AuthModal } from '../auth/auth/AuthModal'
+import { useModal } from '@ebay/nice-modal-react'
+import { useAddressQuery } from '@/api/address/useAddressQuery'
+import { useLocation } from '@/stores/useLocation'
+import { Map } from "../../ui/Map";
 interface CartProps { }
 
 export const Cart: React.FC<CartProps> = ({ }) => {
@@ -30,6 +35,26 @@ export const Cart: React.FC<CartProps> = ({ }) => {
   } = useCart()
   const router = useRouter()
   const { isAuthenticated } = useAuth()
+  const authModal = useModal(AuthModal)
+  const { data } = useAddressQuery()
+  const { setStore } = useLocation()
+  const locationModal = useModal(Map)
+
+
+  const handleAuth = async () => {
+    await authModal.show()
+    const lastAddress = data?.results?.at(-1)
+    if (lastAddress) {
+      setStore((state) => ({ ...state, ...lastAddress }))
+
+    } else {
+      await locationModal.show()
+      // setMapIsOpen(true)
+    }
+    router.push('/order/create?orderId=2')
+
+  }
+
 
   const totalCost = useCart(totalMealCostSelector)
 
@@ -45,7 +70,11 @@ export const Cart: React.FC<CartProps> = ({ }) => {
   ]
 
   const handleSubmit = () => {
-    router.push('/order/create?orderId=2')
+    if (isAuthenticated)
+      router.push('/order/create?orderId=2')
+    else
+      handleAuth()
+
   }
 
   return (
@@ -83,9 +112,9 @@ export const Cart: React.FC<CartProps> = ({ }) => {
               ))
             )}
           </VStack>
-          {(meals.length && isAuthenticated) && (
+          {(meals.length) && (
             <>
-              <VStack spacing={2} py={4} w="full">
+              {isAuthenticated && <VStack spacing={2} py={4} w="full">
                 <ServiceDetails
                   icon={<CookIcon />}
                   title="Tayyorlanish o’rtacha vaqti:"
@@ -99,7 +128,7 @@ export const Cart: React.FC<CartProps> = ({ }) => {
                     value={`${deliveryTime} / ${deliveryPrice}`}
                   />
                 )}
-              </VStack>
+              </VStack>}
               <Button
                 size={'lg'}
                 fontSize="lg"
