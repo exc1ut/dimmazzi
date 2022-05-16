@@ -1,4 +1,5 @@
 import { useRestaurantListQuery } from '@/api/restaurant/useRestaurantListQuery'
+import { useAuth } from '@/stores/useAuth'
 import { useLocation } from '@/stores/useLocation'
 import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
@@ -27,6 +28,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ handleLocation, hand
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { searchVisible, setSearchVisible } = useMobileStore()
   const [searchValue, setSearchValue] = React.useState('')
+  const { isAuthenticated } = useAuth();
   const { t } = useTranslation()
   const location = useLocation((state) => state.place_name)
 
@@ -38,7 +40,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ handleLocation, hand
   return (
     <>
       <VStack w="100%" align="start">
-        <Box marginX="1rem">
+        {isAuthenticated && <Box marginX="1rem">
           <HStack justify="start" cursor={'pointer'} onClick={handleLocation} spacing={2}>
             <Image src="/assets/images/location.svg" width={30} height={30} />
             {location ? (
@@ -49,7 +51,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ handleLocation, hand
               <Text color={'premium_dark.400'} fontSize={'md'}>{t`No location has entered`}</Text>
             )}
           </HStack>
-        </Box>
+        </Box>}
         <SimpleGrid templateColumns={!searchVisible ? 'repeat(3,1fr)' : '1fr'} w="100%">
           {!searchVisible && <Box display={'flex'} justifyContent={'left'} marginLeft={'.8rem'}>
             <IconButton

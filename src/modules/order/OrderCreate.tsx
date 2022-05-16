@@ -24,11 +24,11 @@ import { Map } from '../../ui/Map'
 import address from '../address'
 import { StatusAccepted } from './StatusAccepted'
 
-export default ({}) => {
+export default ({ }) => {
   const [paymentOption, setPaymentOption] = useState<'pay_me_uz' | 'cash' | 'click_uz'>('pay_me_uz')
   const [address, setAddress] = useState<IAddress>()
   const { t } = useTranslation()
-  const { query } = useRouter()
+  const { query, push } = useRouter()
   const { meals, type, deliveryPrice, deliveryTime, preparingTime, reset } = useCart()
   const totalPrice = useCart(totalMealCostSelector)
   const { data, isLoading, isSuccess } = useAddressQuery()
@@ -116,6 +116,7 @@ export default ({}) => {
             textTransform="uppercase"
             justifyContent={'flex-start'}
             pl={0}
+            onClick={() => { push('/cart') }}
           >{t`savatga qaytish`}</Button>
           <Text fontSize={'3xl'} fontWeight={700}>{`Buyurtma ID: ${orderId}`}</Text>
 

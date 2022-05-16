@@ -31,6 +31,7 @@ import { getTime } from '../../../../utils/getTime'
 import { useAddRestaurantToFavouriteMutation } from '../../../../api/restaurant/useAddRestaurantToFavouriteMutation'
 import { useQueryClient } from 'react-query'
 import { queryKeys } from '../../../../api/queryKeys'
+import { useAuth } from '../../../../stores/useAuth'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type RestourantProps = RestaurantDetail
@@ -49,13 +50,16 @@ export const Restourant: React.FC<RestourantProps> = (props) => {
 
   const mutation = useAddRestaurantToFavouriteMutation()
   const queryClient = useQueryClient()
+  const { isAuthenticated } = useAuth()
 
   const handleAddFavorite = () => {
+    if (!isAuthenticated) return
+
     mutation.mutate(props.id, {
       onSuccess: () => {
-        queryClient.invalidateQueries(queryKeys.favoriteRestaurant)
-        queryClient.invalidateQueries(queryKeys.restaurantList)
-        queryClient.invalidateQueries(queryKeys.restaurantDetail)
+        queryClient.refetchQueries(queryKeys.favoriteRestaurant)
+        queryClient.refetchQueries(queryKeys.restaurantList)
+        queryClient.refetchQueries(queryKeys.restaurantDetail)
       },
     })
   }

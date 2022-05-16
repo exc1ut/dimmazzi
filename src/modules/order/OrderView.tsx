@@ -67,7 +67,7 @@ export default () => {
             textTransform="uppercase"
             justifyContent={'flex-start'}
             pl={0}
-            onClick={() => push('/cart')}
+            onClick={() => { push('/cart') }}
           >{t`savatga qaytish`}</Button>
           <Text fontSize={'3xl'} fontWeight={700}>{`Buyurtma ID: ${id}`}</Text>
           <Text pt={4} color={'premium_dark.600'}>

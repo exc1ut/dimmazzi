@@ -9,6 +9,7 @@ import { useQueryClient } from 'react-query'
 import { queryKeys } from '../../../api/queryKeys'
 import { useAddRestaurantToFavouriteMutation } from '../../../api/restaurant/useAddRestaurantToFavouriteMutation'
 import { HeartFill, Start, Tick } from '../../../img/icons/Icons'
+import { useAuth } from '../../../stores/useAuth'
 import { currencyFormatter, formatCurrency } from '../../../utils/currency'
 import { Head } from './Head'
 
@@ -41,6 +42,7 @@ export const RestourantCard = (props: RestourantCardProps) => {
   const [liked, setLiked] = React.useState(props.isLiked)
   const mutation = useAddRestaurantToFavouriteMutation()
   const queryClient = useQueryClient()
+  const { isAuthenticated } = useAuth()
   const getStatus = React.useCallback(
     (status: RestourantCardProps['state']) => {
       switch (status) {
@@ -104,7 +106,7 @@ export const RestourantCard = (props: RestourantCardProps) => {
               {props.star}
             </Text>
           </HStack>
-          {props.isDeliverable && (
+          {props.isDeliverable && isAuthenticated && (
             <>
               <Text color="premium_dark.500" px={0.5} fontWeight={500} fontSize={'sm'}>
                 ●
@@ -116,7 +118,7 @@ export const RestourantCard = (props: RestourantCardProps) => {
           )}
         </HStack>
       </HStack>
-      {props.isDeliverable && (
+      {props.isDeliverable && isAuthenticated && (
         <HStack pb={3} px={4} justifyContent={'space-between'}>
           <HStack>
             <Tick color={'premium_green.1000'} boxSize={'1.3em'} />
