@@ -1,22 +1,22 @@
 import { API_URL } from '../../config/constants/api.constants'
 import jwtAxios from '../../services/jwtAxios'
-import { IRestaurantQuery } from './IRestaurantQuery.interface'
+import { IRestaurantBody, IRestaurantQuery } from './IRestaurantQuery.interface'
 import { useQuery } from 'react-query'
+import { IPagination } from '../IPagination.interface'
+import { IRestaurantList } from './IRestaurnatList.interface'
 
-const fetcher = (id: number) => {
+const fetcher = (id: string) => {
   // const query: string = Object.keys(queryParams)
   //   .map((key) => {
   //     let queryR: any = { ...queryParams }
   //     return `${key}=${queryR[key]}`
   //   })
   //   .join('&')
+  let rest_id = parseInt(id)
 
-  return jwtAxios({
-    url: `${API_URL}customer/restaurant/${id}/detail/`,
-    method: 'GET',
-  })
+  return jwtAxios.get<IPagination<IRestaurantList>>(`/customer/restaurant/${rest_id}/detail/`)
 }
 
-export const useRestaurantDetailQuery = (filters: [string & any], id: number) => {
+export const useRestaurantDetailQuery = (filters: [string], id: string) => {
   return useQuery(...filters, () => fetcher(id))
 }

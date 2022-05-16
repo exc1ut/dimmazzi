@@ -23,19 +23,20 @@ import { SwiperSlide } from 'swiper/react'
 import { Favorite } from './Favorite/Favorite'
 import { Recommended } from './Recommended/Recommended'
 import { AllRestaurants } from './AllRestaurants/AllRestaurants'
+import { useAuth } from '@/stores/useAuth'
 
-interface HomeProps {}
+interface HomeProps { }
 
 const Home: FunctionComponent<HomeProps> = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const [small] = useMediaQuery('(max-width:480px)')
-
+  const { isAuthenticated } = useAuth()
   return (
     <PageMotion>
       <VStack spacing={14} marginBottom="1.5rem">
         {small ? null : <HomeSearch />}
-        <Favorite />
+        {isAuthenticated && <Favorite />}
         <Recommended />
         <AllRestaurants />
       </VStack>

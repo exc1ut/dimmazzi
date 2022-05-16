@@ -1,25 +1,44 @@
 import * as React from 'react'
 import { Header } from '../Header'
 import { Footer } from '../Footer'
-import { Container } from '@chakra-ui/react'
+import { Box, Container, Divider, Link, Spinner, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { useRestaurantListQuery } from '@/api/restaurant/useRestaurantListQuery'
+import { useMobileStore } from '../Header/useMobileStore'
+import { SearchCard } from '@/ui/cards/SearchCard'
+import Empty from '@/ui/features/Status/Empty'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type AppLayoutProps = {}
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const router = useRouter()
+  const { searchVisible, search } = useMobileStore();
+  const response = useRestaurantListQuery({ search: search }, {
+    enabled: !!searchVisible && !!search,
+  });
+
   return (
     <>
-      {!router.pathname.includes('/search/mobile') ? <Header /> : null}
+      <Header />
       <Container
-        py={!router.pathname.includes('/search/mobile') ? 6 : 0}
+        py={6}
         maxW={'container.xl'}
-        p={!router.pathname.includes('/search/mobile') ? '1rem' : '0'}
+        p={searchVisible ? '0.2rem' : '1rem'}
         minH={'70vh'}
       >
-        {children}
+        {searchVisible && ((response.data && response.data.results.length && search) ? (<VStack w="100%">
+          {response.data.results.map((item) => {
+            return (<Link href={`/restaurant/${item.id}`} w="full">
+              <a><SearchCard name={item.title} category={'fastfood'} img={item.logo.file} /></a>
+              <Divider />
+            </Link>)
+          })}
+
+        </VStack>) : response.isFetching ? <Box w="100%" display="flex" justifyContent="center"><Spinner /> </Box> : (!response.data?.results.length && search) ? <Empty /> : null)}
+        {!searchVisible && children}
       </Container>
+
       <Footer />
     </>
   )
