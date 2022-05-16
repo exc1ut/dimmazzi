@@ -1,3 +1,4 @@
+import { useAuth } from '@/stores/useAuth'
 import Empty from '@/ui/features/Status/Empty'
 import { Box, Button, Container, Divider, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
@@ -13,9 +14,9 @@ import { TabButton } from '../../ui/features/TabButton'
 import { PageMotion } from '../../ui/PageMotion'
 import { getTime } from '../../utils/getTime'
 
-interface CartProps {}
+interface CartProps { }
 
-export const Cart: React.FC<CartProps> = ({}) => {
+export const Cart: React.FC<CartProps> = ({ }) => {
   const { t } = useTranslation()
   const {
     deliveryPrice,
@@ -28,6 +29,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
     increaseMealQuantity,
   } = useCart()
   const router = useRouter()
+  const { isAuthenticated } = useAuth()
 
   const totalCost = useCart(totalMealCostSelector)
 
@@ -81,7 +83,7 @@ export const Cart: React.FC<CartProps> = ({}) => {
               ))
             )}
           </VStack>
-          {meals.length && (
+          {(meals.length && isAuthenticated) && (
             <>
               <VStack spacing={2} py={4} w="full">
                 <ServiceDetails

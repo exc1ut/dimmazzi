@@ -49,10 +49,10 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ handleAuth, handle
           </GridItem>
           <GridItem>
             <Center justifyContent={'flex-start'} h={'full'}>
-              <HStack cursor={'pointer'} onClick={handleLocation} spacing={2}>
+              {isAuthenticated && <HStack cursor={'pointer'} onClick={handleLocation} spacing={2}>
                 <Image src="/assets/images/location.svg" width={30} height={30} />
                 {location ? (
-                  <Text color={'premium_dark.900'} fontSize={'md'} fontWeight={400}>
+                  <Text color={'premium_dark.900'} fontSize={['sm', 'sm', 'md']} fontWeight={400} textOverflow="ellipsis" >
                     {location}
                   </Text>
                 ) : (
@@ -61,7 +61,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ handleAuth, handle
                     fontSize={'md'}
                   >{t`No location has entered`}</Text>
                 )}
-              </HStack>
+              </HStack>}
             </Center>
           </GridItem>
           <GridItem>
