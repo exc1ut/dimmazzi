@@ -18,7 +18,6 @@
 		"gen:component": "plop",
 		"gen:theme": "chakra-cli tokens src/theme/chakraTheme.ts",
 		"gen:translation": "i18next 'src/**/*.{ts,tsx}' [-oc]",
-		"postinstall": "yarn gen:theme"
 	},
 	"dependencies": {
 		"@chakra-ui/icons": "^1.1.7",
