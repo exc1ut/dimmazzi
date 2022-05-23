@@ -17,7 +17,7 @@
 		"build-storybook": "build-storybook -s public",
 		"gen:component": "plop",
 		"gen:theme": "chakra-cli tokens src/theme/chakraTheme.ts",
-		"gen:translation": "i18next 'src/**/*.{ts,tsx}' [-oc]",
+		"gen:translation": "i18next 'src/**/*.{ts,tsx}' [-oc]"
 	},
 	"dependencies": {
 		"@chakra-ui/icons": "^1.1.7",

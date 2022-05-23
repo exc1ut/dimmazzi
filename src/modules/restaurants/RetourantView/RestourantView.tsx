@@ -35,7 +35,6 @@ export default () => {
   const router = useRouter()
   const { id } = router.query
   const { data, isLoading, isSuccess } = useRestourantDetail(+id!)
-  const comboList = useMealComboList(id as string)
   const { t } = useTranslation()
   const modal = useModal(MealModalCard)
   const { addMeal } = useCart()
@@ -51,8 +50,8 @@ export default () => {
     },
   ]
 
-  if (isLoading || comboList.isLoading) return <AppLoader />
-  if (!isSuccess || !comboList.isSuccess) return null
+  if (isLoading) return <AppLoader />
+  if (!isSuccess) return null
 
   const handleAddMeal = async (meal: IMeal) => {
     const response = (await modal.show({
