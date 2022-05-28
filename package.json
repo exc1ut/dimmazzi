@@ -5,6 +5,7 @@
 		"dev": "next dev",
 		"dev:mock": "cross-env NEXT_PUBLIC_ENV=mock next dev",
 		"build": "next build",
+		"build:html": "next build && next export",
 		"start": "next start",
 		"build-stats": "cross-env ANALYZE=true npm run build",
 		"export": "next export",

@@ -24,12 +24,12 @@ import { Map } from '../../ui/Map'
 import address from '../address'
 import { StatusAccepted } from './StatusAccepted'
 
-export default ({ }) => {
+export default ({}) => {
   const [paymentOption, setPaymentOption] = useState<'pay_me_uz' | 'cash' | 'click_uz'>('pay_me_uz')
   const [address, setAddress] = useState<IAddress>()
   const { t } = useTranslation()
   const { query, push } = useRouter()
-  const { meals, type, deliveryPrice, deliveryTime, preparingTime, reset } = useCart()
+  const { meals, type, deliveryPrice, deliveryTime, preparingTime, reset, restourantId } = useCart()
   const totalPrice = useCart(totalMealCostSelector)
   const { data, isLoading, isSuccess } = useAddressQuery()
   const modal = useModal(Map)
@@ -89,13 +89,16 @@ export default ({ }) => {
       preparation_time: preperationTime,
       products: orderProduct,
       total_price: deliveryPrice + totalPrice,
+      restaurant: restourantId!,
     }
 
     mutation.mutate(dto, {
       onSuccess: async (data) => {
+        window.open(data.data.link)
         await statusModal.show({
           order_id: data.data.order_id,
         })
+
         reset()
       },
     })
@@ -116,7 +119,9 @@ export default ({ }) => {
             textTransform="uppercase"
             justifyContent={'flex-start'}
             pl={0}
-            onClick={() => { push('/cart') }}
+            onClick={() => {
+              push('/cart')
+            }}
           >{t`savatga qaytish`}</Button>
           <Text fontSize={'3xl'} fontWeight={700}>{`Buyurtma ID: ${orderId}`}</Text>
 

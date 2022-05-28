@@ -6,6 +6,7 @@ export interface IOrderCreate {
   payment_type: string
   delivery_type: string
   preparation_time: number
+  restaurant: number
   delivery_price: number
   meal_total_price: number
   total_price: number
@@ -22,6 +23,7 @@ export interface IOrderProduct {
 
 export interface OrderCreateResponse {
   order_id: number
+  link: string
 }
 
 export const useOrderCreateMutation = () => {

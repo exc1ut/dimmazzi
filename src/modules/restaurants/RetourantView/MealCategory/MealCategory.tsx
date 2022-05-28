@@ -1,5 +1,6 @@
 import { Box, Flex, Button, SimpleGrid, Text } from '@chakra-ui/react'
 import { t } from 'i18next'
+import { useRouter } from 'next/router'
 import { useMealListQuery } from '../../../../api/meal/useMealListQuery'
 import { Loader } from '../../../../ui/AppComponents/Loader'
 import { MealCard } from '../../../../ui/cards/MealCard'
@@ -17,6 +18,8 @@ export const MealCategory: React.FC<MealCategoryProps> = ({ id, title, restauran
     restaurant: restaurantId,
   })
 
+  const router = useRouter()
+
   const { onAddMeal } = useRestaurantViewContext()
 
   if (isLoading) return <Loader />
@@ -28,7 +31,7 @@ export const MealCategory: React.FC<MealCategoryProps> = ({ id, title, restauran
         <Text fontWeight={700} fontSize={'3xl'}>
           {title}
         </Text>
-        <Button size={'lg'} color="premium_red.1000" variant={'link'}>{t`Barchasi`}</Button>
+        {/* <Button onClick={()=>router.push('')} size={'lg'} color="premium_red.1000" variant={'link'}>{t`Barchasi`}</Button> */}
       </Flex>
       <SimpleGrid columns={[null, 1, 2, 3, 4]} spacing={6} py={6}>
         {data.results.map((v, index) => (
