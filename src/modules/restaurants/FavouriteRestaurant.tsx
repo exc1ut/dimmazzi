@@ -36,7 +36,7 @@ const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
                 <Empty />
               </Box>
             ) : (
-              <SimpleGrid columns={[1, 2, 2, 3]} w="100%" spacing={[3, 4, 6]}>
+              <SimpleGrid columns={[1, 2, 2, 3]} w="100%" spacing={[8, 4, 6]}>
                 {data.results.map((v) => (
                   <RestourantCard
                     restaurantId={v.id}

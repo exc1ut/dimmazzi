@@ -1,5 +1,5 @@
 import { ChevronLeftIcon } from '@chakra-ui/icons'
-import { Box, Button, Container, Divider, HStack, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, Container, Divider, HStack, Stack, Text, VStack } from '@chakra-ui/react'
 import { useModal } from '@ebay/nice-modal-react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -178,7 +178,7 @@ export default ({}) => {
             <Divider />
             <ServiceDetails icon={<MoneyIcon />} title={t`Umumiy to’lov`} value={`${totalPrice}`} />
           </VStack>
-          <HStack py={4} spacing={6}>
+          <Stack flexWrap={'wrap'} direction={{ xs: 'column' }} gap={6}>
             <PaymentOptions
               onClick={() => setPaymentOption('pay_me_uz')}
               isActive={paymentOption === 'pay_me_uz'}
@@ -204,7 +204,7 @@ export default ({}) => {
               icon={MoneyIcon}
               title={t`Naqt to’layman`}
             />
-          </HStack>
+          </Stack>
 
           <Box w={'full'} py={6}>
             <Button

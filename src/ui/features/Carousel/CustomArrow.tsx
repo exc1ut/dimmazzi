@@ -1,4 +1,11 @@
-import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons'
+import {
+  ArrowBackIcon,
+  ArrowForwardIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@chakra-ui/icons'
 import { IconButton, IconButtonProps } from '@chakra-ui/react'
 import { useMemo } from 'react'
 import { CustomArrowProps as CProps } from 'react-slick'
@@ -25,8 +32,9 @@ export const CustomArrow: React.FC<CustomArrowProps> = ({ style, direction, ...r
     <IconButton
       // {...rest}
       aria-label="arrow"
-      icon={direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />}
+      icon={direction === 'left' ? <ArrowBackIcon /> : <ArrowForwardIcon />}
       position="absolute"
+      fontSize={'1.4em'}
       borderRadius={'full'}
       top={'45%'}
       translateY="0%"
@@ -34,6 +42,9 @@ export const CustomArrow: React.FC<CustomArrowProps> = ({ style, direction, ...r
       colorScheme={'premium_dark'}
       _focus={{
         borderColor: 'none',
+      }}
+      _active={{
+        bgColor: 'premium_dark.600',
       }}
       _hover={{
         backgroundColor: 'premium_dark.800',

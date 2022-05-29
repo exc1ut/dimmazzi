@@ -77,7 +77,8 @@ export const RestourantCard = (props: RestourantCardProps) => {
     <Stack
       as={motion.div}
       whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.98, opacity: 0.5 }}
+      animate={{ opacity: 1 }}
       cursor={'pointer'}
       overflow={'hidden'}
       borderRadius={'lg'}

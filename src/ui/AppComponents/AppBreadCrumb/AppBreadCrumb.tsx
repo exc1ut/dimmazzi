@@ -12,7 +12,7 @@ interface AppBreadCrumbProps {
 }
 
 const AppBreadCrumb = ({ items }: AppBreadCrumbProps) => {
-  console.log(items);
+  console.log(items)
 
   return (
     <Breadcrumb spacing={2} separator={<ChevronRightIcon boxSize={'1.4em'} />}>
@@ -24,9 +24,13 @@ const AppBreadCrumb = ({ items }: AppBreadCrumbProps) => {
             fontWeight={isCurrent ? 600 : 400}
             isCurrentPage={isCurrent}
           >
-            <Link href={v.link}>
-              <a>{v.label}</a>
-            </Link>
+            {isCurrent ? (
+              <p>{v.label}</p>
+            ) : (
+              <Link href={v.link}>
+                <a>{v.label}</a>
+              </Link>
+            )}
           </BreadcrumbItem>
         )
       })}

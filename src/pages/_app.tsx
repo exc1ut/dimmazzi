@@ -5,9 +5,8 @@ import { AppLayout } from '../ui/layouts/AppLayout'
 
 import { initMock } from '../mocks/'
 
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 import '../ui/features/Carousel/styles.css'
+import '../styles/global.css'
 import { useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import router, { useRouter } from 'next/router'

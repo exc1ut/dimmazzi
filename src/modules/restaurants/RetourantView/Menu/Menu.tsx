@@ -28,6 +28,7 @@ export const Menu: React.FC<MenuProps> = ({}) => {
         css={{
           '&::-webkit-scrollbar': {
             width: '0px',
+            display: 'none',
           },
         }}
       >
