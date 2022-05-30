@@ -11,7 +11,7 @@ import { useWindowSize } from "../../../hooks/useWindowSize";
 import { NextImage } from "@/ui/NextImage";
 import { useLocation } from "@/stores/useLocation";
 import Link from "next/link";
-
+import useDebounce from "@/hooks/useDebounce";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars 
 export type HomeSearchProps = {}
 
@@ -22,9 +22,10 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
   //const [windowSize] = useWindowSize({ width: 0, height: 0 });
   const [value, setValue] = React.useState("");
   const [matchList, setMatchList] = React.useState<IRestaurantBody[]>([]);
-  const [debounce, setDebounce] = React.useState("");
+  // const [debounce, setDebounce] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const debounce = useDebounce(value, 500)
   //const { latitude, longitude } = useLocation();
   // const restaurants = ["Evos - Lavash center", "Shohona - Milliy taomlar", "Retro - Turk taomlari", "SamOsh - Plov center", "Kebab - Plov center"];
 
@@ -44,21 +45,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
       setIsOpen(false);
     }
   }, [matchList])
-  React.useEffect(() => {
-    if (!value.length) {
-      setDebounce("");
-    }
 
-    const Interval = setTimeout(() => {
-      if (value.length) {
-        setDebounce(value);
-      }
-    }, 500)
-
-
-
-    return () => clearTimeout(Interval);
-  }, [value])
 
 
   React.useEffect(() => {
@@ -127,12 +114,12 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
               placeholder={t`Search meal or restaurants`}
               value={value}
               autoComplete="off" onFocusCapture={() => { setModalIsOpen(true) }} ref={inputRef} onChange={handleChange} variant="solid" bgColor="white" />
-            <InputRightElement height="full">
+            <InputRightElement height="full" onClick={() => response.isFetching ? null : inputRef.current?.focus()}>
               {response.isFetching ? <Spinner /> : <InputSearchIcon />}
             </InputRightElement>
           </InputGroup>
         </PopoverTrigger>
-        <PopoverContent w={`${document.querySelector('input')?.offsetWidth}px` || "100%"}>
+        <PopoverContent overflowY="scroll" w={`${document.querySelector('input')?.offsetWidth}px` || "100%"}>
           {response?.data?.results.map(item => {
             console.log("item", item);
 
@@ -152,7 +139,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
       </Popover>
       <Modal isOpen={modalIsOpen} onClose={() => console.log("close")}>
         <ModalOverlay bgColor="blackAlpha.500" onClick={() => {
-          setIsOpen(false); setModalIsOpen(false); setDebounce(""); setValue(""); inputRef.current?.blur();
+          setIsOpen(false); setModalIsOpen(false); setValue(""); inputRef.current?.blur();
         }} />
       </Modal>
     </Box>
