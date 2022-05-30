@@ -28,7 +28,9 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
   //const { latitude, longitude } = useLocation();
   // const restaurants = ["Evos - Lavash center", "Shohona - Milliy taomlar", "Retro - Turk taomlari", "SamOsh - Plov center", "Kebab - Plov center"];
 
-  const response = useRestaurantListQuery({ search: debounce });
+  const response = useRestaurantListQuery({ search: debounce }, {
+    enabled: !!debounce
+  });
 
   // React.useEffect(() => {
   //   let width = document.querySelector('input')?.offsetWidth
@@ -65,10 +67,10 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
 
 
   const handleDebounce = React.useCallback(() => {
-    const match = response.data?.results.some(item => item.title.match(debounce));
+    // const match = response.data?.results.some(item => item.title.match(debounce));
 
 
-    if (debounce.length > 0 && !isOpen && match && modalIsOpen) {
+    if (debounce.length > 0 && !isOpen && modalIsOpen) {
       setIsOpen(true);
     }
     else if (debounce.length === 0 && isOpen) {
@@ -78,7 +80,7 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
       setIsOpen(false);
 
     }
-    if (!match && isOpen && match !== undefined) {
+    if (!response.data?.count) {
       setIsOpen(false);
     }
   }, [debounce, response])
@@ -134,15 +136,17 @@ export const HomeSearch: React.FC<HomeSearchProps> = ({ }) => {
           {response?.data?.results.map(item => {
             console.log("item", item);
 
-            if (item?.title.match(value)) {
-              return (<Link href={`/restaurant/${item.id}`}>
-                <a>
-                  <SearchCard img={item.logo.file} name={item.title} category="fastfood" />
+            // if (item?.title.match(value)) {
+            return (<Link href={`/restaurant/${item.id}`}>
+              <a>
+                <SearchCard img={item.logo.file} name={item.title} category="fastfood" />
 
-                </a>
-              </Link>)
-            }
-          })}
+              </a>
+            </Link>)
+          }
+            //}
+          )
+          }
         </PopoverContent>
 
       </Popover>
