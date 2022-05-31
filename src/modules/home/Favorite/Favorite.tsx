@@ -31,7 +31,6 @@ export const Favorite: React.FC<FavoriteProps> = ({}) => {
             isDeliverable={v.has_delivery}
             cost={v.additional.approximate_delivery_price}
             time={v.additional.approximate_delivery_time}
-            onClick={() => router.push(`/restaurant/${v.id}`)}
           />
         </Box>
       </SwiperSlide>

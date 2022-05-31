@@ -1,5 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import jwtAxios from '../../services/jwtAxios'
+import { useLocation } from '../../stores/useLocation'
 import { UseQueryOptionsType } from '../../utils/useQueryOptionsType'
 import { queryKeys } from '../queryKeys'
 
@@ -34,11 +35,14 @@ export interface Category {
   title: string
 }
 
-const fetcher = async (id: number) => {
-  const { data } = await jwtAxios.get<RestaurantDetail>(`/customer/restaurant/${id}/detail/`)
+const fetcher = async (id: number, location: any) => {
+  const { data } = await jwtAxios.get<RestaurantDetail>(`/customer/restaurant/${id}/detail/`, {
+    params: location,
+  })
   return data
 }
 
 export const useRestourantDetail = (id: number) => {
-  return useQuery([queryKeys.restaurantDetail, id], () => fetcher(id))
+  const { latitude, longitude } = useLocation()
+  return useQuery([queryKeys.restaurantDetail, id], () => fetcher(id, { latitude, longitude }))
 }

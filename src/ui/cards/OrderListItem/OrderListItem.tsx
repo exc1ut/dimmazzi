@@ -1,7 +1,8 @@
 import { BagIcon, ForwardIcon } from '../../../img/icons/Icons'
-import { Box, Flex, HStack, VStack, Text } from '@chakra-ui/react'
+import { Box, Flex, HStack, VStack, Text, IconButton } from '@chakra-ui/react'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
+import { CloseIcon } from '@chakra-ui/icons'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type OrderListItemProps = {
@@ -22,6 +23,10 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, order
     [status]
   )
 
+  const handleCancel: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation()
+  }
+
   return (
     <Box
       w="100%"
@@ -32,6 +37,15 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, order
     >
       <Flex w="100%" justify="space-between" align="center">
         <HStack spacing={3}>
+          <Box>
+            <IconButton
+              onClick={handleCancel}
+              variant={'ghost'}
+              size="xs"
+              aria-label="cancle"
+              icon={<CloseIcon />}
+            />
+          </Box>
           <Box
             boxSize="2.5rem"
             borderRadius="50%"
@@ -43,9 +57,10 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, order
           >
             <BagIcon />
           </Box>
+
           <VStack align="start">
             <Text fontSize="1.07rem" fontWeight={600} lineHeight="1.25rem">
-              {orderId}
+              {t`Order number`}: {orderId}
             </Text>
             <Text
               textTransform="uppercase"

@@ -4,6 +4,7 @@ import { useModal } from '@ebay/nice-modal-react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useQueryClient } from 'react-query'
 import { undefined } from 'zod'
 import { IAddress } from '../../api/address/IAddress.interface'
 import { useAddressQuery } from '../../api/address/useAddressQuery'
@@ -12,6 +13,7 @@ import {
   IOrderCreate,
   useOrderCreateMutation,
 } from '../../api/order/useOrderCreateMutation'
+import { queryKeys } from '../../api/queryKeys'
 import { CarIcon, CookIcon, MoneyIcon } from '../../img/icons/Icons'
 import { totalMealCostSelector, useCart } from '../../stores/useCart'
 import { AppBreadCrumb, BreadCrumb } from '../../ui/AppComponents/AppBreadCrumb'
@@ -35,6 +37,7 @@ export default ({}) => {
   const modal = useModal(Map)
   const statusModal = useModal(StatusAccepted)
   const mutation = useOrderCreateMutation()
+  const queryClient = useQueryClient()
   const { orderId } = query
 
   useEffect(() => {
@@ -94,7 +97,10 @@ export default ({}) => {
 
     mutation.mutate(dto, {
       onSuccess: async (data) => {
-        window.open(data.data.link)
+        if (data.data?.link) {
+          window.open(data.data.link)
+        }
+        queryClient.refetchQueries(queryKeys.orderList)
         await statusModal.show({
           order_id: data.data.order_id,
         })

@@ -1,4 +1,4 @@
 export interface IRestaurantQuery {
-  longtitude?: string
+  longitude?: string
   latitude?: string
 }

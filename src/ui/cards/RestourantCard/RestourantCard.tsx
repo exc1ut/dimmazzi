@@ -3,6 +3,7 @@ import { Box, HStack, IconButton, Stack, StackProps, Text } from '@chakra-ui/rea
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from 'react-query'
@@ -43,6 +44,7 @@ export const RestourantCard = (props: RestourantCardProps) => {
   const mutation = useAddRestaurantToFavouriteMutation()
   const queryClient = useQueryClient()
   const { isAuthenticated } = useAuth()
+  const router = useRouter()
   const getStatus = React.useCallback(
     (status: RestourantCardProps['state']) => {
       switch (status) {
@@ -73,6 +75,12 @@ export const RestourantCard = (props: RestourantCardProps) => {
     })
   }
 
+  const handleClick = () => {
+    if (props.state === 'open') {
+      router.push(`/restaurant/${props.restaurantId}`)
+    }
+  }
+
   return (
     <Stack
       as={motion.div}
@@ -87,6 +95,7 @@ export const RestourantCard = (props: RestourantCardProps) => {
       maxW="26rem"
       margin="0px"
       direction={'column'}
+      onClick={handleClick}
       {...props}
     >
       <Head

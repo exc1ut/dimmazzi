@@ -1,7 +1,8 @@
 import { NextImage } from '../../NextImage'
-import { Box, Divider, Flex, HStack, Text, VStack } from '@chakra-ui/react'
+import { Box, Divider, Flex, HStack, IconButton, Text, VStack } from '@chakra-ui/react'
 import * as React from 'react'
 import CountChange from './CountChangeButton'
+import { DeleteIcon } from '@chakra-ui/icons'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type MealListItemProps = {
@@ -12,6 +13,7 @@ export type MealListItemProps = {
   quantity: number
   handleDecrease?: () => void
   handleIncrease?: () => void
+  handleDelete: () => void
 }
 
 export const MealListItem: React.FC<MealListItemProps> = ({
@@ -22,12 +24,21 @@ export const MealListItem: React.FC<MealListItemProps> = ({
   type,
   handleDecrease,
   handleIncrease,
+  handleDelete,
 }) => {
   return (
     <Box paddingRight=".2rem" w="100%">
       <VStack spacing={2} w="100%">
         <Flex justify="space-between" align="center" w="100%">
           <HStack spacing={4}>
+            <Box>
+              <IconButton
+                aria-label="delete"
+                icon={<DeleteIcon />}
+                variant="ghost"
+                onClick={handleDelete}
+              />
+            </Box>
             <Box w="3rem" h="3rem">
               <NextImage src={imgSrc} objectFit="cover" w={'full'} h={'full'} borderRadius="50%" />
             </Box>

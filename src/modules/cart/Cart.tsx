@@ -18,10 +18,10 @@ import { AuthModal } from '../auth/auth/AuthModal'
 import { useModal } from '@ebay/nice-modal-react'
 import { useAddressQuery } from '@/api/address/useAddressQuery'
 import { useLocation } from '@/stores/useLocation'
-import { Map } from "../../ui/Map";
-interface CartProps { }
+import { Map } from '../../ui/Map'
+interface CartProps {}
 
-export const Cart: React.FC<CartProps> = ({ }) => {
+export const Cart: React.FC<CartProps> = ({}) => {
   const { t } = useTranslation()
   const {
     deliveryPrice,
@@ -32,6 +32,7 @@ export const Cart: React.FC<CartProps> = ({ }) => {
     changeType,
     decreaseMealQuantity,
     increaseMealQuantity,
+    removeMeal,
   } = useCart()
   const router = useRouter()
   const { isAuthenticated } = useAuth()
@@ -40,21 +41,17 @@ export const Cart: React.FC<CartProps> = ({ }) => {
   const { setStore } = useLocation()
   const locationModal = useModal(Map)
 
-
   const handleAuth = async () => {
     await authModal.show()
     const lastAddress = data?.results?.at(-1)
     if (lastAddress) {
       setStore((state) => ({ ...state, ...lastAddress }))
-
     } else {
       await locationModal.show()
       // setMapIsOpen(true)
     }
     router.push('/order/create?orderId=2')
-
   }
-
 
   const totalCost = useCart(totalMealCostSelector)
 
@@ -70,11 +67,8 @@ export const Cart: React.FC<CartProps> = ({ }) => {
   ]
 
   const handleSubmit = () => {
-    if (isAuthenticated)
-      router.push('/order/create?orderId=2')
-    else
-      handleAuth()
-
+    if (isAuthenticated) router.push('/order/create?orderId=2')
+    else handleAuth()
   }
 
   return (
@@ -107,28 +101,31 @@ export const Cart: React.FC<CartProps> = ({ }) => {
                   quantity={v.quantity}
                   handleDecrease={() => decreaseMealQuantity(v.id)}
                   handleIncrease={() => increaseMealQuantity(v.id)}
+                  handleDelete={() => removeMeal(v.id)}
                   type="cart"
                 />
               ))
             )}
           </VStack>
-          {(meals.length) && (
+          {meals.length && (
             <>
-              {isAuthenticated && <VStack spacing={2} py={4} w="full">
-                <ServiceDetails
-                  icon={<CookIcon />}
-                  title="Tayyorlanish o’rtacha vaqti:"
-                  value={getTime(preparingTime)}
-                />
-                <Divider />
-                {type === 'delivery' && (
+              {isAuthenticated && (
+                <VStack spacing={2} py={4} w="full">
                   <ServiceDetails
-                    icon={<CarIcon />}
-                    title="Yetkazib berish:"
-                    value={`${deliveryTime} / ${deliveryPrice}`}
+                    icon={<CookIcon />}
+                    title="Tayyorlanish o’rtacha vaqti:"
+                    value={getTime(preparingTime)}
                   />
-                )}
-              </VStack>}
+                  <Divider />
+                  {type === 'delivery' && (
+                    <ServiceDetails
+                      icon={<CarIcon />}
+                      title="Yetkazib berish:"
+                      value={`${deliveryTime} / ${deliveryPrice}`}
+                    />
+                  )}
+                </VStack>
+              )}
               <Button
                 size={'lg'}
                 fontSize="lg"

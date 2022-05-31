@@ -54,8 +54,8 @@ export default ({}) => {
             data.results.map((v) => (
               <Box
                 as={motion.div}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98, opacity: 0.3 }}
                 w="full"
                 cursor={'pointer'}
                 onClick={() => router.push(`/order/${v.id}`)}

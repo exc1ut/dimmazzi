@@ -52,7 +52,6 @@ const RecommendedRestaurant: FunctionComponent<RecommendedRestaurantProps> = () 
                     isDeliverable={v.has_delivery === true}
                     cost={v.has_delivery ? v.additional.approximate_delivery_price : undefined}
                     time={v.has_delivery ? v.additional.approximate_delivery_time : undefined}
-                    onClick={() => router.push(`/restaurant/${v.id}`)}
                   />
                 ))}
               </SimpleGrid>

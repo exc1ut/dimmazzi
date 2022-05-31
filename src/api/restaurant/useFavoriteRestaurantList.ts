@@ -19,7 +19,7 @@ const fetcher = async (dto: IRestaurantQuery) => {
 export const useFavoriteRestaurantList = () => {
   const { latitude, longitude } = useLocation()
 
-  return useQuery([queryKeys.favoriteRestaurant], () =>
-    fetcher({ latitude, longtitude: longitude })
+  return useQuery([queryKeys.favoriteRestaurant, latitude, longitude], () =>
+    fetcher({ latitude, longitude })
   )
 }
