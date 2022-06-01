@@ -23,10 +23,6 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, order
     [status]
   )
 
-  const handleCancel: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation()
-  }
-
   return (
     <Box
       w="100%"
@@ -37,15 +33,6 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ date, price, order
     >
       <Flex w="100%" justify="space-between" align="center">
         <HStack spacing={3}>
-          <Box>
-            <IconButton
-              onClick={handleCancel}
-              variant={'ghost'}
-              size="xs"
-              aria-label="cancle"
-              icon={<CloseIcon />}
-            />
-          </Box>
           <Box
             boxSize="2.5rem"
             borderRadius="50%"

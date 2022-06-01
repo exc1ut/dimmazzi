@@ -13,7 +13,7 @@ export type MealListItemProps = {
   quantity: number
   handleDecrease?: () => void
   handleIncrease?: () => void
-  handleDelete: () => void
+  handleDelete?: () => void
 }
 
 export const MealListItem: React.FC<MealListItemProps> = ({
