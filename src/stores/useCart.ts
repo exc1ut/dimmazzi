@@ -55,10 +55,6 @@ export interface ICart {
   removeMeal: (mealId: number) => void
   increaseMealQuantity: (mealId: number) => void
   decreaseMealQuantity: (mealId: number) => void
-  addCombo: (combo: ICartCombo) => void
-  removeCombo: (mealId: number) => void
-  increaseComboQuantity: (mealId: number) => void
-  decreaseComboQuantity: (mealId: number) => void
   reset: () => void
 }
 
@@ -97,6 +93,11 @@ const store: StoreType<ICart> = (set, get) => ({
   removeMeal(mealId) {
     const filteredMeals = get().meals.filter((meal) => meal.id !== mealId)
     set((state) => ({ ...state, meals: filteredMeals }))
+    const meals = get().meals
+    const combos = get().combos
+    if (meals.length === 0 && combos.length === 0) {
+      get().reset()
+    }
   },
   increaseMealQuantity(mealId) {
     set(
@@ -126,41 +127,6 @@ const store: StoreType<ICart> = (set, get) => ({
     if (meals.length === 0 && combos.length === 0) {
       get().reset()
     }
-  },
-  addCombo: (combo) =>
-    set(
-      produce<ICart>((state) => {
-        state.combos.push(combo)
-      })
-    ),
-  removeCombo(comboId) {
-    set(
-      produce<ICart>((state) => {
-        const filteredCombos = get().combos.filter((combo) => combo.id !== comboId)
-        state.combos = filteredCombos
-      })
-    )
-  },
-  increaseComboQuantity(comboId) {
-    set(
-      produce<ICart>((state) => {
-        const comboIndex = get().combos.findIndex((v) => v.id === comboId)
-        state.combos[comboIndex]!.quantity++
-      })
-    )
-  },
-  decreaseComboQuantity(comboId) {
-    set(
-      produce<ICart>((state) => {
-        const comboIndex = get().combos.findIndex((v) => v.id === comboId)
-        const combo = state.combos[comboIndex]!
-        if (combo.quantity > 1) {
-          state.combos[comboIndex]!.quantity--
-        } else {
-          get().removeCombo(comboId)
-        }
-      })
-    )
   },
   changeType(type) {
     set({ type })
