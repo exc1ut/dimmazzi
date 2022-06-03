@@ -32,7 +32,7 @@ const RecommendedRestaurant: FunctionComponent<RecommendedRestaurantProps> = () 
         <VStack spacing={14} w="100%" mt="1.5rem">
           {small ? null : <HomeSearch />}
           <VStack w="100%" spacing={6} align="start">
-            <Heading fontSize="1.5rem" lineHeight="2rem">{t`Favourite Restaurants`}</Heading>
+            <Heading fontSize="1.5rem" lineHeight="2rem">{t`Recommended restaurants`}</Heading>
 
             {data.results.length === 0 ? (
               <Box w="full">

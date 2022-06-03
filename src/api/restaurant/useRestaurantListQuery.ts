@@ -11,7 +11,7 @@ export interface IRestaurantListDto {
   recommended?: 'true' | 'false'
 }
 
-const fetcher = async (dto: IRestaurantListDto) => {
+export const restaurantListfetcher = async (dto: IRestaurantListDto) => {
   const { data } = await jwtAxios.get<IPagination<IRestaurantList>>('/customer/restaurant/list/', {
     params: dto,
   })
@@ -21,8 +21,8 @@ const fetcher = async (dto: IRestaurantListDto) => {
 export const useRestaurantListQuery = (dto: IRestaurantListDto, otpions?: any) => {
   const { latitude, longitude } = useLocation()
   return useQuery(
-    [queryKeys.restaurantList, dto],
-    () => fetcher({ latitude, longitude: longitude, ...dto }),
+    [queryKeys.restaurantList, dto, latitude, longitude],
+    () => restaurantListfetcher({ latitude, longitude: longitude, ...dto }),
     { ...otpions }
   )
 }

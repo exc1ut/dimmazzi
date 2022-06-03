@@ -14,7 +14,10 @@ import {
 import { FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { useRestaurantListQuery } from '../../api/restaurant/useRestaurantListQuery'
+import {
+  restaurantListfetcher,
+  useRestaurantListQuery,
+} from '../../api/restaurant/useRestaurantListQuery'
 import { RestourantCard } from '../../ui/cards/RestourantCard'
 import { useRouter } from 'next/router'
 import { PageMotion } from '../../ui/PageMotion'
@@ -24,8 +27,26 @@ import { Favorite } from './Favorite/Favorite'
 import { Recommended } from './Recommended/Recommended'
 import { AllRestaurants } from './AllRestaurants/AllRestaurants'
 import { useAuth } from '@/stores/useAuth'
+import { dehydrate, QueryClient } from 'react-query'
+import { queryKeys } from '../../api/queryKeys'
 
-interface HomeProps { }
+interface HomeProps {}
+
+export async function getStaticProps() {
+  const queryClient = new QueryClient()
+
+  await queryClient.prefetchQuery(queryKeys.favoriteRestaurant, () => [])
+  await queryClient.prefetchQuery([queryKeys.restaurantList, { recommended: 'true' }], () =>
+    restaurantListfetcher({ recommended: 'true' })
+  )
+  await queryClient.prefetchQuery(queryKeys.restaurantList, () => restaurantListfetcher({}))
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  }
+}
 
 const Home: FunctionComponent<HomeProps> = () => {
   const { t } = useTranslation()

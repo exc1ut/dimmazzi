@@ -31,7 +31,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const AnyComponent = Component as any
 
   return (
-    <Providers>
+    <Providers pageProps={pageProps}>
       <AppLayout>
         <AnimatePresence exitBeforeEnter initial={false}>
           <AnyComponent {...pageProps} canonical={router.pathname} key={router.pathname} />
