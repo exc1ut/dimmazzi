@@ -11,6 +11,7 @@ import { RestourantCard } from '../../ui/cards/RestourantCard'
 import image from 'next/image'
 import { useRouter } from 'next/router'
 import Empty from '../../ui/features/Status/Empty'
+import { RestaurantSkeleton } from '../../ui/AppComponents/RestaurantSkeleton'
 
 interface FavouriteRestaurantProps {}
 
@@ -20,9 +21,6 @@ const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
   const { data, isLoading, isSuccess } = useFavoriteRestaurantList()
   const router = useRouter()
 
-  if (isLoading) return <AppLoader />
-  if (!isSuccess) return null
-
   return (
     <PageMotion>
       <Container maxW="container.xl">
@@ -31,26 +29,31 @@ const FavouriteRestaurant: FunctionComponent<FavouriteRestaurantProps> = () => {
           <VStack w="100%" spacing={6} align="start">
             <Heading fontSize="1.5rem" lineHeight="2rem">{t`Favourite Restaurants`}</Heading>
 
-            {data.results.length === 0 ? (
+            {data?.results.length === 0 ? (
               <Box w="full">
                 <Empty />
               </Box>
             ) : (
               <SimpleGrid columns={[1, 2, 2, 3]} w="100%" spacing={[8, 4, 6]}>
-                {data.results.map((v) => (
-                  <RestourantCard
-                    restaurantId={v.id}
-                    image={v.background.file}
-                    isLiked={v.is_favourite}
-                    name={v.title}
-                    star={v.rating}
-                    distance={v.distance}
-                    state={v.is_open ? 'open' : 'closed'}
-                    isDeliverable={v.has_delivery === true}
-                    cost={v.has_delivery ? v.additional.approximate_delivery_price : undefined}
-                    time={v.has_delivery ? v.additional.approximate_delivery_time : undefined}
-                  />
-                ))}
+                {isLoading ? (
+                  <RestaurantSkeleton skeletonNumber={3} />
+                ) : (
+                  isSuccess &&
+                  data.results.map((v) => (
+                    <RestourantCard
+                      restaurantId={v.id}
+                      image={v.background.file}
+                      isLiked={v.is_favourite}
+                      name={v.title}
+                      star={v.rating}
+                      distance={v.distance}
+                      state={v.is_open ? 'open' : 'closed'}
+                      isDeliverable={v.has_delivery === true}
+                      cost={v.has_delivery ? v.additional.approximate_delivery_price : undefined}
+                      time={v.has_delivery ? v.additional.approximate_delivery_time : undefined}
+                    />
+                  ))
+                )}
               </SimpleGrid>
             )}
           </VStack>

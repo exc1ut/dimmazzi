@@ -16,6 +16,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, [router.pathname])
+
+  useEffect(() => {
     ;(async () => {
       if (process.env.NEXT_PUBLIC_ENV === 'mock') {
         await initMock()

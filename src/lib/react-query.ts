@@ -48,11 +48,11 @@ export const queryClient = new QueryClient({
   },
 })
 
-if (typeof window !== 'undefined') {
-  const localStoragePersistor = createWebStoragePersistor({ storage: window.localStorage })
+// if (typeof window !== 'undefined') {
+//   const localStoragePersistor = createWebStoragePersistor({ storage: window.localStorage })
 
-  persistQueryClient({
-    queryClient,
-    persistor: localStoragePersistor,
-  })
-}
+//   persistQueryClient({
+//     queryClient,
+//     persistor: localStoragePersistor,
+//   })
+// }

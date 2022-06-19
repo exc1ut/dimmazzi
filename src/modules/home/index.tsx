@@ -32,10 +32,10 @@ import { queryKeys } from '../../api/queryKeys'
 
 interface HomeProps {}
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery(queryKeys.favoriteRestaurant, () => [])
+  await queryClient.prefetchQuery(queryKeys.favoriteRestaurant, () => restaurantListfetcher({}))
   await queryClient.prefetchQuery([queryKeys.restaurantList, { recommended: 'true' }], () =>
     restaurantListfetcher({ recommended: 'true' })
   )

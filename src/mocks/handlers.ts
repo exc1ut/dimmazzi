@@ -27,4 +27,7 @@ export const handlers = [
 
     return res(ctx.json(user))
   }),
+  rest.post('*/account/edit_profile/', (req, res, ctx) => {
+    return res(ctx.status(201))
+  }),
 ]

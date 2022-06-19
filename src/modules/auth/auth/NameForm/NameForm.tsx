@@ -48,13 +48,14 @@ export const NameForm = (props: NameFormProps) => {
     })
   })
   return (
-    <MotionBox p="40px">
+    <MotionBox data-testid={'name-container'} p="40px">
       <form onSubmit={onSubmit}>
         <VStack spacing={6} align="center">
           <ModalHeader>{t`User information`}</ModalHeader>
           <Input
             placeholder={t`Name`}
             isInvalid={!!formState.errors.first_name}
+            data-testid="name"
             {...register('first_name')}
           />
           <Input
@@ -69,7 +70,7 @@ export const NameForm = (props: NameFormProps) => {
             }
             variant={'modal'}
             isLoading={mutation.isLoading}
-            disabled={!formState.isValid}
+            disabled={!formState.isValid || mutation.isLoading}
             loadingText={t`Submitting`}
           >{t`Submit`}</Button>
         </VStack>

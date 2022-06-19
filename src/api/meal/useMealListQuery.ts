@@ -5,6 +5,7 @@ import { useQuery } from 'react-query'
 import { queryKeys } from '../queryKeys'
 import { IPagination } from '../IPagination.interface'
 import { IMeal } from './IMeal.interface'
+import { UseQueryOptionsType } from '../../utils/useQueryOptionsType'
 
 export interface IMealListDto {
   category?: number
@@ -19,6 +20,6 @@ const fetcher = async (dto: IMealListDto) => {
   return data
 }
 
-export const useMealListQuery = (dto: IMealListDto) => {
-  return useQuery([queryKeys.mealList, dto], () => fetcher(dto))
+export const useMealListQuery = (dto: IMealListDto, options?: UseQueryOptionsType<any>) => {
+  return useQuery([queryKeys.mealList, dto], () => fetcher(dto), options)
 }

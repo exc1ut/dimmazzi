@@ -1,8 +1,6 @@
 import produce from 'immer'
-import { DRAFT_STATE } from 'immer/dist/internal'
-import { SetState } from 'zustand'
+
 import { persist } from 'zustand/middleware'
-import { IMeal } from '../api/meal/IMeal.interface'
 import { IMealType } from '../api/meal/IMealType.interface'
 import { createStore, StoreType } from '../lib/zustand'
 import { createStandaloneToast } from '@chakra-ui/react'
@@ -132,15 +130,7 @@ const store: StoreType<ICart> = (set, get) => ({
     set({ type })
   },
   reset() {
-    set({
-      type: 'delivery',
-      deliveryPrice: 0,
-      deliveryTime: 0,
-      meals: [],
-      preparingTime: '',
-      combos: [],
-      restourantId: undefined,
-    })
+    set(initialState, true)
   },
 })
 
@@ -161,3 +151,5 @@ export const useCart = createStore(
     name: 'cart-persist',
   })
 )
+
+var initialState = useCart.getState()

@@ -1,17 +1,11 @@
 import { Center, Spinner } from '@chakra-ui/react'
+import Lottie from 'lottie-react-web'
+import loader from './loader.json'
 
-interface LoaderProps {}
-
-export const Loader: React.FC<LoaderProps> = ({}) => {
+export const Loader: React.FC = ({}) => {
   return (
     <Center h="full">
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="premium_dark.400"
-        color="premium_red.1000"
-        size="xl"
-      />
+      <Lottie options={{ animationData: loader, loop: true }} height="10rem" />
     </Center>
   )
 }
