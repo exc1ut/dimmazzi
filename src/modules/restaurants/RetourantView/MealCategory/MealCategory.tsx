@@ -17,7 +17,7 @@ export const MealCategory: React.FC<MealCategoryProps> = ({ id, title, restauran
     triggerOnce: true,
     rootMargin: '0px 0px -100px 0px',
   })
-  const { data,isLoading,isSuccess } = useMealListQuery({
+  const { data, isLoading, isSuccess } = useMealListQuery({
     category: id,
     restaurant: restaurantId,
   })
@@ -35,9 +35,11 @@ export const MealCategory: React.FC<MealCategoryProps> = ({ id, title, restauran
         </Text>
         {/* <Button onClick={()=>router.push('')} size={'lg'} color="premium_red.1000" variant={'link'}>{t`Barchasi`}</Button> */}
       </Flex>
-      {/* {!visible ? null : ( */}
       <SimpleGrid columns={[null, 1, 2, 3, 4]} spacing={6} py={6}>
-			 {isLoading || !isSuccess ?<RestaurantSkeleton skeletonNumber={data?.results.length} />:data.results.map((v, index) => (
+        {isLoading || !isSuccess ? (
+          <RestaurantSkeleton skeletonNumber={data?.results.length} />
+        ) : (
+          data.results.map((v, index) => (
             <Box>
               <MealCard
                 image={v.image}
@@ -47,8 +49,8 @@ export const MealCategory: React.FC<MealCategoryProps> = ({ id, title, restauran
                 key={index}
               />
             </Box>
-          )) } 
-
+          ))
+        )}
       </SimpleGrid>
       {/* )} */}
     </Box>
